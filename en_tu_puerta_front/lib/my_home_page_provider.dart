@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:en_tu_puerta_front/widget_provider/screen_provider_home.dart';
+import 'package:en_tu_puerta_front/widget_provider/home_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/petitions_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/screen_provider_metrics.dart';
 import 'package:en_tu_puerta_front/widget_provider/settings_provider_screen.dart';
