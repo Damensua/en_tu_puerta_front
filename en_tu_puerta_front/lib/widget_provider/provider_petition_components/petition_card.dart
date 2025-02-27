@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screen_petition_details.dart';
+import 'petition_details_screen.dart';
 
 // Componente de tarjeta para mostrar notificaciones/solicitudes al proveedor
 class NotificationCard extends StatefulWidget {
