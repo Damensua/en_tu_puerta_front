@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'provider_notification_components/notification_card.dart';
+import 'petition_card.dart';
 
 // Widget para la pantalla de notificaciones del proveedor
 class WidgetProviderNotifications extends StatefulWidget {
