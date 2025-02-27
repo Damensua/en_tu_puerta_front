@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screen_detail_service.dart';
+import 'detail_service_client_screen.dart';
 import 'search_components/search_result_card.dart';
 import 'search_components/search_service.dart';
 

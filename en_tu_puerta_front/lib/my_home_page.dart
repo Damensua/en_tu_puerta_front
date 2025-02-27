@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:en_tu_puerta_front/widget_client/screen_home.dart';
-import 'package:en_tu_puerta_front/widget_client/screen_search.dart';
-import 'package:en_tu_puerta_front/widget_client/screen_notifications.dart';
-import 'package:en_tu_puerta_front/widget_client/screen_settings.dart';
+import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/search_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/chat_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
 
 
 //Controlador principal de la aplicación en el rol de cliente
