@@ -3,7 +3,7 @@ import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/search_client_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/chat_client_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
-
+import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home screen
 
 //Controlador principal de la aplicación en el rol de cliente
 class MyHomePage extends StatefulWidget {
@@ -48,6 +48,16 @@ class _MyHomePageState extends State<MyHomePage> {
               Icons.account_circle_outlined,
               size: 40,
               color: Color(0xFF001563)),
+            // Add a button to navigate back to the pre-home screen
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => PreHomeScreen()),
+                );
+              },
+            ),
           ],
         ),
       ),
