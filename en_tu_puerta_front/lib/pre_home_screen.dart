@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 // Pantalla de inicio que permite al usuario elegir entre ser cliente o proveedor
 class PreHomeScreen extends StatelessWidget {
+  const PreHomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
