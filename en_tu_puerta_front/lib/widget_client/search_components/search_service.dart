@@ -33,5 +33,4 @@ class SearchService {
       'location': 'Boulevard Norte #789'
     },
   ];
-
 }

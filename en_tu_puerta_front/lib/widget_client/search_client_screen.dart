@@ -5,7 +5,6 @@ import 'search_components/search_service.dart';
 
 // Widget para la pantalla de búsqueda del cliente
 class WidgetSearch extends StatefulWidget {
-
   const WidgetSearch({super.key});
 
   @override
@@ -14,13 +13,11 @@ class WidgetSearch extends StatefulWidget {
 
 // Estado que maneja la lógica de búsqueda y filtrado
 class _WidgetSearchState extends State<WidgetSearch> {
-
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, dynamic>> _filteredResults = [];
 
   // Filtra los resultados basados en la consulta de búsqueda
   void _filterResults(String query) {
-
     setState(() {
       if (query.isEmpty) {
         _filteredResults = [];
@@ -37,7 +34,6 @@ class _WidgetSearchState extends State<WidgetSearch> {
   @override
   Widget build(BuildContext context) {
     // Construye la interfaz de búsqueda con campo de texto y lista de resultados
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Buscar'),
@@ -119,22 +115,19 @@ class _WidgetSearchState extends State<WidgetSearch> {
                                 price: result['price'],
                                 description: result['description'],
                                 providerImage: result['providerImage'],
-                                providerName: result['providerName'],
-                                rating: result['rating'],
+                                providerName: result['providerName'], // Added providerName
+                                rating: result['rating'], // Keeping rating for DetailView
                                 location: result['location'],
                               ),
-
                             ),
                           );
                         },
-                          child: SearchResultCard(
-                            icon: result['icon'],
-                            name: result['name'],
-                            price: result['price'],
-                            rating: result['rating'],
-                            description: result['description'],
-                          ),
-
+                        child: SearchResultCard(
+                          icon: result['icon'],
+                          serviceName: result['name'], // Updated to serviceName
+                          providerName: result['providerName'], // Added providerName
+                          price: result['price'],
+                        ),
                       );
                     },
                   ),
