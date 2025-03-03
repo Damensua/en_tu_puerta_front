@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
+// import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/search_client_screen.dart';
-import 'package:en_tu_puerta_front/widget_client/chat_client_screen.dart';
-import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
+//import 'package:en_tu_puerta_front/widget_client/chat_client_screen.dart';
+//import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home screen
 
 //Controlador principal de la aplicación en el rol de cliente
@@ -25,11 +25,11 @@ class _MyHomePageState extends State<MyHomePage> {
     //WidgetSettings()
   ];
 
-  void _selectOptionInMyBottomNavigation(int index) {
+  /*void _selectOptionInMyBottomNavigation(int index) {
     setState(() {
       _selectedIndex = index;
     });
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

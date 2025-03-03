@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:en_tu_puerta_front/widget_provider/home_provider_screen.dart';
+//import 'package:en_tu_puerta_front/widget_provider/home_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/petitions_provider_screen.dart';
-import 'package:en_tu_puerta_front/widget_provider/chat_provider_screen.dart';
-import 'package:en_tu_puerta_front/widget_provider/settings_provider_screen.dart';
+//import 'package:en_tu_puerta_front/widget_provider/chat_provider_screen.dart';
+//import 'package:en_tu_puerta_front/widget_provider/settings_provider_screen.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home screen
 
 //Controlador principal de la aplicación en el rol de proveedor
@@ -25,11 +25,11 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
     //WidgetProviderSettings()
   ];
 
-  void _selectOptionInMyBottomNavigation(int index) {
+  /*void _selectOptionInMyBottomNavigation(int index) {
     setState(() {
       _selectedIndex = index;
     });
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
