@@ -19,10 +19,10 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    WidgetProviderHome(),
+    //WidgetProviderHome(),
     WidgetProviderNotifications(),
-    WidgetProviderMetrics(),
-    WidgetProviderSettings()
+    //WidgetProviderMetrics(),
+    //WidgetProviderSettings()
   ];
 
   void _selectOptionInMyBottomNavigation(int index) {
@@ -62,12 +62,12 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
         ),
       ),
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
-      bottomNavigationBar: BottomNavigationBar(
+      /* bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
+          ), 
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'Solicitudes',
@@ -79,13 +79,13 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Perfil',
-          ),
+          ), 
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.grey,
         selectedItemColor: Color(0xFF001563),
         onTap: _selectOptionInMyBottomNavigation,
-      ),
+      ),*/
     );
   }
 }

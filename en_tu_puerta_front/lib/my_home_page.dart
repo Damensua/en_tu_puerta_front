@@ -19,10 +19,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    WidgetHome(),
+    //WidgetHome(),
     WidgetSearch(),
-    WidgetNotification(),
-    WidgetSettings()
+    //WidgetNotification(),
+    //WidgetSettings()
   ];
 
   void _selectOptionInMyBottomNavigation(int index) {
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
-      bottomNavigationBar: BottomNavigationBar(
+      /* bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedItemColor: Colors.grey,
         selectedItemColor: Color(0xFF001563),
         onTap: _selectOptionInMyBottomNavigation,
-      ),
+      ),*/
     );
   }
 }
