@@ -33,58 +33,62 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
   @override
   Widget build(BuildContext context) {
-    // Construye la interfaz de búsqueda con campo de texto y lista de resultados
+    // Construye la interfaz de búsqueda con SearchBar y lista de resultados
     return Scaffold(
       appBar: AppBar(
         title: Text('Buscar'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text('Filtrar'),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Filtros no disponibles por el momento'),
-                    ],
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text('Aceptar'),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              style: TextStyle(color: Color(0xFF001563)),
-              decoration: InputDecoration(
-                hintText: 'Buscar servicio...',
-                hintStyle: TextStyle(color: Color(0xFF001563).withOpacity(0.6)),
-                prefixIcon: Icon(Icons.search, color: Color(0xFF001563)),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF001563)),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    style: TextStyle(color: Color(0xFF001563)),
+                    decoration: InputDecoration(
+                      hintText: 'Buscar servicio...',
+                      hintStyle: TextStyle(color: Color(0xFF001563).withOpacity(0.6)),
+                      prefixIcon: Icon(Icons.search, color: Color(0xFF001563)),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF001563)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF001563)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF001563), width: 2),
+                      ),
+                    ),
+                    onChanged: _filterResults,
+                  ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF001563)),
+                IconButton(
+                  icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Filtrar'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Filtros no disponibles por el momento'),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text('Aceptar'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF001563), width: 2),
-                ),
-              ),
-              onChanged: _filterResults,
+              ],
             ),
           ),
           Expanded(
