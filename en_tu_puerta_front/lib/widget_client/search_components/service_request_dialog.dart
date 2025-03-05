@@ -1,6 +1,6 @@
 import 'package:en_tu_puerta_front/functions/format_dates.dart';
 import 'package:en_tu_puerta_front/functions/shorten_days.dart';
-import 'package:en_tu_puerta_front/objects/petition.dart';
+import 'package:en_tu_puerta_front/models/petition.dart';
 import 'package:en_tu_puerta_front/widget_client/search_components/days_widget.dart';
 import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +35,11 @@ class ServiceRequestDialog extends StatefulWidget {
   _ServiceRequestDialogState createState() => _ServiceRequestDialogState();
 }
 
+
+
+
+
+
 class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   int indexSelectedDay = -1;
   String? selectedDay;
@@ -53,7 +58,12 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
     });
     //print("Selected Day Index: $indexSelectedDay");
   }
-
+  
+  void resetDropdown() {
+      setState(() {
+        selectedTime = null; // Reinicia el valor seleccionado
+      });
+    }
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -87,7 +97,8 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       daysShown: daysShown,
                       days: shortDays,
                       date: shortDates,
-                      onDaySelected: handleDaySelected)),
+                      onDaySelected: handleDaySelected,
+                      resetDropdown:resetDropdown)),
 
               //DROPDOWN DE HORARIOS DISPONIBLES
               SizedBox(

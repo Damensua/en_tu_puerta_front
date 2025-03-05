@@ -10,13 +10,15 @@ class DaysWidget extends StatefulWidget {
   final List days; 
   final List date; 
   final Function(int) onDaySelected; 
+  final Function() resetDropdown;  
 
   const DaysWidget(
       {super.key,
       required this.daysShown,
       required this.days,
       required this.date,
-      required this.onDaySelected
+      required this.onDaySelected,
+      required this.resetDropdown
       });
 
   @override
@@ -43,6 +45,7 @@ class DaysWidgetState extends State<DaysWidget> {
               setState(() {
                 selectedDay = widget.days[index];
                 indexSelectedDay = index;
+                widget.resetDropdown();
                 print(indexSelectedDay);
                 print(selectedDay);
               });
