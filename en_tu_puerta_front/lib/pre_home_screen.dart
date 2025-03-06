@@ -2,6 +2,9 @@ import 'package:en_tu_puerta_front/controllers/first_crontroller.dart';
 import 'package:en_tu_puerta_front/my_home_page.dart';
 import 'package:en_tu_puerta_front/my_home_page_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 // Pantalla de inicio que permite al usuario elegir entre ser cliente o proveedor
 class PreHomeScreen extends StatelessWidget {
@@ -45,6 +48,9 @@ class PreHomeScreen extends StatelessWidget {
                 color: Colors.blue,
               ),
               SizedBox(height: 20),
+
+              //BOTON DE CLIENTE
+
               Text(
                 'Cliente',
                 style: TextStyle(
@@ -56,18 +62,29 @@ class PreHomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () async{
-                  FirstCrontroller().getData();
+                onPressed: () async {
+
+                  String token = await getToken();
+                  
+
+                  String inputSearchBar = "1";
+
+                  getPetitionS(inputSearchBar, token);
+
+
+
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Home')),
+                    MaterialPageRoute(
+                        builder: (context) => const MyHomePage(title: 'Home')),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   backgroundColor: Color(0xFF001563),
                 ),
-                child: Text('Solicitar servicio', style: TextStyle(color: Colors.white)),
+                child: Text('Solicitar servicio',
+                    style: TextStyle(color: Colors.white)),
               ),
               SizedBox(height: 40),
               Icon(
@@ -90,14 +107,17 @@ class PreHomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const MyHomePageProvider(title: 'Home')),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const MyHomePageProvider(title: 'Home')),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   backgroundColor: Color(0xFF001563),
                 ),
-                child: Text('Ofrecer servicio', style: TextStyle(color: Colors.white)),
+                child: Text('Ofrecer servicio',
+                    style: TextStyle(color: Colors.white)),
               ),
             ],
           ),

@@ -179,12 +179,14 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                   //Procede a intentar crear la solicitud
                 } else if (indexSelectedDay >= 0) {
                   try {
-                    Petition newPetition = Petition(
-                        day: days[indexSelectedDay],
-                        date: dates[indexSelectedDay],
-                        time: selectedTime,
-                        message: getInput());
-                    print(newPetition.toString());
+                    // Petition newPetition = Petition(
+                    //     day: days[indexSelectedDay],
+                    //     date: dates[indexSelectedDay],
+                    //     time: selectedTime,
+                    //     message: getInput());
+                    // print(newPetition.toString());
+                    
+                    
                     Navigator.pop(context);
                     showDialog(
                       context: context,

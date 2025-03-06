@@ -1,30 +1,66 @@
+
+import 'dart:convert';
+
+Petition petitionFromJson(String str) => Petition.fromJson(json.decode(str));
+
+String petitionToJson(Petition data) => json.encode(data.toJson());
+
 class Petition {
-  String day;
-  String date;
-  String? time;
-  String? message; // Optional message
+    PetitionClass petition;
 
-  Petition({
-    required this.day,
-    required this.date,
-    required this.time,
-    this.message='',
-  });
+    Petition({
+        required this.petition,
+    });
 
-  @override
-  String toString() {
-    return 'Solicitude(day: $day, date: $date, time: $time, message: $message)';
-  }
+    factory Petition.fromJson(Map<String, dynamic> json) => Petition(
+        petition: PetitionClass.fromJson(json["petition"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "petition": petition.toJson(),
+    };
 }
 
-Petition createSolicitude(List<String> days, List<String> dates, int index, {String? message}) {
-  if (index < 0 || index >= days.length || index >= dates.length) {
-    throw RangeError('Index is out of range for the provided lists.');
-  }
+class PetitionClass {
+    int idUser;
+    String description;
+    String? type;
+    String? area;
+    DateTime date;
+    String time;
+    String message;
+    int idService;
 
-  String day = days[index];
-  String date = dates[index];
-  String time = DateTime.now().toLocal().toString().split(' ')[1].substring(0, 5); // Current time in HH:mm format
+    PetitionClass({
+        required this.idUser,
+        required this.description,
+        required this.type,
+        required this.area,
+        required this.date,
+        required this.time,
+        required this.message,
+        required this.idService,
+    });
 
-  return Petition(day: day, date: date, time: time, message: message);
+    factory PetitionClass.fromJson(Map<String, dynamic> json) => PetitionClass(
+        idUser: json["id_user"],
+        description: json["description"],
+        type: json["type"],
+        area: json["area"],
+        date: DateTime.parse(json["date"]),
+        time: json["time"],
+        message: json["message"],
+        idService: json["id_service"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id_user": idUser,
+        "description": description,
+        "type": type,
+        "area": area,
+        "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+        "time": time,
+        "message": message,
+        "id_service": idService,
+    };
 }
