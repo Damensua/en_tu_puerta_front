@@ -1,3 +1,4 @@
+import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'detail_service_client_screen.dart';
 import 'search_components/search_result_card.dart';
@@ -8,8 +9,9 @@ import 'search_components/provider_card.dart';
 
 // Widget para la pantalla de búsqueda del cliente
 class WidgetSearch extends StatefulWidget {
-  const WidgetSearch({super.key});
+  WidgetSearch({super.key});
 
+String? localToken = globalToken;
   @override
   State<WidgetSearch> createState() => _WidgetSearchState();
 }
