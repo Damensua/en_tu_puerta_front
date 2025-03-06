@@ -1,4 +1,7 @@
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
+import 'package:en_tu_puerta_front/controllers/first_crontroller.dart'; // Import FirstController
+
+
 import 'package:flutter/material.dart';
 import 'detail_service_client_screen.dart';
 import 'search_components/search_result_card.dart';
@@ -11,20 +14,21 @@ import 'search_components/provider_card.dart';
 class WidgetSearch extends StatefulWidget {
   WidgetSearch({super.key});
 
-String? localToken = globalToken;
+
   @override
   State<WidgetSearch> createState() => _WidgetSearchState();
 }
 
 // Estado que maneja la lógica de búsqueda y filtrado
 class _WidgetSearchState extends State<WidgetSearch> {
+  String? localToken = globalToken;
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, dynamic>> _filteredResults = [];
   List<Map<String, dynamic>> _filteredProviders = [];
 
 
   // Filtra los resultados basados en la consulta de búsqueda
-  void _filterResults(String query) {
+  Future<void> _filterResults(String query) async {
     setState(() {
       if (query.isEmpty) {
         _filteredResults = [];
@@ -44,8 +48,16 @@ class _WidgetSearchState extends State<WidgetSearch> {
                     .contains(query.toLowerCase()))
             .toList();
       }
-
     });
+
+    // Call the getServices method from FirstController
+    var servicesResponse = await getServices(query, localToken);
+
+
+    String localhost = 'localhost'; // Define your localhost variable
+    var services = await getServices('/services', localToken);
+    // Handle the services response as needed
+    print(services);
   }
 
   @override
@@ -85,25 +97,9 @@ class _WidgetSearchState extends State<WidgetSearch> {
                 IconButton(
                   icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Filtrar'),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('Filtros no disponibles por el momento'),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text('Aceptar'),
-                          ),
-                        ],
-                      ),
-                    );
+                    print(localToken);
                   },
+
                 ),
               ],
             ),
