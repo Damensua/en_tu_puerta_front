@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 // Punto de entrada principal de la aplicación
 void main() {
   final logger= Logger();
-
+  
   logger.e('Error Log',error: "Test Error", stackTrace: StackTrace.empty);
   logger.i('Info Log', error: "Test Info", stackTrace: StackTrace.empty);
   logger.w('Warning Log',error: "Test Warning", stackTrace: StackTrace.empty);
