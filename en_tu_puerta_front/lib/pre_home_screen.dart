@@ -7,6 +7,7 @@ class PreHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF001563), // Updated background color
       body: Padding(
         padding: const EdgeInsets.only(bottom: 40),
         child: Center(
@@ -15,43 +16,21 @@ class PreHomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
-                'https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png',
+                'https://i.postimg.cc/85XVXVzn/Entupuertanuevo.png', // Updated image URL
                 height: 150,
               ),
-              SizedBox(height: 20),
-              Text(
-                '¡Nosotros nos encargamos!',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
               Text(
                 '¿Que necesitas?',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 24, // Increased font size
+                  color: Colors.white, // Updated title color
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
-              Icon(
-                Icons.person,
-                size: 50,
-                color: Colors.blue,
+              Image.network(
+                'https://i.postimg.cc/pdZv8jbv/cliente.png', // Updated client icon URL
+                height: 160, // Doubled size
               ),
-              SizedBox(height: 20),
-              Text(
-                'Cliente',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF001563),
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
@@ -61,27 +40,14 @@ class PreHomeScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  backgroundColor: Color(0xFF001563),
+                  backgroundColor: Color(0xFF606d9e), // Updated button color
                 ),
                 child: Text('Solicitar servicio', style: TextStyle(color: Colors.white)),
               ),
-              SizedBox(height: 40),
-              Icon(
-                Icons.person,
-                size: 50,
-                color: Colors.green,
+              Image.network(
+                'https://i.postimg.cc/XJYbgv4C/proveedor.png', // Updated provider icon URL
+                height: 160, // Doubled size
               ),
-              SizedBox(height: 10),
-              Text(
-                'Proveedor',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF001563),
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
@@ -91,7 +57,7 @@ class PreHomeScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  backgroundColor: Color(0xFF001563),
+                  backgroundColor: Color(0xFF606d9e), // Updated button color
                 ),
                 child: Text('Ofrecer servicio', style: TextStyle(color: Colors.white)),
               ),
