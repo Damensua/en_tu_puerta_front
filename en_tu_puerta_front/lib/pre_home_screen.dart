@@ -1,9 +1,12 @@
+import 'package:en_tu_puerta_front/controllers/first_crontroller.dart';
 import 'package:en_tu_puerta_front/my_home_page.dart';
 import 'package:en_tu_puerta_front/my_home_page_provider.dart';
 import 'package:flutter/material.dart';
 
 // Pantalla de inicio que permite al usuario elegir entre ser cliente o proveedor
 class PreHomeScreen extends StatelessWidget {
+  const PreHomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +35,8 @@ class PreHomeScreen extends StatelessWidget {
                 height: 160, // Doubled size
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async{
+                  FirstCrontroller().getData();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Home')),
