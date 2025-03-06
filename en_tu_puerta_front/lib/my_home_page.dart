@@ -7,9 +7,10 @@ import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home
 
 //Controlador principal de la aplicación en el rol de cliente
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
+  const MyHomePage({super.key, required this.title, this.globalToken});
+  
   final String title;
+  final String? globalToken;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -33,6 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Use the globalToken as needed
+    print('Global Token: ${widget.globalToken}'); // Example usage
+
     return Scaffold(
       appBar: AppBar(
         title: Row(

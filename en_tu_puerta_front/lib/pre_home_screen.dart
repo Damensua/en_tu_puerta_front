@@ -82,11 +82,12 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const MyHomePage(title: 'Home')),
+Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+      builder: (context) =>
+          MyHomePage(title: 'Home', globalToken: globalToken)),
+
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -107,11 +108,12 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const MyHomePageProvider(title: 'Home')),
+Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+      builder: (context) =>
+          MyHomePageProvider(title: 'Home', globalToken: globalToken)),
+
                       );
                     },
                     style: ElevatedButton.styleFrom(
