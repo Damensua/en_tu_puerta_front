@@ -1,12 +1,9 @@
-import 'package:en_tu_puerta_front/controllers/first_crontroller.dart';
 import 'package:en_tu_puerta_front/my_home_page.dart';
 import 'package:en_tu_puerta_front/my_home_page_provider.dart';
 import 'package:flutter/material.dart';
 
 // Pantalla de inicio que permite al usuario elegir entre ser cliente o proveedor
 class PreHomeScreen extends StatelessWidget {
-  const PreHomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,8 +17,9 @@ class PreHomeScreen extends StatelessWidget {
             children: [
               Image.network(
                 'https://i.postimg.cc/85XVXVzn/Entupuertanuevo.png', // Updated image URL
-                height: 150,
+                height: 160, // Height of the top image
               ),
+              SizedBox(height: 20), // Space between the top image and the text
               Text(
                 '¿Que necesitas?',
                 style: TextStyle(
@@ -30,13 +28,13 @@ class PreHomeScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+              SizedBox(height: 20), // Space between the text and the first image
               Image.network(
                 'https://i.postimg.cc/pdZv8jbv/cliente.png', // Updated client icon URL
-                height: 160, // Doubled size
+                height: 130, // Updated height to 130 for the client icon
               ),
               ElevatedButton(
-                onPressed: () async{
-                  FirstCrontroller().getData();
+                onPressed: () {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Home')),
@@ -48,9 +46,10 @@ class PreHomeScreen extends StatelessWidget {
                 ),
                 child: Text('Solicitar servicio', style: TextStyle(color: Colors.white)),
               ),
+              SizedBox(height: 20), // Space between the button and the second image
               Image.network(
                 'https://i.postimg.cc/XJYbgv4C/proveedor.png', // Updated provider icon URL
-                height: 160, // Doubled size
+                height: 130, // Updated height to 130 for the provider icon
               ),
               ElevatedButton(
                 onPressed: () {
