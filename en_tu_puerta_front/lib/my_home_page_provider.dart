@@ -7,16 +7,15 @@ import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home
 
 //Controlador principal de la aplicación en el rol de proveedor
 class MyHomePageProvider extends StatefulWidget {
-  const MyHomePageProvider({super.key, required this.title, this.globalToken});
-  
+  const MyHomePageProvider({super.key, required this.title});
   final String title;
-  final String? globalToken;
 
   @override
   State<MyHomePageProvider> createState() => _MyHomePageProviderState();
 }
 
 class _MyHomePageProviderState extends State<MyHomePageProvider> {
+  
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
@@ -34,8 +33,7 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
 
   @override
   Widget build(BuildContext context) {
-    // Use the globalToken as needed
-    print('Global Token: ${widget.globalToken}'); // Example usage
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +50,8 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
               Icons.account_circle_outlined,
               size: 40,
               color: Color(0xFF001563)),
-            // Add a button to navigate back to the pre-home screen
+
+            //BOTON DE REGRESO A PRE-HOME
             IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -66,6 +65,8 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
         ),
       ),
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+
+      //NAVBAR 
       /* bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

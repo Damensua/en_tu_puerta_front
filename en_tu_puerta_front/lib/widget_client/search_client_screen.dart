@@ -1,13 +1,14 @@
+import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
+import 'package:en_tu_puerta_front/functions/read_data.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
-import 'package:en_tu_puerta_front/controllers/first_crontroller.dart'; // Import FirstController
 import 'package:flutter/material.dart';
-import 'detail_service_client_screen.dart';
-import 'search_components/search_service.dart'; // Re-add this import
-import 'search_components/mock_providers.dart'; // Re-add this import
+import 'package:logger/logger.dart';
+
+final mensajito = Logger();
 
 // Widget para la pantalla de búsqueda del cliente
 class WidgetSearch extends StatefulWidget {
-  WidgetSearch({super.key});
+  const WidgetSearch({super.key});
 
   @override
   State<WidgetSearch> createState() => _WidgetSearchState();
@@ -15,54 +16,80 @@ class WidgetSearch extends StatefulWidget {
 
 // Estado que maneja la lógica de búsqueda y filtrado
 class _WidgetSearchState extends State<WidgetSearch> {
-  String? localToken = globalToken;
-  final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _filteredResults = [];
-  List<Map<String, dynamic>> _filteredProviders = [];
+  /////////////////////////////////////////
 
-  // Filtra los resultados basados en la consulta de búsqueda
-  Future<void> _filterResults(String query) async {
+  //VARIABLES
+  //Token//
+  String? localToken = globalToken;
+
+  // Controlador de la caja de texto para la búsqueda//
+  final TextEditingController _searchController = TextEditingController();
+  //Texto para el query//
+  String searchText = '';
+  //Lista de objetos Servicios//
+  List servicesFounds = [];
+
+  ///////////////////////////////////////
+  @override
+  void initState() {
+    super.initState();
+    // Inicializa la lista filtrada con todos los elementos
+    fetchServices(); // Llama a la función para obtener los servicios inicialmente
+
+    // Listener que cambia el searchText
+    _searchController.addListener(() {
+      setState(() {
+        searchText =
+            _searchController.text; // Actualiza la variable con el texto actual
+        fetchServices(); // Llama a la función para filtrar los servicios
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose(); // Dispose the controller when done
+    super.dispose();
+  }
+
+  // Función para obtener los servicios
+  void fetchServices() async {
+    var json = await getServices(searchText, localToken);
+    mensajito.log(Level.debug, "JSON RETORNADO:$json");
     setState(() {
-      if (query.isEmpty) {
-        _filteredResults = [];
-        _filteredProviders = [];
-      } else {
-        _filteredResults = SearchService.mockResults
-            .where((result) =>
-                result['name'].toLowerCase().contains(query.toLowerCase()))
-            .toList();
-        _filteredProviders = ProviderService.mockProviders
-            .where((provider) =>
-                provider['name'].toLowerCase().contains(query.toLowerCase()) ||
-                provider['serviceType']
-                    .toLowerCase()
-                    .contains(query.toLowerCase()))
-            .toList();
-      }
+      servicesFounds = parseServices(json); // Actualiza la lista de servicios encontrados
+    });
+  }
+
+  //Función para el onchange de la searchbar
+  void updateSearch(String value) {
+    setState(() {
+      searchText = value; // Actualiza searchText
     });
 
-    // Call the getServices method from FirstController
-    var servicesResponse = await getServices(query, localToken);
-
-    String localhost = 'localhost'; // Define your localhost variable
-    var services = await getServices('/services', localToken);
-    // Handle the services response as needed
-    print(services);
+    // Verificación de lo que se esta escribiendo
+    mensajito.log(Level.info, "Searching for: $searchText");
   }
 
   @override
   Widget build(BuildContext context) {
-    // Construye la interfaz de búsqueda con SearchBar y lista de resultados
     return Scaffold(
+      //ENCABEZADO
+      //Acomodar el espaciamiento de esto
+      //Esya muy pegado arriba, debe estar entre la barra y el logo
+      //Y el tipo de letra debe ser más grande y llamativo, y en azul
       appBar: AppBar(
-        title: Text('Buscar'),
+        title: Text('Búsqueda'),
       ),
+
+      //RESTO DE LA VISTA
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
+                //BARRA DE BÚSQUEDA
                 Expanded(
                   child: TextField(
                     controller: _searchController,
@@ -83,20 +110,25 @@ class _WidgetSearchState extends State<WidgetSearch> {
                             BorderSide(color: Color(0xFF001563), width: 2),
                       ),
                     ),
-                    onChanged: _filterResults,
+                    onChanged: updateSearch,
                   ),
                 ),
+
+                //BOTÓN DE FILTRO
+                //O el boton del filtro esta adentro de la barra
+                //o se busca otra forma de acomodar las cosas
+                //dalta configurar lo del filtro
                 IconButton(
                   icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
-                  onPressed: () {
-                    print(localToken);
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),
           ),
+
+          //Esta frase debe ir en el centro de la pantalla  tanto vertical como horizontalmente
           Expanded(
-            child: _filteredResults.isEmpty && _filteredProviders.isEmpty
+            child: servicesFounds.isEmpty
                 ? Center(
                     child: Text(
                       _searchController.text.isEmpty

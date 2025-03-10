@@ -73,7 +73,37 @@ Future getServices(String inputSearchBar, String? token) async {
 }
 
 
-//REVISAR ESTO error de servidor
+//Retorna un usuario con el idUser
+Future getUser(String idUser, String? token) async {
+  var url = Uri.http('10.0.2.2:8000', 'api/v1/users/$idUser');
+      
+      Map<String, String>? header;
+
+      if (token != null) {
+      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+    } else {
+      header = {'Accept': 'application/json'};
+    }
+
+  try {
+    var response = await http.get(url, headers: header);
+      logger.log(Level.info, response.statusCode);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      logger.log(Level.info, data);
+
+      return data;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    logger.log(Level.error, 'Error: $e');
+  }
+}
+
+
+//Retorna una el JSON con los usuarios que tengan concidencia parcial con el input colocado
 Future getUsers(String inputSearchBar, String? token) async {
   var url = Uri.http('10.0.2.2:8000', 'api/v1/users', {'fullname': '*$inputSearchBar*'});
       
@@ -104,7 +134,7 @@ Future getUsers(String inputSearchBar, String? token) async {
 
 //Me regresa las peticiones pero no entiendo que me regresa
 Future getPetitionS(String userId, String? token) async {
-  var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions', {'filter[user]':'3&include=$userId'});
+  var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions', {'filter[user]':'$userId & include=user'});
       
       Map<String, String>? header;
 
@@ -130,7 +160,6 @@ Future getPetitionS(String userId, String? token) async {
   }
 }
 
-//REVISAR ESTO
 
 Future postPetition(Petition petition,String? token) async {
 
@@ -170,10 +199,3 @@ Future postPetition(Petition petition,String? token) async {
   }
 }
 
-
-/**
- * Petition todavía tiene atributos que no van 
- * Necesito el id del usuario con el que me estoy registrando
- * Buscar por nombre me da error 500
- * No entiendo la estructura de las petittion cuando las llamo 
- */
