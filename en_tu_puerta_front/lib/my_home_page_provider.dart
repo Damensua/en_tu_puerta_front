@@ -39,29 +39,28 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
       appBar: AppBar(
         title: Row(
           children: [
-            Image.network(
-              'https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png',
-              width: 150,
-              height: 150,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => PreHomeScreen()),
+                );
+              },
+              child: Image.network(
+                'https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png',
+                width: 150,
+                height: 150,
+              ),
             ),
             SizedBox(width: 10),
             Spacer(),
             Icon(
               Icons.account_circle_outlined,
               size: 40,
-              color: Color(0xFF001563)),
-
-            //BOTON DE REGRESO A PRE-HOME
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => PreHomeScreen()),
-                );
-              },
+              color: Color(0xFF001563),
             ),
           ],
+
         ),
       ),
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
