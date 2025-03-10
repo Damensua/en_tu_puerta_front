@@ -113,16 +113,27 @@ Puntuación: ${firstService.punctuationProvider}
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                //BARRA DE BÚSQUEDA
+                //BARRA DE BÚSQUEDA CON FILTRO INTEGRADO
                 Expanded(
                   child: TextField(
                     controller: _searchController,
                     style: TextStyle(color: Color(0xFF001563)),
                     decoration: InputDecoration(
                       hintText: 'Buscar servicio...',
-                      hintStyle:
-                          TextStyle(color: Color(0xFF001563).withOpacity(0.6)),
+                      hintStyle: TextStyle(color: Color(0xFF001563).withOpacity(0.6)),
                       prefixIcon: Icon(Icons.search, color: Color(0xFF001563)),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Este es el boton de filtro'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        },
+                      ),
+
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFF001563)),
                       ),
@@ -130,22 +141,13 @@ Puntuación: ${firstService.punctuationProvider}
                         borderSide: BorderSide(color: Color(0xFF001563)),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFF001563), width: 2),
+                        borderSide: BorderSide(color: Color(0xFF001563), width: 2),
                       ),
                     ),
                     onChanged: updateSearch,
                   ),
                 ),
 
-                //BOTÓN DE FILTRO
-                //O el boton del filtro esta adentro de la barra
-                //o se busca otra forma de acomodar las cosas
-                //dalta configurar lo del filtro
-                IconButton(
-                  icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
-                  onPressed: () {},
-                ),
               ],
             ),
           ),
