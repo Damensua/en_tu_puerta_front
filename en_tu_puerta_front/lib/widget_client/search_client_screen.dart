@@ -3,6 +3,8 @@ import 'package:en_tu_puerta_front/functions/read_data.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:en_tu_puerta_front/widget_client/search_components/search_result_card.dart';
+
 
 final mensajito = Logger();
 
@@ -26,7 +28,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
   final TextEditingController _searchController = TextEditingController();
   //Texto para el query//
   String searchText = '';
-  //Lista de objetos Servicios//
+  //Lista de objetos Servicioss//
   List servicesFounds = [];
 
   ///////////////////////////////////////
@@ -56,9 +58,28 @@ class _WidgetSearchState extends State<WidgetSearch> {
   void fetchServices() async {
     var json = await getServices(searchText, localToken);
     mensajito.log(Level.debug, "JSON RETORNADO:$json");
-    setState(() {
-      servicesFounds = parseServices(json); // Actualiza la lista de servicios encontrados
-    });
+      setState(() {
+        servicesFounds = parseServices(json);
+        mensajito.log(Level.info, "Objetos Servicio: $servicesFounds"); // Actualiza la lista de servicios encontrados
+        
+        // Imprimir el primer servicio si existe
+        if (servicesFounds.isNotEmpty) {
+          final firstService = servicesFounds.first;
+          mensajito.i('''
+Primer servicio encontrado:
+ID: ${firstService.id}
+Nombre: ${firstService.serviceName}
+Proveedor: ${firstService.firstNameProvider} ${firstService.lastNameProvider}
+Precio: ${firstService.servicePrice}
+Dirección: ${firstService.addressProvider}
+Descripción: ${firstService.description}
+Duración: ${firstService.duration} minutos
+Imágenes: ${firstService.imagesPath}
+Puntuación: ${firstService.punctuationProvider}
+''');
+        }
+      });
+
   }
 
   //Función para el onchange de la searchbar
@@ -70,6 +91,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
     // Verificación de lo que se esta escribiendo
     mensajito.log(Level.info, "Searching for: $searchText");
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -140,10 +162,19 @@ class _WidgetSearchState extends State<WidgetSearch> {
                       ),
                     ),
                   )
-                : ListView(
+                : ListView.builder(
                     padding: EdgeInsets.all(16.0),
-                    children: [],
+                    itemCount: servicesFounds.length,
+                    itemBuilder: (context, index) {
+                      final service = servicesFounds[index];
+                      return SearchResultCard(
+                        serviceName: service.serviceName,
+                        providerName: '${service.firstNameProvider} ${service.lastNameProvider}',
+                        price: service.servicePrice,
+                      );
+                    },
                   ),
+
           ),
         ],
       ),

@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 
 // Componente que muestra una tarjeta de resultado de búsqueda
 class SearchResultCard extends StatelessWidget {
-  final IconData icon;
-  final String serviceName; // Updated to serviceName
-  final String providerName; // Added providerName
+  final String serviceName;
+  final String providerName;
   final double price;
 
   const SearchResultCard({
-    required this.icon,
-    required this.serviceName, // Updated to serviceName
-    required this.providerName, // Added providerName
+    required this.serviceName,
+    required this.providerName,
     required this.price,
     super.key,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,8 @@ class SearchResultCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, size: 40, color: Color(0xFF001563)),
+            Icon(Icons.work, size: 40, color: Color(0xFF001563)), // Icono fijo
+
               SizedBox(width: 16),
               Expanded(
                 child: Column(

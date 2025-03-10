@@ -13,7 +13,7 @@ Future getToken() async {
   var url = Uri.http(urlBase(), 'api/login');
 
   //Usario de validación para hacer el login
-  var body = {'email': 'osvaldo.kassulke@example.org', 'password': 'password'};
+  var body = {'email': 'ferry.camryn@example.com', 'password': 'password'};
 
   try {
     //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs

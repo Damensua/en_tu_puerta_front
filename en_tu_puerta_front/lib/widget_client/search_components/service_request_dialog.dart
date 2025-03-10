@@ -74,7 +74,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
             children: [
               Center(
                 child: Text(
-                  'Solicitud de servici',
+                  'Solicitud de servicio',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
