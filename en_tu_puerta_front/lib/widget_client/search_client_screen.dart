@@ -4,6 +4,8 @@ import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:en_tu_puerta_front/widget_client/search_components/search_result_card.dart';
+import 'package:en_tu_puerta_front/widget_client/detail_service_client_screen.dart';
+
 
 
 final mensajito = Logger();
@@ -167,11 +169,24 @@ Puntuación: ${firstService.punctuationProvider}
                     itemCount: servicesFounds.length,
                     itemBuilder: (context, index) {
                       final service = servicesFounds[index];
-                      return SearchResultCard(
-                        serviceName: service.serviceName,
-                        providerName: '${service.firstNameProvider} ${service.lastNameProvider}',
-                        price: service.servicePrice,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailServiceClientScreen(
+                                service: service,
+                              ),
+                            ),
+                          );
+                        },
+                        child: SearchResultCard(
+                          serviceName: service.serviceName,
+                          providerName: '${service.firstNameProvider} ${service.lastNameProvider}',
+                          price: service.servicePrice,
+                        ),
                       );
+
                     },
                   ),
 
