@@ -115,38 +115,41 @@ Puntuación: ${firstService.punctuationProvider}
               children: [
                 //BARRA DE BÚSQUEDA CON FILTRO INTEGRADO
                 Expanded(
-                  child: TextField(
+                  child: SearchBar(
                     controller: _searchController,
-                    style: TextStyle(color: Color(0xFF001563)),
-                    decoration: InputDecoration(
-                      hintText: 'Buscar servicio...',
-                      hintStyle: TextStyle(color: Color(0xFF001563).withOpacity(0.6)),
-                      prefixIcon: Icon(Icons.search, color: Color(0xFF001563)),
-                      suffixIcon: IconButton(
+                    hintText: 'Buscar servicio...',
+                    leading: Icon(Icons.search, color: Color(0xFF001563)),
+                    trailing: [
+                      PopupMenuButton<String>(
                         icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
-                        onPressed: () {
+                        onSelected: (String value) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Este es el boton de filtro'),
+                              content: Text('Filtro seleccionado: $value'),
                               duration: Duration(seconds: 2),
                             ),
                           );
                         },
+                        itemBuilder: (BuildContext context) => [
+                          PopupMenuItem<String>(
+                            value: 'Todos',
+                            child: Text('Todos'),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'Servicio',
+                            child: Text('Servicio'),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'Cuenta',
+                            child: Text('Cuenta'),
+                          ),
+                        ],
                       ),
-
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF001563)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF001563)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF001563), width: 2),
-                      ),
-                    ),
+                    ],
                     onChanged: updateSearch,
                   ),
                 ),
+
 
               ],
             ),
