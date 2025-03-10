@@ -132,10 +132,6 @@ Puntuación: ${firstService.punctuationProvider}
                         },
                         itemBuilder: (BuildContext context) => [
                           PopupMenuItem<String>(
-                            value: 'Todos',
-                            child: Text('Todos'),
-                          ),
-                          PopupMenuItem<String>(
                             value: 'Servicio',
                             child: Text('Servicio'),
                           ),
