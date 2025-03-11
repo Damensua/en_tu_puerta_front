@@ -103,14 +103,28 @@ Puntuación: ${firstService.punctuationProvider}
       //Esya muy pegado arriba, debe estar entre la barra y el logo
       //Y el tipo de letra debe ser más grande y llamativo, y en azul
       appBar: AppBar(
-        title: Text('Búsqueda'),
+        title: Row(
+          children: [
+            Text(
+              'Búsqueda',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold, // Hacer el texto más grueso
+                color: Color(0xFF001563), // Cambiar el color si es necesario
+              ),
+            ),
+          ],
+
+        ),
       ),
+
 
       //RESTO DE LA VISTA
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0), // Reduce el espacio vertical
+
             child: Row(
               children: [
                 //BARRA DE BÚSQUEDA CON FILTRO INTEGRADO
