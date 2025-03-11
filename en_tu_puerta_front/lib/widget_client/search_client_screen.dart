@@ -167,44 +167,54 @@ Puntuación: ${firstService.punctuationProvider}
 
           //Esta frase debe ir en el centro de la pantalla  tanto vertical como horizontalmente
           Expanded(
-            child: servicesFounds.isEmpty
+            child: searchText.isEmpty 
                 ? Center(
                     child: Text(
-                      _searchController.text.isEmpty
-                          ? '¿Qué deseas buscar hoy?'
-                          : 'No se encontraron resultados',
+                      '¿Qué deseas buscar hoy?',
                       style: TextStyle(
                         fontSize: 18,
+                        fontWeight: FontWeight.bold,
                         color: Color(0xFF001563),
                       ),
                     ),
                   )
-                : ListView.builder(
-                    padding: EdgeInsets.all(16.0),
-                    itemCount: servicesFounds.length,
-                    itemBuilder: (context, index) {
-                      final service = servicesFounds[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailServiceClientScreen(
-                                service: service,
-                              ),
+                : servicesFounds.isEmpty
+                    ? Center(
+                        child: Text(
+                          _searchController.text.isEmpty
+                              ? '¿Qué deseas buscar hoy?'
+                              : 'No se encontraron resultados',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF001563),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: EdgeInsets.all(16.0),
+                        itemCount: servicesFounds.length,
+                        itemBuilder: (context, index) {
+                          final service = servicesFounds[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailServiceClientScreen(
+                                    service: service,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: SearchResultCard(
+                              serviceName: service.serviceName,
+                              providerName: '${service.firstNameProvider} ${service.lastNameProvider}',
+                              price: service.servicePrice,
                             ),
                           );
                         },
-                        child: SearchResultCard(
-                          serviceName: service.serviceName,
-                          providerName: '${service.firstNameProvider} ${service.lastNameProvider}',
-                          price: service.servicePrice,
-                        ),
-                      );
-
-                    },
-                  ),
-
+                      ),
           ),
         ],
       ),
