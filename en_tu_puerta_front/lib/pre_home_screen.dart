@@ -1,4 +1,5 @@
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
+import 'package:en_tu_puerta_front/models/auth_response.dart';
 import 'package:en_tu_puerta_front/my_home_page.dart';
 import 'package:en_tu_puerta_front/my_home_page_provider.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:logger/logger.dart';
 final mensajero = Logger();
 
 String? globalToken;
+AuthResponse? authResponse;
+String? globalIdUser;
 
 class PreHomeScreen extends StatefulWidget {
   const PreHomeScreen({super.key});
@@ -21,15 +24,16 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeToken();
+    _initializeAuth();
   }
 
-  Future<void> _initializeToken() async {
-    globalToken = await getToken(); // Store the token in the global variable
-    logger.i('Global Token: $globalToken'); // Log the token to the terminal
+  Future<void> _initializeAuth() async {
+    authResponse = await getToken(); 
+    globalToken=authResponse?.token;
+    globalIdUser=authResponse?.idUser;
     setState(() {
       _isTokenInitialized =
-          true; // Update the state to indicate token is initialized
+          true;
     });
   }
 

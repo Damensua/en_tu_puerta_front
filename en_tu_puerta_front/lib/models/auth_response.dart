@@ -4,10 +4,12 @@ class AuthResponse {
   String token;
   String message;
   int status;
+  String idUser;
 
   // Constructor que recibe un JSON y extrae la información
   AuthResponse.fromJson(Map<String, dynamic> json)
       : token = json["data"]["token"],
+        idUser = json["data"]["id_user"].toString(),
         message = json["message"],
         status = json["status"];
 

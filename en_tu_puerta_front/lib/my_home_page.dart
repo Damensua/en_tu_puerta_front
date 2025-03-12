@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // Use the globalToken as needed
-    print('Global Token: ${widget.globalToken}'); // Example usage
+    print('Global Token: ${widget.globalToken}'); 
 
     return Scaffold(
       appBar: AppBar(

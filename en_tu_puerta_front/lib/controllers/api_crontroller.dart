@@ -34,7 +34,7 @@ Future getToken() async {
       AuthResponse authResponse = AuthResponse.fromJson(data);
 
 
-      return authResponse.token;
+      return authResponse;
 
     } else {
       return null;
