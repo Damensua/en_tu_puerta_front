@@ -59,27 +59,11 @@ class _WidgetSearchState extends State<WidgetSearch> {
   // Función para obtener los servicios
   void fetchServices() async {
     var json = await getServices(searchText, localToken);
-    mensajito.log(Level.debug, "JSON RETORNADO:$json");
+    //mensajito.log(Level.debug, "JSON RETORNADO:$json");
       setState(() {
         servicesFounds = parseServices(json);
-        mensajito.log(Level.info, "Objetos Servicio: $servicesFounds"); // Actualiza la lista de servicios encontrados
-        
-        // Imprimir el primer servicio si existe
-        if (servicesFounds.isNotEmpty) {
-          final firstService = servicesFounds.first;
-          mensajito.i('''
-Primer servicio encontrado:
-ID: ${firstService.id}
-Nombre: ${firstService.serviceName}
-Proveedor: ${firstService.firstNameProvider} ${firstService.lastNameProvider}
-Precio: ${firstService.servicePrice}
-Dirección: ${firstService.addressProvider}
-Descripción: ${firstService.description}
-Duración: ${firstService.duration} minutos
-Imágenes: ${firstService.imagesPath}
-Puntuación: ${firstService.punctuationProvider}
-''');
-        }
+        //mensajito.log(Level.info, "Objetos Servicio: $servicesFounds"); // Actualiza la lista de servicios encontrados
+      
       });
 
   }

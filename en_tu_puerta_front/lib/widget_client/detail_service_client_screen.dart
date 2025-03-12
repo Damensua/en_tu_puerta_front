@@ -6,10 +6,11 @@ import 'package:en_tu_puerta_front/models/service.dart';
 
 
 
+// ignore: must_be_immutable
 class DetailServiceClientScreen extends StatelessWidget {
-  final Service service;
+  Service service;
 
-  const DetailServiceClientScreen({
+  DetailServiceClientScreen({
     required this.service,
     super.key,
   });
@@ -27,6 +28,7 @@ class DetailServiceClientScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             // Carrusel de imágenes
             ImageCarousel(
               imageUrls: [service.imagesPath],
@@ -143,6 +145,8 @@ class DetailServiceClientScreen extends StatelessWidget {
           ],
         ),
       ),
+
+
       // Botón fijo en la parte inferior
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -152,7 +156,7 @@ class DetailServiceClientScreen extends StatelessWidget {
           onPressed: () {
             showDialog(
               context: context,
-              builder: (context) => const ServiceRequestDialog(),
+              builder: (context) => ServiceRequestDialog(service: service),
             );
           },
         ),

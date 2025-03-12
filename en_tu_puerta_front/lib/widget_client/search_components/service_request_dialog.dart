@@ -1,69 +1,118 @@
+import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
+import 'package:en_tu_puerta_front/functions/add_seconds.dart';
 import 'package:en_tu_puerta_front/functions/format_dates.dart';
 import 'package:en_tu_puerta_front/functions/shorten_days.dart';
 import 'package:en_tu_puerta_front/models/petition.dart';
+import 'package:en_tu_puerta_front/models/service.dart';
+import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/search_components/days_widget.dart';
 import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
 import 'package:flutter/material.dart';
-import 'package:en_tu_puerta_front/APIs/info.dart';
-
-final info = Info();
-// Variables globales para almacenar la selección de fecha y hora
-
-//Fechas completas YYYY-MM-DD
-List<dynamic> dates = info.getDates();
-
-//Días correspondientes a las fechas
-List<dynamic> days = info.getDays();
-
-// Horarios disponibles para cada fecha
-Map<String, dynamic> times = info.getAvailableSlots();
-
-// Cantidad de días a mostrar en la lista
-int daysShown = info.getDaysShown();
-
-//Días en formato Lun, Mar
-List shortDays = shortenDays(days);
-
-//Fechas en formato DD/MM
-List shortDates = formatDates(dates);
-
+import 'package:en_tu_puerta_front/APIs/schedule_information.dart';
+import 'package:logger/logger.dart';
+final mensajero = Logger();
 // Diálogo para solicitar un servicio con selección de fecha y hora
 class ServiceRequestDialog extends StatefulWidget {
-  const ServiceRequestDialog({super.key});
+  const ServiceRequestDialog({super.key, required this.service});
+  final Service service;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ServiceRequestDialogState createState() => _ServiceRequestDialogState();
 }
 
-
-
-
-
-
 class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
+  //Datos de autentificación para mandar la solicitud de Servicio
+  String? token = globalToken;
+  String? idClient = globalIdUser;
+  int? idService;
+
+  //Datos de selección del usuario
   int indexSelectedDay = -1;
   String? selectedDay;
   String? selectedTime;
 
+  //Controller para el cambio de texto en la sección de comentario
   final TextEditingController _controller = TextEditingController();
 
-  String getInput() {
-    String inputText = _controller.text;
-    return inputText; // Handle the input as needed
+  // Variables globales para almacenar la selección de fecha y hora 
+
+  //Fechas completas YYYY-MM-DD 
+  List<dynamic> dates = [];
+
+  //Días correspondientes a las fechas  
+  List<dynamic> days = [];
+
+  // Horarios disponibles para cada fecha 
+  Map<String, dynamic> times = {};
+
+  // Cantidad de días a mostrar en la lista 
+  int daysShown = 0;
+
+  // Días en formato Lun, Mar 
+  List<dynamic> shortDays = [];
+
+  // Fechas en formato DD/MM  
+  List<dynamic> shortDates = [];
+
+  //inicializa el id service con el service del parametro
+  @override
+  void initState() {
+    super.initState();
+    idService = widget.service.id;
+
+    // Fetch schedule information
+    fetchScheduleInformation();
   }
 
+  Future<void> fetchScheduleInformation() async {
+    ScheduleInformation info = ScheduleInformation(idService, token);
+
+    
+    await info.getInfo(idService.toString(), token!);
+
+    dates = info.getDates();
+    days = info.getDays();
+    times = info.getAvailableSlots();
+    daysShown = info.getDaysShown();
+
+    //Estas listas estan regresando vacias
+    //mensajero.log(Level.warning,dates);
+    //mensajero.log(Level.warning, days);
+
+    // Initialize shortDays and shortDates after fetching data
+    shortDays = shortenDays(days);
+    shortDates = formatDates(dates);
+
+    //Estas listas estan regresando vacias
+    //mensajero.log(Level.warning,shortDays);
+    //mensajero.log(Level.warning, shortDates);
+    
+    // Update the state to reflect the new data
+    setState(() {});
+  }
+
+  // Obtiene el texto ingresado por el usuario
+  String getInput() {
+    String inputText = _controller.text;
+    return inputText;
+  }
+
+  //
   void handleDaySelected(int index) {
     setState(() {
       indexSelectedDay = index; // Update the selected day index
     });
     //print("Selected Day Index: $indexSelectedDay");
   }
-  
+
+  //
   void resetDropdown() {
-      setState(() {
-        selectedTime = null; // Reinicia el valor seleccionado
-      });
-    }
+    setState(() {
+      selectedTime = null; // Reinicia el valor seleccionado
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -98,7 +147,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       days: shortDays,
                       date: shortDates,
                       onDaySelected: handleDaySelected,
-                      resetDropdown:resetDropdown)),
+                      resetDropdown: resetDropdown)),
 
               //DROPDOWN DE HORARIOS DISPONIBLES
               SizedBox(
@@ -164,7 +213,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
             ReusableButton(
               text: 'Enviar Solicitud',
               color: Color(0xFF001563),
-              onPressed: () {
+              onPressed: () async {
                 if (indexSelectedDay == -1) {
                   //No se ha seleccionado ningun día entonces no se puede enviar la petición
                   // y hay que colocar una advertencia
@@ -177,17 +226,23 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       "Debe seleccionar un horario para solicitar el servicio");
 
                   //Procede a intentar crear la solicitud
-                } else if (indexSelectedDay >= 0) {
+                } else if (indexSelectedDay >= 0 && idClient != null) {
                   try {
-                    // Petition newPetition = Petition(
-                    //     day: days[indexSelectedDay],
-                    //     date: dates[indexSelectedDay],
-                    //     time: selectedTime,
-                    //     message: getInput());
-                    // print(newPetition.toString());
+                    Petition newPetition = Petition(
+                        idUser: int.parse(idClient as String),
+                        date: dates[indexSelectedDay],
+                        time: addSeconds(selectedTime),
+                        message: getInput(),
+                        idService: idService);
+
+                    mensajero.log(Level.info, newPetition.toString());
+
+                    String? response= await createPetition(newPetition.toJson(), token);
+                    mensajero.log(Level.info, response);
                     
-                    
-                    Navigator.pop(context);
+                    //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
+                    if (response!=null){
+                      Navigator.pop(context);
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -214,8 +269,18 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         ),
                       ),
                     );
+                  
+                    }else{
+                      //DESPLEGAR MENSAJE
+                      print('Hubo un error con la solicitud, intente nuevamente');
+                    }
+
+                    //
                     
+                  
                   } catch (e) {
+                    //AGREGAR UN MENSAJE POP DE QUE HA HABIDO UN ERROR CON EL ENVIO: CON EL TIPO DE ERROR
+                    //Y DICIENDO QUE LO VUELVA A INTENTAR
                     print(e.toString());
                   }
                 }

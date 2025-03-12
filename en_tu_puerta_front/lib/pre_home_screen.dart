@@ -94,20 +94,15 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                var messi1 = getServices('', globalToken);
 
-                                var messi2 = getUsers('Jose', globalToken);
+                                //ESPACIO DE PRUEBA PARA LA LLAMADA DE LAS APIs
 
-                                var messi3 = getPetitionS('1', globalToken);
+                                //var messi2 = getUsers('Jose', globalToken);
 
-                                mensajero.log(Level.info,
-                                    'Este es la respuesta de los srvicios a la llamada de la API:$messi1');
+                                //mensajero.log(Level.info,'Este es la respuesta de los srvicios a la llamada de la API:$messi2');
 
-                                mensajero.log(Level.info,
-                                    'Este es la respuesta de los srvicios a la llamada de la API:$messi2');
+                                ///////////////////////////////////////////////////////////
 
-                                mensajero.log(Level.info,
-                                    'Este es la respuesta de los srvicios a la llamada de la API:$messi3');
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

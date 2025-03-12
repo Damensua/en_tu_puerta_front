@@ -13,7 +13,7 @@ Future getToken() async {
   var url = Uri.http(urlBase(), 'api/login');
 
   //Usario de validación para hacer el login
-  var body = {'email': 'ferry.camryn@example.com', 'password': 'password'};
+  var body = {'email': 'osvaldo.kassulke@example.org', 'password': 'password'};
 
   try {
     //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs
@@ -61,7 +61,7 @@ Future getServices(String inputSearchBar, String? token) async {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      logger.log(Level.info, data);
+      //logger.log(Level.info, data);
 
       return data;
     } else {
@@ -199,3 +199,72 @@ Future postPetition(Petition petition,String? token) async {
   }
 }
 
+
+Future serviceSchedule( String serviceId, String? token) async{
+  
+  var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions/create/$serviceId');
+      
+      Map<String, String>? header;
+
+      if (token != null) {
+      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+    } else {
+      header = {'Accept': 'application/json'};
+    }
+
+  try {
+    var response = await http.get(url, headers: header);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      //logger.log(Level.info, data);
+
+      return data;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    logger.log(Level.error, 'Error: $e');
+  }
+
+}
+
+Future createPetition(Map<String, dynamic> petitionJson, String? token) async {
+  //Url de la pagina login
+  var url = Uri.http(urlBase(), 'api/v1/petitions');
+  Map<String, String>? header;
+
+  if (token != null) {
+      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+    } else {
+      header = {'Accept': 'application/json'};
+    }
+  //Usario de validación para hacer el login
+  var body = {'data': petitionJson};
+
+  try {
+    //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs
+    var response = await http.post(
+      url,
+      headers: header,
+      body: body,
+    );
+
+    //logger.log(Level.info, 'Response status: ${response.statusCode}');
+    //logger.log(Level.info, 'Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      logger.log(Level.info, data);
+
+      return data;
+
+    } else {
+      return null;
+    }
+  } catch (e) {
+    logger.log(Level.error, 'Error: $e');
+    return null;
+  }
+}

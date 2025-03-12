@@ -22,3 +22,9 @@
     return 'api/v1/users?filter[fullname]=*$inputSearchBar*';
 
   }
+
+
+String endpointCreatePetition(String serviceId){
+
+    return 'api/v1/petitions/create/$serviceId*';
+}
