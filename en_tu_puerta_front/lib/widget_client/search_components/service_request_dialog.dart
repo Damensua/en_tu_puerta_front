@@ -76,7 +76,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
     times = info.getAvailableSlots();
     daysShown = info.getDaysShown();
 
-    //Estas listas estan regresando vacias
     //mensajero.log(Level.warning,dates);
     //mensajero.log(Level.warning, days);
 
@@ -84,7 +83,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
     shortDays = shortenDays(days);
     shortDates = formatDates(dates);
 
-    //Estas listas estan regresando vacias
     //mensajero.log(Level.warning,shortDays);
     //mensajero.log(Level.warning, shortDates);
     
@@ -237,10 +235,13 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                     mensajero.log(Level.info, newPetition.toString());
 
-                    String? response= await createPetition(newPetition.toJson(), token);
+                    String? response;
+                    //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
+                    //response= await createPetition(newPetition.toJson(), token);
                     mensajero.log(Level.info, response);
                     
                     //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
+                    //Si se envia existosamente entonces sale el mensaje de besito y luego lo dejas en la pantalla detallada del servicio
                     if (response!=null){
                       Navigator.pop(context);
                     showDialog(
@@ -271,7 +272,8 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     );
                   
                     }else{
-                      //DESPLEGAR MENSAJE
+                      //DESPLEGAR MENSAJE/
+                      //Despues del mensaje y del boton okay se deja al usuario en el formulario, pero el formulario reiniciado
                       print('Hubo un error con la solicitud, intente nuevamente');
                     }
 
@@ -284,23 +286,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     print(e.toString());
                   }
                 }
-
-                //AQUI VA EL CODIGO QUE CREA EL OBJETO SOLICITUD Y LO ENVIA A LA BASE DE DATOS
-                // Ejemplo:
-                // Solicitud solicitud = Solicitud(
-                //   fecha: dates[indexSelectedDay],
-                //   hora: selectedTime,
-                //   comentarios: widget.commentText,
-                //   // Añadir más campos según sea necesario
-                // );
-                // await solicitud.save();
-                // print('Solicitud guardada con éxito');
-
-                // Simulación de envío de solicitud
-                // Aquí podría ser llamado un API para enviar la solicitud al proveedor de servicio
-                // Ejemplo:
-                // await info.sendServiceRequest(solicitud);
-                // print('Solicitud enviada al proveedor de servicio');
 
                 // Mostrar diálogo de confirmación
                 // Aquí podría ser utilizado un framework de diálogos, como Flutter Dialogs,
