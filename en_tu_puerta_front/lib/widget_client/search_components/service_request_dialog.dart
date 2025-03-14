@@ -10,7 +10,9 @@ import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
 import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/APIs/schedule_information.dart';
 import 'package:logger/logger.dart';
+
 final mensajero = Logger();
+
 // Diálogo para solicitar un servicio con selección de fecha y hora
 class ServiceRequestDialog extends StatefulWidget {
   const ServiceRequestDialog({super.key, required this.service});
@@ -35,24 +37,25 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   //Controller para el cambio de texto en la sección de comentario
   final TextEditingController _controller = TextEditingController();
 
-  // Variables globales para almacenar la selección de fecha y hora 
+  // Variables globales para almacenar la selección de fecha y hora
 
-  //Fechas completas YYYY-MM-DD 
+  //Fechas completas YYYY-MM-DD
   List<dynamic> dates = [];
 
-  //Días correspondientes a las fechas  
+  //Días correspondientes a las fechas
   List<dynamic> days = [];
 
-  // Horarios disponibles para cada fecha 
+  // Horarios disponibles para cada fecha
   Map<String, dynamic> times = {};
 
-  // Cantidad de días a mostrar en la lista 
+  // Cantidad de días a mostrar en la lista
+  bool isLoading = true;
   int daysShown = 0;
 
-  // Días en formato Lun, Mar 
+  // Días en formato Lun, Mar
   List<dynamic> shortDays = [];
 
-  // Fechas en formato DD/MM  
+  // Fechas en formato DD/MM
   List<dynamic> shortDates = [];
 
   //inicializa el id service con el service del parametro
@@ -68,13 +71,13 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   Future<void> fetchScheduleInformation() async {
     ScheduleInformation info = ScheduleInformation(idService, token);
 
-    
     await info.getInfo(idService.toString(), token!);
 
     dates = info.getDates();
     days = info.getDays();
     times = info.getAvailableSlots();
     daysShown = info.getDaysShown();
+    isLoading = false;
 
     //mensajero.log(Level.warning,dates);
     //mensajero.log(Level.warning, days);
@@ -85,7 +88,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
     //mensajero.log(Level.warning,shortDays);
     //mensajero.log(Level.warning, shortDates);
-    
+
     // Update the state to reflect the new data
     setState(() {});
   }
@@ -114,6 +117,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      //CONTENIDO DEL WIDGET
       content: SingleChildScrollView(
         child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -130,71 +134,84 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
               ),
               SizedBox(height: 20),
 
-              //TEXTO SELECCIONA UNA FECHA
-              Text(
-                'Selecciona el día',
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 10),
+              // Check if daysShown is 0
+              if (isLoading) ...[
+              Center(child: CircularProgressIndicator()),
+            ] else if (daysShown == 0) ...[
+                Text(
+                  'Lo sentimos, no hay fechas disponibles para el servicio. Intenta en otro momento o con otro servicio.',
+                  style: TextStyle(fontSize: 16, color: Colors.red),
+                  textAlign: TextAlign.center,
+                ),
+              ] else ...[
+                //TEXTO SELECCIONA UNA FECHA
+                Text(
+                  'Selecciona el día',
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 10),
 
-              //FECHAS DISPONIBLES
-              SizedBox(
-                  height: 150,
-                  child: DaysWidget(
-                      daysShown: daysShown,
-                      days: shortDays,
-                      date: shortDates,
-                      onDaySelected: handleDaySelected,
-                      resetDropdown: resetDropdown)),
+                //FECHAS DISPONIBLES
+                SizedBox(
+                    height: 150,
+                    child: DaysWidget(
+                        daysShown: daysShown,
+                        days: shortDays,
+                        date: shortDates,
+                        onDaySelected: handleDaySelected,
+                        resetDropdown: resetDropdown)),
 
-              //DROPDOWN DE HORARIOS DISPONIBLES
-              SizedBox(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20),
-                  // Dropdown for hours
-                  if (indexSelectedDay >= 0)
-                    (DropdownButton<String>(
-                        hint: Text('Selecciona la hora'),
-                        value: selectedTime,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedTime = newValue;
-                            print(selectedTime);
-                          });
-                        },
-                        items: (indexSelectedDay >= 0 &&
-                                indexSelectedDay < dates.length &&
-                                times.containsKey(dates[indexSelectedDay]) &&
-                                times[dates[indexSelectedDay]] != null &&
-                                times[dates[indexSelectedDay]]!.isNotEmpty)
-                            ? (times[dates[indexSelectedDay]] as List<String>)
-                                .map<DropdownMenuItem<String>>((String hour) {
-                                return DropdownMenuItem<String>(
-                                  value: hour,
-                                  child: Text(hour),
-                                );
-                              }).toList()
-                            : []))
-                ],
-              )),
+                //DROPDOWN DE HORARIOS DISPONIBLES
+                SizedBox(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 20),
+                    // Dropdown for hours
+                    if (indexSelectedDay >= 0)
+                      (DropdownButton<String>(
+                          hint: Text('Selecciona la hora'),
+                          value: selectedTime,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedTime = newValue;
+                              print(selectedTime);
+                            });
+                          },
+                          items: (indexSelectedDay >= 0 &&
+                                  indexSelectedDay < dates.length &&
+                                  times.containsKey(dates[indexSelectedDay]) &&
+                                  times[dates[indexSelectedDay]] != null &&
+                                  times[dates[indexSelectedDay]]!.isNotEmpty)
+                              ? (times[dates[indexSelectedDay]] as List<String>)
+                                  .map<DropdownMenuItem<String>>((String hour) {
+                                  return DropdownMenuItem<String>(
+                                    value: hour,
+                                    child: Text(hour),
+                                  );
+                                }).toList()
+                              : []))
+                  ],
+                )),
 
-              //CAJA DE TEXTO
-              SizedBox(
-                child: TextField(
-                  maxLength: 250,
-                  minLines: 1,
-                  maxLines: null, //
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Comentarios',
+                //CAJA DE TEXTO
+                SizedBox(
+                  child: TextField(
+                    maxLength: 250,
+                    minLines: 1,
+                    maxLines: null, //
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Comentarios',
+                    ),
                   ),
                 ),
-              ),
+              ],
             ]),
       ),
+
+      //ACCION DEL WIDGET
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,47 +256,45 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
                     //response= await createPetition(newPetition.toJson(), token);
                     mensajero.log(Level.info, response);
-                    
+
                     //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
                     //Si se envia existosamente entonces sale el mensaje de besito y luego lo dejas en la pantalla detallada del servicio
-                    if (response!=null){
+                    if (response != null) {
                       Navigator.pop(context);
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Solicitud enviada!'),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                                'El proveedor de servicio responderá en los próximos 10 minutos para confirmar la solicitud'),
-                            SizedBox(height: 20),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ReusableButton(
-                                text: 'Aceptar',
-                                color: Color(0xFF001563),
-                                onPressed: () {
-                                  // Cierra todos los diálogos y regresa a la pantalla principal
-                                  Navigator.popUntil(
-                                      context, (route) => route.isFirst);
-                                },
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Solicitud enviada!'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                  'El proveedor de servicio responderá en los próximos 10 minutos para confirmar la solicitud'),
+                              SizedBox(height: 20),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ReusableButton(
+                                  text: 'Aceptar',
+                                  color: Color(0xFF001563),
+                                  onPressed: () {
+                                    // Cierra todos los diálogos y regresa a la pantalla principal
+                                    Navigator.popUntil(
+                                        context, (route) => route.isFirst);
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  
-                    }else{
+                      );
+                    } else {
                       //DESPLEGAR MENSAJE/
                       //Despues del mensaje y del boton okay se deja al usuario en el formulario, pero el formulario reiniciado
-                      print('Hubo un error con la solicitud, intente nuevamente');
+                      print(
+                          'Hubo un error con la solicitud, intente nuevamente');
                     }
 
                     //
-                    
-                  
                   } catch (e) {
                     //AGREGAR UN MENSAJE POP DE QUE HA HABIDO UN ERROR CON EL ENVIO: CON EL TIPO DE ERROR
                     //Y DICIENDO QUE LO VUELVA A INTENTAR
