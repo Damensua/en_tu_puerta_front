@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 
 final logger = Logger();
 
+
 Future getToken() async {
   //Url de la pagina login
   var url = Uri.http(urlBase(), 'api/login');
@@ -44,6 +45,7 @@ Future getToken() async {
   }
 }
 
+//Controller que retorna los servcios
 Future getServices(String inputSearchBar, String? token) async {
   var url = Uri.http(
       '10.0.2.2:8000', 'api/v1/services', {'filter[name]': '*$inputSearchBar*'});
@@ -105,8 +107,8 @@ Future getUser(String idUser, String? token) async {
 
 //Retorna una el JSON con los usuarios que tengan concidencia parcial con el input colocado
 Future getUsers(String inputSearchBar, String? token) async {
-  var url = Uri.http('10.0.2.2:8000', 'api/v1/users', {'fullname': '*$inputSearchBar*'});
-      
+  var url = Uri.http('10.0.2.2:8000', 'api/v1/users', {'fullname': inputSearchBar});
+                                                     //{'filter[name]': '*$inputSearchBar*'}
       Map<String, String>? header;
 
       if (token != null) {
@@ -117,7 +119,7 @@ Future getUsers(String inputSearchBar, String? token) async {
 
   try {
     var response = await http.get(url, headers: header);
-      logger.log(Level.info, response.statusCode);
+      //logger.log(Level.info, response.statusCode);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -132,7 +134,9 @@ Future getUsers(String inputSearchBar, String? token) async {
   }
 }
 
-//Me regresa las peticiones pero no entiendo que me regresa
+
+//Controller para las las solicitud de peticiones 
+//TODO: falta colocar el endpoint correcto para la historia de solicitar 
 Future getPetitionS(String userId, String? token) async {
   var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions', {'filter[user]':'$userId & include=user'});
       
@@ -161,6 +165,7 @@ Future getPetitionS(String userId, String? token) async {
 }
 
 
+//Controller para enviar una solicitud de servicio al backend
 Future postPetition(Petition petition,String? token) async {
 
   var url = Uri.http(urlBase(), 'api/v1/petitions');
@@ -200,6 +205,8 @@ Future postPetition(Petition petition,String? token) async {
 }
 
 
+
+//Controller para solicitar las fechas y horas disponibles para los servicios
 Future serviceSchedule( String serviceId, String? token) async{
   
   var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions/create/$serviceId');
@@ -229,6 +236,8 @@ Future serviceSchedule( String serviceId, String? token) async{
 
 }
 
+
+//Controller para le creacion de Servicio
 Future createPetition(Map<String, dynamic> petitionJson, String? token) async {
   //Url de la pagina login
   var url = Uri.http(urlBase(), 'api/v1/petitions');

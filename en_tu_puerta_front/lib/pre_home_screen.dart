@@ -93,13 +93,13 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                                   130, // Updated height to 130 for the client icon
                             ),
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
 
                                 //ESPACIO DE PRUEBA PARA LA LLAMADA DE LAS APIs
 
-                                //var messi2 = getUsers('Jose', globalToken);
-
-                                //mensajero.log(Level.info,'Este es la respuesta de los srvicios a la llamada de la API:$messi2');
+                                //String inputSearchBar="ra";
+                                //var messi= await getUsers(inputSearchBar,  globalToken);
+                                //mensajero.log(Level.debug,'Este es la respuesta de los srvicios a la llamada de la API:$messi');
 
                                 ///////////////////////////////////////////////////////////
 

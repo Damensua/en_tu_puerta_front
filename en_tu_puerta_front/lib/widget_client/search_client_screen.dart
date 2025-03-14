@@ -6,8 +6,6 @@ import 'package:logger/logger.dart';
 import 'package:en_tu_puerta_front/widget_client/search_components/search_result_card.dart';
 import 'package:en_tu_puerta_front/widget_client/detail_service_client_screen.dart';
 
-
-
 final mensajito = Logger();
 
 // Widget para la pantalla de búsqueda del cliente
@@ -23,15 +21,22 @@ class _WidgetSearchState extends State<WidgetSearch> {
   /////////////////////////////////////////
 
   //VARIABLES
+
   //Token//
   String? localToken = globalToken;
 
   // Controlador de la caja de texto para la búsqueda//
   final TextEditingController _searchController = TextEditingController();
+
   //Texto para el query//
   String searchText = '';
+
   //Lista de objetos Servicioss//
   List servicesFounds = [];
+  List providersFounds = [];
+
+  //Variable para el Filtro
+  String selectedFilter = 'Servicio';
 
   ///////////////////////////////////////
   @override
@@ -39,13 +44,18 @@ class _WidgetSearchState extends State<WidgetSearch> {
     super.initState();
     // Inicializa la lista filtrada con todos los elementos
     fetchServices(); // Llama a la función para obtener los servicios inicialmente
-
+    fetchProviders();
     // Listener que cambia el searchText
     _searchController.addListener(() {
       setState(() {
         searchText =
             _searchController.text; // Actualiza la variable con el texto actual
-        fetchServices(); // Llama a la función para filtrar los servicios
+
+        if (selectedFilter == 'Servicio') {
+          fetchServices(); //  Llama a la función para obtener los servicios SI el filtro es "Servicio"
+        } else if (selectedFilter == 'Cuenta') {
+          fetchProviders(); // Llama a la función para obtener los prestadores de servicios SI el filtro es "Cuenta"
+        }
       });
     });
   }
@@ -60,12 +70,22 @@ class _WidgetSearchState extends State<WidgetSearch> {
   void fetchServices() async {
     var json = await getServices(searchText, localToken);
     //mensajito.log(Level.debug, "JSON RETORNADO:$json");
-      setState(() {
-        servicesFounds = parseServices(json);
-        //mensajito.log(Level.info, "Objetos Servicio: $servicesFounds"); // Actualiza la lista de servicios encontrados
-      
-      });
+    setState(() {
+      servicesFounds = parseServices(json);
+      //mensajito.log(Level.info, "Objetos Servicio: $servicesFounds"); // Actualiza la lista de servicios encontrados
+    });
+  }
 
+  //Funcion para obtener los prestadores de servicios
+  void fetchProviders() async {
+    var json = await getUsers(searchText, localToken);
+    mensajito.log(Level.debug, "JSON RETORNADO:$json");
+    setState(() {
+      providersFounds = parseProviders(json);
+      mensajito.log(Level.info,
+          "Objetos Servicio: $providersFounds,Cantidad de usarios encontrados ${providersFounds.length}");
+      // Actualiza la lista de prestadores de servicio encontrados
+    });
   }
 
   //Función para el onchange de la searchbar
@@ -77,7 +97,6 @@ class _WidgetSearchState extends State<WidgetSearch> {
     // Verificación de lo que se esta escribiendo
     mensajito.log(Level.info, "Searching for: $searchText");
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -98,16 +117,15 @@ class _WidgetSearchState extends State<WidgetSearch> {
               ),
             ),
           ],
-
         ),
       ),
-
 
       //RESTO DE LA VISTA
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0), // Reduce el espacio vertical
+            padding: const EdgeInsets.symmetric(
+                vertical: 8.0, horizontal: 16.0), // Reduce el espacio vertical
 
             child: Row(
               children: [
@@ -121,12 +139,23 @@ class _WidgetSearchState extends State<WidgetSearch> {
                       PopupMenuButton<String>(
                         icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
                         onSelected: (String value) {
+                          setState(() {
+                            selectedFilter =
+                                value; // Actualiza el filtro
+                          });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Filtro seleccionado: $value'),
                               duration: Duration(seconds: 2),
                             ),
                           );
+
+                          // Cambia la busqueda segun el filtro
+                          if (selectedFilter == 'Servicio') {
+                            fetchServices(); // Fetch services if the filter is "Servicio"
+                          } else if (selectedFilter == 'Cuenta') {
+                            fetchProviders(); // Fetch providers if the filter is "Cuenta"
+                          }
                         },
                         itemBuilder: (BuildContext context) => [
                           PopupMenuItem<String>(
@@ -143,15 +172,13 @@ class _WidgetSearchState extends State<WidgetSearch> {
                     onChanged: updateSearch,
                   ),
                 ),
-
-
               ],
             ),
           ),
 
           //Esta frase debe ir en el centro de la pantalla  tanto vertical como horizontalmente
           Expanded(
-            child: searchText.isEmpty 
+            child: searchText.isEmpty
                 ? Center(
                     child: Text(
                       '¿Qué deseas buscar hoy?',
@@ -185,7 +212,8 @@ class _WidgetSearchState extends State<WidgetSearch> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DetailServiceClientScreen(
+                                  builder: (context) =>
+                                      DetailServiceClientScreen(
                                     service: service,
                                   ),
                                 ),
@@ -193,7 +221,8 @@ class _WidgetSearchState extends State<WidgetSearch> {
                             },
                             child: SearchResultCard(
                               serviceName: service.serviceName,
-                              providerName: '${service.firstNameProvider} ${service.lastNameProvider}',
+                              providerName:
+                                  '${service.firstNameProvider} ${service.lastNameProvider}',
                               price: service.servicePrice,
                             ),
                           );

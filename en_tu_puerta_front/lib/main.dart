@@ -8,7 +8,10 @@ void main() {
   runApp(const MyApp());
 }
 
-// Clase principal que configura la aplicación Flutter
+
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
