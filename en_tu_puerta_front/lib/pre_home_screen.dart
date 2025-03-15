@@ -39,7 +39,7 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
 
   Future<String> fetchData() async {
     if (globalToken == null) {
-      throw Exception('Token is not available');
+      throw Exception('Token is not available, Try Again');
     }
     return globalToken!;
   }

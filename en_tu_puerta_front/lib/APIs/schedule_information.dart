@@ -30,12 +30,15 @@ class ScheduleInformation {
 
         for (var entry in data) {
           // Agregar fecha y día a sus respectivas listas
+          if (entry["available_slots"] != null && entry["available_slots"].isNotEmpty) {
           dates.add(entry["date"]);
           days.add(entry["day"]);
 
           // Agregar fecha y horarios disponibles al mapa
-          availableSlotsMap[entry["date"]] = List<String>.from(entry["available_slots"]);
+          availableSlotsMap[entry["date"]] = List<String>.from(entry["available_slots"]);}
+          else{continue;}
         }
+
 
         // Log para verificar la información extraída
         //mensajero.log(Level.debug, availableSlotsMap);

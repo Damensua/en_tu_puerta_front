@@ -8,7 +8,6 @@ import 'package:logger/logger.dart';
 
 final logger = Logger();
 
-
 Future getToken() async {
   //Url de la pagina login
   var url = Uri.http(urlBase(), 'api/login');
@@ -24,8 +23,8 @@ Future getToken() async {
       body: body,
     );
 
-    //logger.log(Level.info, 'Response status: ${response.statusCode}');
-    //logger.log(Level.info, 'Response body: ${response.body}');
+    logger.log(Level.info, 'Response status: ${response.statusCode}');
+    logger.log(Level.info, 'Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -34,9 +33,7 @@ Future getToken() async {
 
       AuthResponse authResponse = AuthResponse.fromJson(data);
 
-
       return authResponse;
-
     } else {
       return null;
     }
@@ -47,16 +44,16 @@ Future getToken() async {
 
 //Controller que retorna los servcios
 Future getServices(String inputSearchBar, String? token) async {
-  var url = Uri.http(
-      '10.0.2.2:8000', 'api/v1/services', {'filter[name]': '*$inputSearchBar*'});
-      
-      Map<String, String>? header;
+  var url = Uri.http(urlBase(), 'api/v1/services',
+      {'filter[name]': '*$inputSearchBar*'});
 
-      if (token != null) {
-      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
-    } else {
-      header = {'Accept': 'application/json'};
-    }
+  Map<String, String>? header;
+
+  if (token != null) {
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
 
   try {
     var response = await http.get(url, headers: header);
@@ -74,22 +71,21 @@ Future getServices(String inputSearchBar, String? token) async {
   }
 }
 
-
 //Retorna un usuario con el idUser
 Future getUser(String idUser, String? token) async {
-  var url = Uri.http('10.0.2.2:8000', 'api/v1/users/$idUser');
-      
-      Map<String, String>? header;
+  var url = Uri.http(urlBase(), 'api/v1/users/$idUser');
 
-      if (token != null) {
-      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
-    } else {
-      header = {'Accept': 'application/json'};
-    }
+  Map<String, String>? header;
+
+  if (token != null) {
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
 
   try {
     var response = await http.get(url, headers: header);
-      logger.log(Level.info, response.statusCode);
+    logger.log(Level.info, response.statusCode);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -103,23 +99,22 @@ Future getUser(String idUser, String? token) async {
     logger.log(Level.error, 'Error: $e');
   }
 }
-
 
 //Retorna una el JSON con los usuarios que tengan concidencia parcial con el input colocado
 Future getUsers(String inputSearchBar, String? token) async {
-  var url = Uri.http('10.0.2.2:8000', 'api/v1/users', {'fullname': inputSearchBar});
-                                                     //{'filter[name]': '*$inputSearchBar*'}
-      Map<String, String>? header;
+  var url = Uri.http(urlBase(), 'api/v1/users', {'fullname': inputSearchBar});
+  //{'filter[name]': '*$inputSearchBar*'}
+  Map<String, String>? header;
 
-      if (token != null) {
-      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
-    } else {
-      header = {'Accept': 'application/json'};
-    }
+  if (token != null) {
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
 
   try {
     var response = await http.get(url, headers: header);
-      //logger.log(Level.info, response.statusCode);
+    //logger.log(Level.info, response.statusCode);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -134,19 +129,19 @@ Future getUsers(String inputSearchBar, String? token) async {
   }
 }
 
-
-//Controller para las las solicitud de peticiones 
-//TODO: falta colocar el endpoint correcto para la historia de solicitar 
+//Controller para las las solicitud de peticiones
+//TODO: falta colocar el endpoint correcto para la historia de solicitar
 Future getPetitionS(String userId, String? token) async {
-  var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions', {'filter[user]':'$userId & include=user'});
-      
-      Map<String, String>? header;
+  var url = Uri.http(urlBase(), 'api/v1/petitions',
+      {'filter[user]': '$userId & include=user'});
 
-      if (token != null) {
-      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
-    } else {
-      header = {'Accept': 'application/json'};
-    }
+  Map<String, String>? header;
+
+  if (token != null) {
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
 
   try {
     var response = await http.get(url, headers: header);
@@ -163,21 +158,19 @@ Future getPetitionS(String userId, String? token) async {
     logger.log(Level.error, 'Error: $e');
   }
 }
-
 
 //Controller para enviar una solicitud de servicio al backend
-Future postPetition(Petition petition,String? token) async {
-
+Future postPetition(Petition petition, String? token) async {
   var url = Uri.http(urlBase(), 'api/v1/petitions');
   var body = petition.toJson();
 
   Map<String, String>? header;
 
   if (token != null) {
-      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
-    } else {
-      header = {'Accept': 'application/json'};
-    }
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
 
   try {
     var response = await http.post(
@@ -195,7 +188,6 @@ Future postPetition(Petition petition,String? token) async {
       logger.log(Level.info, data);
 
       return data;
-
     } else {
       return null;
     }
@@ -204,20 +196,17 @@ Future postPetition(Petition petition,String? token) async {
   }
 }
 
-
-
 //Controller para solicitar las fechas y horas disponibles para los servicios
-Future serviceSchedule( String serviceId, String? token) async{
-  
-  var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions/create/$serviceId');
-      
-      Map<String, String>? header;
+Future serviceSchedule(String serviceId, String? token) async {
+  var url = Uri.http(urlBase(), 'api/v1/petitions/create/$serviceId');
 
-      if (token != null) {
-      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
-    } else {
-      header = {'Accept': 'application/json'};
-    }
+  Map<String, String>? header;
+
+  if (token != null) {
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
 
   try {
     var response = await http.get(url, headers: header);
@@ -233,23 +222,22 @@ Future serviceSchedule( String serviceId, String? token) async{
   } catch (e) {
     logger.log(Level.error, 'Error: $e');
   }
-
 }
-
 
 //Controller para le creacion de Servicio
 Future createPetition(Map<String, dynamic> petitionJson, String? token) async {
   //Url de la pagina login
   var url = Uri.http(urlBase(), 'api/v1/petitions');
-  Map<String, String>? header;
 
+  Map<String, String>? header;
   if (token != null) {
-      header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
-    } else {
-      header = {'Accept': 'application/json'};
-    }
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
   //Usario de validación para hacer el login
-  var body = {'data': petitionJson};
+  var body = jsonEncode(petitionJson);
+  logger.log(Level.debug, body);
 
   try {
     //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs
@@ -259,7 +247,7 @@ Future createPetition(Map<String, dynamic> petitionJson, String? token) async {
       body: body,
     );
 
-    //logger.log(Level.info, 'Response status: ${response.statusCode}');
+    logger.log(Level.info, 'Response status: ${response.statusCode}');
     //logger.log(Level.info, 'Response body: ${response.body}');
 
     if (response.statusCode == 200) {
@@ -268,7 +256,6 @@ Future createPetition(Map<String, dynamic> petitionJson, String? token) async {
       logger.log(Level.info, data);
 
       return data;
-
     } else {
       return null;
     }

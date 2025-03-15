@@ -137,10 +137,13 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
               // Check if daysShown is 0
               if (isLoading) ...[
               Center(child: CircularProgressIndicator()),
-            ] else if (daysShown == 0) ...[
+            ] else if (daysShown == 0 || days.isEmpty || times.isEmpty) ...[
                 Text(
+
+                  //ACA SE DEBE COLOCAR UNA IMAGEN CON UN ICONO PARA ACOMPAÑAR AL TEXTO, ICONO EN ROJO
+                  //SI ESTO SUCEDE NO DEBERÍAS MOSTRARSE LOS BOTONES 
                   'Lo sentimos, no hay fechas disponibles para el servicio. Intenta en otro momento o con otro servicio.',
-                  style: TextStyle(fontSize: 16, color: Colors.red),
+                  style: TextStyle(fontSize: 16, color: const Color.fromARGB(255, 0, 0, 0)),
                   textAlign: TextAlign.center,
                 ),
               ] else ...[
@@ -224,6 +227,8 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
               child: Text('Cancelar'),
             ),
 
+
+            //ESTOS BOTONES SOLO PUEDEN APARECER EN PANTALLA SI isLoading==FALSE && DAYSSHOWN!=0
             //BOTON PARA ENVIAR LA SOLICITUD
             ReusableButton(
               text: 'Enviar Solicitud',
@@ -250,11 +255,11 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         message: getInput(),
                         idService: idService);
 
-                    mensajero.log(Level.info, newPetition.toString());
+                    mensajero.log(Level.info, newPetition.toJson());
 
                     String? response;
                     //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                    //response= await createPetition(newPetition.toJson(), token);
+                    response= await createPetition(newPetition.toJson(), token);
                     mensajero.log(Level.info, response);
 
                     //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
