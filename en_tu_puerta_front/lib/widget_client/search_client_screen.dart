@@ -1,6 +1,7 @@
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/functions/read_data.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/search_components/card_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:en_tu_puerta_front/widget_client/search_components/search_result_card.dart';
@@ -178,56 +179,93 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
           //Esta frase debe ir en el centro de la pantalla  tanto vertical como horizontalmente
           Expanded(
-            child: searchText.isEmpty
-                ? Center(
-                    child: Text(
-                      '¿Qué deseas buscar hoy?',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF001563),
-                      ),
-                    ),
-                  )
-                : servicesFounds.isEmpty
+            child: selectedFilter == 'Cuenta'
+                ? searchText.isEmpty
                     ? Center(
                         child: Text(
-                          _searchController.text.isEmpty
-                              ? '¿Qué deseas buscar hoy?'
-                              : 'No se encontraron resultados',
+                          '¿Qué deseas buscar hoy?',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Color(0xFF001563),
                             fontWeight: FontWeight.bold,
+                            color: Color(0xFF001563),
                           ),
                         ),
                       )
-                    : ListView.builder(
-                        padding: EdgeInsets.all(16.0),
-                        itemCount: servicesFounds.length,
-                        itemBuilder: (context, index) {
-                          final service = servicesFounds[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailServiceClientScreen(
-                                    service: service,
-                                  ),
+                    : providersFounds.isEmpty
+                        ? Center(
+                            child: Text(
+                              _searchController.text.isEmpty
+                                  ? '¿Qué deseas buscar hoy?'
+                                  : 'No se encontraron resultados',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color(0xFF001563),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.all(16.0),
+                            itemCount: providersFounds.length,
+                            itemBuilder: (context, index) {
+                              final provider = providersFounds[index];
+                              return GestureDetector(
+                                child: CardProvider(
+                                  provider: provider,
                                 ),
                               );
                             },
-                            child: SearchResultCard(
-                              serviceName: service.serviceName,
-                              providerName:
-                                  '${service.firstNameProvider} ${service.lastNameProvider}',
-                              price: service.servicePrice,
+                          )
+                : searchText.isEmpty
+                    ? Center(
+                        child: Text(
+                          '¿Qué deseas buscar hoy?',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF001563),
+                          ),
+                        ),
+                      )
+                    : servicesFounds.isEmpty
+                        ? Center(
+                            child: Text(
+                              _searchController.text.isEmpty
+                                  ? '¿Qué deseas buscar hoy?'
+                                  : 'No se encontraron resultados',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color(0xFF001563),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          );
-                        },
-                      ),
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.all(16.0),
+                            itemCount: servicesFounds.length,
+                            itemBuilder: (context, index) {
+                              final service = servicesFounds[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailServiceClientScreen(
+                                        service: service,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: SearchResultCard(
+                                  serviceName: service.serviceName,
+                                  providerName:
+                                      '${service.firstNameProvider} ${service.lastNameProvider}',
+                                  price: service.servicePrice,
+                                ),
+                              );
+                            },
+                          ),
           ),
         ],
       ),

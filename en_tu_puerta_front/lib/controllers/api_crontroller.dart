@@ -13,6 +13,7 @@ Future getToken() async {
   var url = Uri.http(urlBase(), 'api/login');
 
   //Usario de validación para hacer el login
+
   var body = {'email': 'efren.grimes@example.com', 'password': 'password'};
 
   try {
@@ -44,8 +45,8 @@ Future getToken() async {
 
 //Controller que retorna los servcios
 Future getServices(String inputSearchBar, String? token) async {
-  var url = Uri.http(urlBase(), 'api/v1/services',
-      {'filter[name]': '*$inputSearchBar*'});
+  var url = Uri.http(
+      urlBase(), 'api/v1/services', {'filter[name]': '*$inputSearchBar*'});
 
   Map<String, String>? header;
 
