@@ -132,7 +132,6 @@ class DetailServiceClientScreen extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             service.addressProvider,
-
                             style: const TextStyle(fontSize: 14),
                           ),
                         ],
@@ -151,7 +150,7 @@ class DetailServiceClientScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ReusableButton(
-          text: 'Solicitar',
+          text: 'Solicitar servicio',
           color: const Color(0xFF001563),
           onPressed: () {
             showDialog(
