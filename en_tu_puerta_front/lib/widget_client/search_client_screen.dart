@@ -193,15 +193,26 @@ class _WidgetSearchState extends State<WidgetSearch> {
                       )
                     : providersFounds.isEmpty
                         ? Center(
-                            child: Text(
-                              _searchController.text.isEmpty
-                                  ? '¿Qué deseas buscar hoy?'
-                                  : 'No se encontraron resultados',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFF001563),
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (!_searchController.text.isEmpty)
+                                  Image.network(
+                                    'https://i.postimg.cc/wxRP2X0y/pngtree-adorable-cute-kitten-orange-cat-sad-in-box-sticker-png-image-9191988.png',
+                                    height: 100, //tamaño de la imagen
+                                  ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  _searchController.text.isEmpty
+                                      ? '¿Qué deseas buscar hoy?'
+                                      : 'No se encontraron resultados',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFF001563),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           )
                         : ListView.builder(
@@ -229,15 +240,26 @@ class _WidgetSearchState extends State<WidgetSearch> {
                       )
                     : servicesFounds.isEmpty
                         ? Center(
-                            child: Text(
-                              _searchController.text.isEmpty
-                                  ? '¿Qué deseas buscar hoy?'
-                                  : 'No se encontraron resultados',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFF001563),
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (!_searchController.text.isEmpty)
+                                  Image.network(
+                                    'https://i.postimg.cc/wxRP2X0y/pngtree-adorable-cute-kitten-orange-cat-sad-in-box-sticker-png-image-9191988.png',
+                                    height: 100, //tamaño de la imagen
+                                  ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  _searchController.text.isEmpty
+                                      ? '¿Qué deseas buscar hoy?'
+                                      : 'No se encontraron resultados',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFF001563),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           )
                         : ListView.builder(
