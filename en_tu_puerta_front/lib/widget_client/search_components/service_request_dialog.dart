@@ -123,14 +123,27 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Text(
-                  'Solicitud de servicio',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        'Solicitud de servicio',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: 20),
               
@@ -221,12 +234,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //Quitar este boton
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancelar'),
-            ),
 
 
             //ESTOS BOTONES SOLO PUEDEN APARECER EN PANTALLA SI isLoading==FALSE && DAYSSHOWN!=0
@@ -260,7 +267,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                     String? response;
                     //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                    response= await createPetition(newPetition.toJson(), token);
+                    //response= await createPetition(newPetition.toJson(), token);
                     //mensajero.log(Level.info, response);
 
                     //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
