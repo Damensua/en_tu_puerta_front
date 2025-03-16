@@ -1,9 +1,9 @@
+import 'package:en_tu_puerta_front/widget_client/chat_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
 import 'package:flutter/material.dart';
-// import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/search_client_screen.dart';
-//import 'package:en_tu_puerta_front/widget_client/chat_client_screen.dart';
-//import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
-import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home screen
+import 'package:en_tu_puerta_front/pre_home_screen.dart'; 
 
 //Controlador principal de la aplicación en el rol de cliente
 class MyHomePage extends StatefulWidget {
@@ -20,17 +20,17 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    //WidgetHome(),
+    WidgetHome(),
     WidgetSearch(),
-    //WidgetNotification(),
-    //WidgetSettings()
+    WidgetNotification(),
+    WidgetSettings()
   ];
 
-  /*void _selectOptionInMyBottomNavigation(int index) {
+  void _selectOptionInMyBottomNavigation(int index) {
     setState(() {
       _selectedIndex = index;
     });
-  } */
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
-      /* bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -77,8 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Búsqueda',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notificaciones',
+            icon: Icon(Icons.calendar_month),
+            label: 'calendario',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedItemColor: Colors.grey,
         selectedItemColor: Color(0xFF001563),
         onTap: _selectOptionInMyBottomNavigation,
-      ),*/
+      ),
     );
   }
 }
