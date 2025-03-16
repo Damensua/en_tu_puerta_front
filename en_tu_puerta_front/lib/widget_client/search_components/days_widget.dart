@@ -33,28 +33,31 @@ class DaysWidgetState extends State<DaysWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      direction: Axis.horizontal,
-      children: List.generate(widget.daysShown, (index) {
-        return Container(
-          margin: const EdgeInsets.only(right: 5, bottom: 5),
-          child: AppButtons(
-            isSelected: selectedDay == widget.days[index],
-            day: widget.days[index],
-            onTap: () {
-              setState(() {
-                selectedDay = widget.days[index];
-                indexSelectedDay = index;
-                widget.resetDropdown();
-                print(indexSelectedDay);
-                print(selectedDay);
-              });
-              widget.onDaySelected(indexSelectedDay ?? -1);
-            },
-            date: widget.date[index],
-          ),
-        );
-      }),
+    return SizedBox(
+      height: widget.days.length < 4 ? 50 : 120,
+      child: Wrap(
+        direction: Axis.horizontal,
+        children: List.generate(widget.daysShown, (index) {
+          return Container(
+            margin: const EdgeInsets.only(right: 5, bottom: 5),
+            child: AppButtons(
+              isSelected: selectedDay == widget.days[index],
+              day: widget.days[index],
+              onTap: () {
+                setState(() {
+                  selectedDay = widget.days[index];
+                  indexSelectedDay = index;
+                  widget.resetDropdown();
+                  print(indexSelectedDay);
+                  print(selectedDay);
+                });
+                widget.onDaySelected(indexSelectedDay ?? -1);
+              },
+              date: widget.date[index],
+            ),
+          );
+        }),
+      ),
     );
   }
 

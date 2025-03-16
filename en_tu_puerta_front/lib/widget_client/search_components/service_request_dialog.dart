@@ -169,14 +169,12 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                 SizedBox(height: 10),
 
                 //FECHAS DISPONIBLES
-                SizedBox(
-                    height: 150,
-                    child: DaysWidget(
+                DaysWidget(
                         daysShown: daysShown,
                         days: shortDays,
                         date: shortDates,
                         onDaySelected: handleDaySelected,
-                        resetDropdown: resetDropdown)),
+                        resetDropdown: resetDropdown),
 
                 //DROPDOWN DE HORARIOS DISPONIBLES
                 SizedBox(
