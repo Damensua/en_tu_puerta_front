@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/functions/read_data.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
@@ -38,7 +40,14 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
   //Variable para el Filtro
   String selectedFilter = 'Servicio';
-
+ 
+ //Lista de images de gatos
+ final List<String> noResultsImages = [
+    'https://i.postimg.cc/wxRP2X0y/pngtree-adorable-cute-kitten-orange-cat-sad-in-box-sticker-png-image-9191988.png',
+    'https://i.postimg.cc/LXwWR568/pngtree-adorable-cute-animal-orange-cat-sleeping-on-blue-pillow-sticker-cartoon-png-image-9192730.png',
+    'https://i.postimg.cc/PJDRqHPz/pngtree-adorable-cute-cat-orange-kitten-sitting-on-pillow-sticker-cartoon-png-image-9192728.png',
+    'https://i.postimg.cc/VLjhQYyz/pngtree-adorable-cute-cat-orange-kitten-so-dizzy-sticker-png-image-9191989.png',
+  ];
   ///////////////////////////////////////
   @override
   void initState() {
@@ -197,10 +206,10 @@ class _WidgetSearchState extends State<WidgetSearch> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if (!_searchController.text.isEmpty)
-                                  Image.network(
-                                    'https://i.postimg.cc/wxRP2X0y/pngtree-adorable-cute-kitten-orange-cat-sad-in-box-sticker-png-image-9191988.png',
-                                    height: 100, //tamaño de la imagen
-                                  ),
+                                Image.network(
+                                  noResultsImages[Random().nextInt(noResultsImages.length)], // Seleccionar aleatoriamente una imagen
+                                  height: 100, //tamaño de la imagen
+                                  ),  
                                 const SizedBox(height: 8),
                                 Text(
                                   _searchController.text.isEmpty
@@ -245,9 +254,9 @@ class _WidgetSearchState extends State<WidgetSearch> {
                               children: [
                                 if (!_searchController.text.isEmpty)
                                   Image.network(
-                                    'https://i.postimg.cc/wxRP2X0y/pngtree-adorable-cute-kitten-orange-cat-sad-in-box-sticker-png-image-9191988.png',
-                                    height: 100, //tamaño de la imagen
-                                  ),
+                                  noResultsImages[Random().nextInt(noResultsImages.length)], // Seleccionar aleatoriamente una imagen
+                                  height: 100, // Ajustar el tamaño de la imagen
+                                  ),  
                                 const SizedBox(height: 8),
                                 Text(
                                   _searchController.text.isEmpty
