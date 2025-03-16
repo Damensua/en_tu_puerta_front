@@ -1,4 +1,4 @@
-import 'package:en_tu_puerta_front/widget_client/chat_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/calendar_client_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
 import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +20,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    WidgetHome(),
+    //WidgetHome(),
     WidgetSearch(),
-    WidgetNotification(),
-    WidgetSettings()
+    WidgetCalendar(),
+    //WidgetSettings()
   ];
 
   void _selectOptionInMyBottomNavigation(int index) {
@@ -53,13 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 150,
               ),
             ),
-            SizedBox(width: 10),
-            Spacer(),
-            Icon(
-              Icons.account_circle_outlined,
-              size: 40,
-              color: Color(0xFF001563),
-            ),
+            
           ],
 
         ),
@@ -68,21 +62,21 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Búsqueda',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month),
+            label: 'Calendario',
+          ),
+          /* BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
             label: 'calendario',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Perfil',
-          ),
+          ),*/
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.grey,

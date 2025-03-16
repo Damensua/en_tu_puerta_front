@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 // Widget para la pantalla de notificaciones del cliente
-class WidgetNotification extends StatelessWidget {
+class WidgetCalendar extends StatelessWidget {
 
-  const WidgetNotification({super.key});
+  const WidgetCalendar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class WidgetNotification extends StatelessWidget {
 
     return Container(
       color: Colors.grey,
-      child: Text('Index 2: Notificaciones'),
+      child: Text('Index 1: Calendario'),
       
     );
   }

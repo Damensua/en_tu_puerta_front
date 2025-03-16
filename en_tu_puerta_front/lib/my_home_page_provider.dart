@@ -19,10 +19,10 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    WidgetProviderHome(),
+    //WidgetProviderHome(),
     WidgetProviderNotifications(),
     WidgetProviderMetrics(),
-    WidgetProviderSettings()
+    //WidgetProviderSettings()
   ];
 
   void _selectOptionInMyBottomNavigation(int index) {
@@ -52,13 +52,7 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
                 height: 150,
               ),
             ),
-            SizedBox(width: 10),
-            Spacer(),
-            Icon(
-              Icons.account_circle_outlined,
-              size: 40,
-              color: Color(0xFF001563),
-            ),
+            
           ],
 
         ),
@@ -69,21 +63,21 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.notifications),
+            label: 'Soliictudes',
           ), 
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Solicitudes',
+            icon: Icon(Icons.calendar_month),
+            label: 'CALENDARIO',
           ),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
             icon: Icon(Icons.auto_graph_outlined),
             label: 'Metricas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Perfil',
-          ), 
+          ), */
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.grey,

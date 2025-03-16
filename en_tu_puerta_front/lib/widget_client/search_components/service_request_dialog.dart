@@ -131,6 +131,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       child: Text(
                         'Solicitud de servicio',
                         style: TextStyle(
+                          color: Color(0xFF001563),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -139,6 +140,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                   ),
                   IconButton(
                     icon: Icon(Icons.close),
+                    color: Color(0xFF001563),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -220,12 +222,15 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                 //CAJA DE TEXTO
                 SizedBox(
                   child: TextField(
+                    
                     maxLength: 250,
                     minLines: 1,
                     maxLines: null, //
                     controller: _controller,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF001563)),
+                      ),
                       hintText: 'Comentarios',
                     ),
                   ),
@@ -237,7 +242,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
       //ACCION DEL WIDGET
       actions: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //Quitar este boton
 

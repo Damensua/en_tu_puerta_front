@@ -208,7 +208,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
                                 if (!_searchController.text.isEmpty)
                                 Image.network(
                                   noResultsImages[Random().nextInt(noResultsImages.length)], // Seleccionar aleatoriamente una imagen
-                                  height: 100, //tamaño de la imagen
+                                  height: 200, //tamaño de la imagen
                                   ),  
                                 const SizedBox(height: 8),
                                 Text(
@@ -255,7 +255,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
                                 if (!_searchController.text.isEmpty)
                                   Image.network(
                                   noResultsImages[Random().nextInt(noResultsImages.length)], // Seleccionar aleatoriamente una imagen
-                                  height: 100, // Ajustar el tamaño de la imagen
+                                  height: 200, // Ajustar el tamaño de la imagen
                                   ),  
                                 const SizedBox(height: 8),
                                 Text(
