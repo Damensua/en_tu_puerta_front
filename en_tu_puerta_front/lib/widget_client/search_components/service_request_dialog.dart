@@ -177,6 +177,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         resetDropdown: resetDropdown),
 
                 //DROPDOWN DE HORARIOS DISPONIBLES
+                SizedBox(height: 5),
                 SizedBox(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -184,8 +185,11 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     SizedBox(height: 20),
                     // Dropdown for hours
                     if (indexSelectedDay >= 0)
-                      (DropdownButton<String>(
-                          hint: Text('Selecciona la hora'),
+                      (DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Selecciona la hora',
+                          ),
                           value: selectedTime,
                           onChanged: (String? newValue) {
                             setState(() {
@@ -202,12 +206,16 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                                   .map<DropdownMenuItem<String>>((String hour) {
                                   return DropdownMenuItem<String>(
                                     value: hour,
-                                    child: Text(hour),
+                                    child: Text(
+                                      hour,
+                                      style: TextStyle(fontSize: 16), // Customize item text style
+                                    ),
                                   );
                                 }).toList()
                               : []))
                   ],
                 )),
+                 SizedBox(height: 15),
 
                 //CAJA DE TEXTO
                 SizedBox(
