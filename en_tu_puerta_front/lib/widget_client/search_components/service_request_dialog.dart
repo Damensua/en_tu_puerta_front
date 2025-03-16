@@ -79,9 +79,9 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
     daysShown = info.getDaysShown();
     isLoading = false;
 
-    //mensajero.log(Level.warning,dates);
-    //mensajero.log(Level.warning, days);
-
+    mensajero.log(Level.warning,dates);
+    mensajero.log(Level.warning, days);
+    mensajero.log(Level.info, daysShown);
     // Initialize shortDays and shortDates after fetching data
     shortDays = shortenDays(days);
     shortDates = formatDates(dates);
@@ -133,6 +133,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                 ),
               ),
               SizedBox(height: 20),
+              
 
               // Check if daysShown is 0
               if (isLoading) ...[
@@ -259,7 +260,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                     String? response;
                     //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                    //response= await createPetition(newPetition.toJson(), token);
+                    response= await createPetition(newPetition.toJson(), token);
                     //mensajero.log(Level.info, response);
 
                     //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION

@@ -26,8 +26,7 @@ class ScheduleInformation {
 
       // Verifica que la respuesta contenga datos
       if (data != null && data.isNotEmpty) {
-        daysShown = data.length;
-
+        
         for (var entry in data) {
           // Agregar fecha y día a sus respectivas listas
           if (entry["available_slots"] != null && entry["available_slots"].isNotEmpty) {
@@ -38,7 +37,7 @@ class ScheduleInformation {
           availableSlotsMap[entry["date"]] = List<String>.from(entry["available_slots"]);}
           else{continue;}
         }
-
+        daysShown = days.length;
 
         // Log para verificar la información extraída
         //mensajero.log(Level.debug, availableSlotsMap);
