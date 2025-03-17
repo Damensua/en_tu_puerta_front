@@ -247,89 +247,154 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
             //Quitar este boton
 
 
-            //ESTOS BOTONES SOLO PUEDEN APARECER EN PANTALLA SI isLoading==FALSE && DAYSSHOWN!=0
+            //ESTOS BOTONES SOLO PUEDEN APARECER EN PANTALLA SI isLoading==FALSE && DAYSSHOWN!=0 Listo
             //BOTON PARA ENVIAR LA SOLICITUD
-            ReusableButton(
-              text: 'Enviar Solicitud',
-              color: Color(0xFF001563),
-              onPressed: () async {
-                if (indexSelectedDay == -1) {
-                  //No se ha seleccionado ningun día entonces no se puede enviar la petición
-                  // y hay que colocar una advertencia
-                  print(
-                      "Debe seleccionar una fecha para solicitar el servicio");
-                } else if (selectedTime == null) {
-                  //No se ha seleccionado ningun horario entonces no se puede enviar la petición
-                  // y hay que colocar una advertencia
-                  print(
-                      "Debe seleccionar un horario para solicitar el servicio");
+            if (!isLoading && daysShown != 0) 
+              ReusableButton(
+                text: 'Enviar Solicitud',
+                color: Color(0xFF001563),
+                onPressed: () async {
+                  if (indexSelectedDay == -1) {
+                    //No se ha seleccionado ningun día entonces no se puede enviar la petición
+                    // y hay que colocar una advertencia Listo
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                      title: Text('Advertencia', style: TextStyle(color: Color(0xFF001563))),
+                      content: Text('Debe seleccionar una fecha para solicitar el servicio',
+                       style: TextStyle(fontSize: 18)),
+                      actions: [
+                        Center(
+                        child: ReusableButton(
+                          text: 'Ok',
+                          color: Color(0xFF001563),
+                          onPressed: () {
+                          Navigator.pop(context);
+                          },
+                        ),
+                        ),
+                      ],
+                      ),
+                    );
+                    
+                    print(
+                        "Debe seleccionar una fecha para solicitar el servicio");
+                  } else if (selectedTime == null) {
+                    //No se ha seleccionado ningun horario entonces no se puede enviar la petición
+                    // y hay que colocar una advertencia Listo
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                      title: Text('Advertencia',  style: TextStyle(color: Color(0xFF001563))),
+                      content: Text('Debe seleccionar un horario para solicitar el servicio', style: TextStyle(fontSize: 18)),
+                        actions: [
+                      
+                        Center(
+                        child: ReusableButton(
+                          text: 'Ok',
+                          color: Color(0xFF001563),
+                          onPressed: () {
+                          Navigator.pop(context);
+                          },
+                        ),
+                        ),
+                      ],
+                      ),
+                    );
+                    print(
+                        "Debe seleccionar un horario para solicitar el servicio");
 
-                  //Procede a intentar crear la solicitud
-                } else if (indexSelectedDay >= 0 && idClient != null) {
-                  try {
-                    Petition newPetition = Petition(
-                        idUser: int.parse(idClient as String),
-                        date: dates[indexSelectedDay],
-                        time: addSeconds(selectedTime),
-                        message: getInput(),
-                        idService: idService);
+                    //Procede a intentar crear la solicitud
+                  } else if (indexSelectedDay >= 0 && idClient != null) {
+                    try {
+                      Petition newPetition = Petition(
+                          idUser: int.parse(idClient as String),
+                          date: dates[indexSelectedDay],
+                          time: addSeconds(selectedTime),
+                          message: getInput(),
+                          idService: idService);
 
-                    mensajero.log(Level.info, newPetition.toJson());
+                      mensajero.log(Level.info, newPetition.toJson());
 
-                    String? response;
-                    //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                    //response= await createPetition(newPetition.toJson(), token);
-                    //mensajero.log(Level.info, response);
+                      String? response;
+                      //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
+                      //response= await createPetition(newPetition.toJson(), token);
+                      //mensajero.log(Level.info, response);
 
-                    //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
-                    //Si se envia existosamente entonces sale el mensaje de besito y luego lo dejas en la pantalla detallada del servicio
-                    if (response != null) {
-                      Navigator.pop(context);
-                      showDialog(
+                      //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
+                      //Si se envia existosamente entonces sale el mensaje de besito y luego lo dejas en la pantalla detallada del servicio
+                      if (response != null) {
+                        Navigator.pop(context);
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('Solicitud enviada!'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    'El proveedor de servicio responderá en los próximos 10 minutos para confirmar la solicitud'),
+                                SizedBox(height: 20),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ReusableButton(
+                                    text: 'Aceptar',
+                                    color: Color(0xFF001563),
+                                    onPressed: () {
+                                      // Cierra todos los diálogos y regresa a la pantalla principal
+                                      Navigator.popUntil(
+                                          context, (route) => route.isFirst);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        //DESPLEGAR MENSAJE/
+                        //Despues del mensaje y del boton okay se deja al usuario en el formulario, pero el formulario reiniciado
+                        print(
+                            'Hubo un error con la solicitud, intente nuevamente');
+                      }
+
+                      //
+                    } catch (e) {
+                      //AGREGAR UN MENSAJE POP DE QUE HA HABIDO UN ERROR CON EL ENVIO: CON EL TIPO DE ERROR
+                        showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Solicitud enviada!'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                  'El proveedor de servicio responderá en los próximos 10 minutos para confirmar la solicitud'),
-                              SizedBox(height: 20),
-                              SizedBox(
-                                width: double.infinity,
-                                child: ReusableButton(
-                                  text: 'Aceptar',
-                                  color: Color(0xFF001563),
-                                  onPressed: () {
-                                    // Cierra todos los diálogos y regresa a la pantalla principal
-                                    Navigator.popUntil(
-                                        context, (route) => route.isFirst);
-                                  },
-                                ),
-                              ),
-                            ],
+                          title: Text('Ha ocurrido un error',  style: TextStyle(color: Color(0xFF001563))),
+                          content: Text('Intente más tarde., ', style: TextStyle(fontSize: 18)),
+                          actions: [
+                          Center(
+                            child: ReusableButton(
+                            text: 'Ok',
+                            color: Color(0xFF001563),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            ),
                           ),
+                          ],
                         ),
-                      );
-                    } else {
-                      //DESPLEGAR MENSAJE/
-                      //Despues del mensaje y del boton okay se deja al usuario en el formulario, pero el formulario reiniciado
-                      print(
-                          'Hubo un error con la solicitud, intente nuevamente');
+                        );
+                      print(e.toString());
                     }
-
-                    //
-                  } catch (e) {
-                    //AGREGAR UN MENSAJE POP DE QUE HA HABIDO UN ERROR CON EL ENVIO: CON EL TIPO DE ERROR
-                    //Y DICIENDO QUE LO VUELVA A INTENTAR
-                    print(e.toString());
                   }
-                }
 
-                // Mostrar diálogo de confirmación
-                // Aquí podría ser utilizado un framework de diálogos, como Flutter Dialogs,
-              },
-            ),
+                  // Mostrar diálogo de confirmación
+                  // Aquí podría ser utilizado un framework de diálogos, como Flutter Dialogs,
+                },
+              )
+            else 
+              ReusableButton(
+                text: 'Ok',
+                color: Color(0xFF001563),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
           ],
         ),
       ],
