@@ -1,6 +1,9 @@
+import 'package:en_tu_puerta_front/widget_provider/create_event_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/widget_provider/home_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/petitions_provider_screen.dart';
+
+import 'package:en_tu_puerta_front/widget_provider/calendar_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/chat_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/settings_provider_screen.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home screen
@@ -20,8 +23,10 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
   static final List<Widget> _widgetOptions = <Widget>[
     WidgetProviderHome(),
     WidgetProviderNotifications(),
+    WidgetCalendar(),
     WidgetProviderMetrics(),
-    WidgetProviderSettings()
+    CreateEventScreen(),
+    //WidgetProviderSettings()
   ];
 
   void _selectOptionInMyBottomNavigation(int index) {
@@ -73,8 +78,16 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
             label: 'Solicitudes',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month),
+            label: 'Calendario',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.auto_graph_outlined),
             label: 'Metricas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Añadir',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),

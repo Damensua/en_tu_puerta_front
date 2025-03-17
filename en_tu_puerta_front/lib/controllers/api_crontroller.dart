@@ -1,4 +1,3 @@
-//import 'dart:convert';
 import 'dart:convert';
 import 'package:en_tu_puerta_front/functions/api_endpoints.dart';
 import 'package:en_tu_puerta_front/models/auth_response.dart';
@@ -15,7 +14,7 @@ Future getToken() async {
 
   //Usario de validación para hacer el login
 
-  var body = {'email': 'ruth.boehm@example.com', 'password': 'password'};
+  var body = {'email': 'myriam.brakus@example.net', 'password': 'password'};
 
   try {
     //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs
@@ -299,21 +298,40 @@ Future getEventsByUser(String? userId, String? token) async {
   }
 }
 
-  // Future<void> createEvent(String title, DateTime date) async {
-    // final response = await http.post(
-      // Uri.parse(baseUrl),
-      // headers: <String, String>{
-        // 'Content-Type': 'application/json; charset=UTF-8',
-      // },
-      // body: jsonEncode(<String, dynamic>{
-        // 'title': title,
-        // 'date': date.toIso8601String(),
-      // }),
-    // );
-// 
-    // if (response.statusCode != 201) {
-      // throw Exception('Error al crear evento');
-    // }
-  // }
+Future<dynamic> createEvent(Event event, String? token) async {
+  var url = Uri.http(urlBase(), 'api/v1/events');
+  var body = event.toJson();
 
-//}
+  Map<String, String>? header;
+
+  if (token != null) {
+    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+  } else {
+    header = {'Accept': 'application/json'};
+  }
+
+  print(jsonEncode(body));
+
+  try {
+    var response = await http.post(
+      url,
+      headers: header,
+      body: jsonEncode(body), // Asegúrate de codificar el cuerpo como JSON
+    );
+
+    // Imprimir el código de estado y el cuerpo de la respuesta
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return data;
+    } else {
+      // Puedes lanzar una excepción o devolver null
+      throw Exception('Error: ${response.statusCode} - ${response.body}');
+    }
+  } catch (e) {
+    logger.log(Level.error, 'Error: $e');
+    return null;
+  }
+}
