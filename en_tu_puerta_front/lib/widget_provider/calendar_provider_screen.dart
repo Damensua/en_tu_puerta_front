@@ -70,7 +70,14 @@ class _CalendarScreenState extends State<WidgetCalendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendario'),
+        title: Text(
+          'Calendario',
+          style: TextStyle(
+        color: Color(0xFF001563),
+        fontWeight: FontWeight.bold,
+        fontSize: 30,
+          ),
+        ),
       ),
       body: Column(
         children: [
