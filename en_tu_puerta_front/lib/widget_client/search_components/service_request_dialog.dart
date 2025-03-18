@@ -217,7 +217,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                               : []))
                   ],
                 )),
-                 SizedBox(height: 15),
+                SizedBox(height: 15),
 
                 //CAJA DE TEXTO
                 SizedBox(
@@ -262,7 +262,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       builder: (context) => AlertDialog(
                       title: Text('Advertencia', style: TextStyle(color: Color(0xFF001563))),
                       content: Text('Debe seleccionar una fecha para solicitar el servicio',
-                       style: TextStyle(fontSize: 18)),
+                      style: TextStyle(fontSize: 18)),
                       actions: [
                         Center(
                         child: ReusableButton(
@@ -316,14 +316,14 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                       mensajero.log(Level.info, newPetition.toJson());
 
-                      String? response;
+                      var response;
                       //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                      //response= await createPetition(newPetition.toJson(), token);
+                      response= await postPetition(newPetition.toJson(), token);
                       //mensajero.log(Level.info, response);
 
                       //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
                       //Si se envia existosamente entonces sale el mensaje de besito y luego lo dejas en la pantalla detallada del servicio
-                      if (response != null) {
+                      if (response == 201) {
                         Navigator.pop(context);
                         showDialog(
                           context: context,
@@ -351,7 +351,12 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                             ),
                           ),
                         );
-                      } else {
+                      } else if(response== 409){
+                        //DESPLEGAR MENSAJE/
+                        //No se puede crear la misma solicitud dos veces 
+                        print('Ya existe la solicitud');
+                      }
+                      else {
                         //DESPLEGAR MENSAJE/
                         //Despues del mensaje y del boton okay se deja al usuario en el formulario, pero el formulario reiniciado
                         print(
@@ -365,7 +370,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         context: context,
                         builder: (context) => AlertDialog(
                           title: Text('Ha ocurrido un error',  style: TextStyle(color: Color(0xFF001563))),
-                          content: Text('Intente más tarde., ', style: TextStyle(fontSize: 18)),
+                          content: Text('Intente más tarde.', style: TextStyle(fontSize: 18)),
                           actions: [
                           Center(
                             child: ReusableButton(

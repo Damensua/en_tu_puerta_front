@@ -8,6 +8,11 @@ class Provider {
   final String username;
   final String email;
   final String address;
+  final String startTime;
+  final String endTime;
+  final String profileImagePath;
+  final int punctuation;
+
 
   Provider({
     required this.type,
@@ -17,6 +22,10 @@ class Provider {
     required this.username,
     required this.email,
     required this.address,
+    required this.startTime,
+    required this.endTime,
+    required this.profileImagePath,
+    required this.punctuation
   });
 
   // Factory method to create a Provider from JSON
@@ -29,6 +38,10 @@ class Provider {
       username: json['attributes']['username'],
       email: json['attributes']['email'],
       address: json['attributes']['address'],
+      startTime: json['attributes']['start_time'],
+      endTime: json['attributes']['end_time'],
+      profileImagePath: json['attributes']['profile_image_path'],
+      punctuation: json['attributes']['punctuation'],
     );
   }
 }
