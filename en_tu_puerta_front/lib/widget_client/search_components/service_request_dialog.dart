@@ -27,7 +27,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   //Datos de autentificación para mandar la solicitud de Servicio
   String? token = globalToken;
   String? idClient = globalIdUser;
-  int? idService;
+  late int idService;
 
   //Datos de selección del usuario
   int indexSelectedDay = -1;
@@ -63,12 +63,17 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   void initState() {
     super.initState();
     idService = widget.service.id;
-
-    // Fetch schedule information
     fetchScheduleInformation();
   }
 
   Future<void> fetchScheduleInformation() async {
+    // Reinicializa las listas y variables
+    dates.clear();
+    days.clear();
+    times.clear();
+    shortDays.clear();
+    shortDates.clear();
+    isLoading = true;
     ScheduleInformation info = ScheduleInformation(idService, token);
 
     await info.getInfo(idService.toString(), token!);
@@ -79,7 +84,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
     daysShown = info.getDaysShown();
     isLoading = false;
 
-    mensajero.log(Level.warning,dates);
+    mensajero.log(Level.warning, dates);
     mensajero.log(Level.warning, days);
     mensajero.log(Level.info, daysShown);
     // Initialize shortDays and shortDates after fetching data
@@ -148,18 +153,17 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                 ],
               ),
               SizedBox(height: 20),
-              
 
               // Check if daysShown is 0
               if (isLoading) ...[
-              Center(child: CircularProgressIndicator()),
-            ] else if (daysShown == 0 || days.isEmpty || times.isEmpty) ...[
+                Center(child: CircularProgressIndicator()),
+              ] else if (daysShown == 0 || days.isEmpty || times.isEmpty) ...[
                 Text(
-
                   //ACA SE DEBE COLOCAR UNA IMAGEN CON UN ICONO PARA ACOMPAÑAR AL TEXTO, ICONO EN ROJO
-                  //SI ESTO SUCEDE NO DEBERÍAS MOSTRARSE LOS BOTONES 
+                  //SI ESTO SUCEDE NO DEBERÍAS MOSTRARSE LOS BOTONES
                   'Lo sentimos, no hay fechas disponibles para el servicio. Intenta en otro momento o con otro servicio.',
-                  style: TextStyle(fontSize: 16, color: const Color.fromARGB(255, 0, 0, 0)),
+                  style: TextStyle(
+                      fontSize: 16, color: const Color.fromARGB(255, 0, 0, 0)),
                   textAlign: TextAlign.center,
                 ),
               ] else ...[
@@ -172,11 +176,11 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                 //FECHAS DISPONIBLES
                 DaysWidget(
-                        daysShown: daysShown,
-                        days: shortDays,
-                        date: shortDates,
-                        onDaySelected: handleDaySelected,
-                        resetDropdown: resetDropdown),
+                    daysShown: daysShown,
+                    days: shortDays,
+                    date: shortDates,
+                    onDaySelected: handleDaySelected,
+                    resetDropdown: resetDropdown),
 
                 //DROPDOWN DE HORARIOS DISPONIBLES
                 SizedBox(height: 5),
@@ -210,7 +214,9 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                                     value: hour,
                                     child: Text(
                                       hour,
-                                      style: TextStyle(fontSize: 16), // Customize item text style
+                                      style: TextStyle(
+                                          fontSize:
+                                              16), // Customize item text style
                                     ),
                                   );
                                 }).toList()
@@ -222,7 +228,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                 //CAJA DE TEXTO
                 SizedBox(
                   child: TextField(
-                    
                     maxLength: 250,
                     minLines: 1,
                     maxLines: null, //
@@ -247,7 +252,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
             //Quitar este boton
             //ESTOS BOTONES SOLO PUEDEN APARECER EN PANTALLA SI isLoading==FALSE && DAYSSHOWN!=0 Listo
             //BOTON PARA ENVIAR LA SOLICITUD
-            if (!isLoading && daysShown != 0) 
+            if (!isLoading && daysShown != 0)
               ReusableButton(
                 text: 'Enviar Solicitud',
                 color: Color(0xFF001563),
@@ -258,23 +263,25 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                      title: Text('Advertencia', style: TextStyle(color: Color(0xFF001563))),
-                      content: Text('Debe seleccionar una fecha para solicitar el servicio',
-                      style: TextStyle(fontSize: 18)),
-                      actions: [
-                        Center(
-                        child: ReusableButton(
-                          text: 'Ok',
-                          color: Color(0xFF001563),
-                          onPressed: () {
-                          Navigator.pop(context);
-                          },
-                        ),
-                        ),
-                      ],
+                        title: Text('Advertencia',
+                            style: TextStyle(color: Color(0xFF001563))),
+                        content: Text(
+                            'Debe seleccionar una fecha para solicitar el servicio',
+                            style: TextStyle(fontSize: 18)),
+                        actions: [
+                          Center(
+                            child: ReusableButton(
+                              text: 'Ok',
+                              color: Color(0xFF001563),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     );
-                    
+
                     print(
                         "Debe seleccionar una fecha para solicitar el servicio");
                   } else if (selectedTime == null) {
@@ -283,20 +290,22 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                      title: Text('Advertencia',  style: TextStyle(color: Color(0xFF001563))),
-                      content: Text('Debe seleccionar un horario para solicitar el servicio', style: TextStyle(fontSize: 18)),
+                        title: Text('Advertencia',
+                            style: TextStyle(color: Color(0xFF001563))),
+                        content: Text(
+                            'Debe seleccionar un horario para solicitar el servicio',
+                            style: TextStyle(fontSize: 18)),
                         actions: [
-                      
-                        Center(
-                        child: ReusableButton(
-                          text: 'Ok',
-                          color: Color(0xFF001563),
-                          onPressed: () {
-                          Navigator.pop(context);
-                          },
-                        ),
-                        ),
-                      ],
+                          Center(
+                            child: ReusableButton(
+                              text: 'Ok',
+                              color: Color(0xFF001563),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     );
                     print(
@@ -316,7 +325,8 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                       var response;
                       //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                      response= await postPetition(newPetition.toJson(), token);
+                      response =
+                          await postPetition(newPetition.toJson(), token);
                       //mensajero.log(Level.info, response);
 
                       //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
@@ -349,12 +359,11 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                             ),
                           ),
                         );
-                      } else if(response== 409){
+                      } else if (response == 409) {
                         //DESPLEGAR MENSAJE/
-                        //No se puede crear la misma solicitud dos veces 
+                        //No se puede crear la misma solicitud dos veces
                         print('Ya existe la solicitud');
-                      }
-                      else {
+                      } else {
                         //DESPLEGAR MENSAJE/
                         //Despues del mensaje y del boton okay se deja al usuario en el formulario, pero el formulario reiniciado
                         print(
@@ -364,24 +373,26 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       //
                     } catch (e) {
                       //AGREGAR UN MENSAJE POP DE QUE HA HABIDO UN ERROR CON EL ENVIO: CON EL TIPO DE ERROR
-                        showDialog(
+                      showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Ha ocurrido un error',  style: TextStyle(color: Color(0xFF001563))),
-                          content: Text('Intente más tarde.', style: TextStyle(fontSize: 18)),
+                          title: Text('Ha ocurrido un error',
+                              style: TextStyle(color: Color(0xFF001563))),
+                          content: Text('Intente más tarde.',
+                              style: TextStyle(fontSize: 18)),
                           actions: [
-                          Center(
-                            child: ReusableButton(
-                            text: 'Ok',
-                            color: Color(0xFF001563),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            Center(
+                              child: ReusableButton(
+                                text: 'Ok',
+                                color: Color(0xFF001563),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
                             ),
-                          ),
                           ],
                         ),
-                        );
+                      );
                       print(e.toString());
                     }
                   }
@@ -390,7 +401,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                   // Aquí podría ser utilizado un framework de diálogos, como Flutter Dialogs,
                 },
               )
-            else 
+            else
               ReusableButton(
                 text: 'Ok',
                 color: Color(0xFF001563),

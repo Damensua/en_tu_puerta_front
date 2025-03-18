@@ -1,26 +1,58 @@
+import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
+import 'package:en_tu_puerta_front/models/provider.dart';
+import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
 import 'package:en_tu_puerta_front/widget_client/search_components/service_request_dialog.dart';
 import 'package:en_tu_puerta_front/widgets/image_carousel.dart';
 import 'package:en_tu_puerta_front/models/service.dart';
+import 'package:logger/logger.dart';
+
+final mensajito = Logger();
 
 
+class DetailServiceClientScreen extends StatefulWidget {
+  final Service service;
 
-// ignore: must_be_immutable
-class DetailServiceClientScreen extends StatelessWidget {
-  Service service;
-
-  DetailServiceClientScreen({
+  const DetailServiceClientScreen({
     required this.service,
     super.key,
   });
+
+  @override
+  _DetailServiceClientScreenState createState() => _DetailServiceClientScreenState();
+}
+
+class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
+  String? localToken = globalToken;
+  late Provider mainProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProvider(); // Llama a la función para obtener el proveedor
+  }
+
+
+
+//Funcion para obtener los prestadores de servicios
+  void fetchProvider() async {
+    var json = await getServiceOwner(widget.service.idProvider, localToken);
+    
+    setState(() {
+      mainProvider = parseProvider(json);
+      mensajito.log(Level.info,
+          "Nombre de usurio, dueño del servicio ${mainProvider.username}");
+    });
+  }
+
 
 
   @override
   Widget build(BuildContext context,) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(service.serviceName),
+        title: Text(widget.service.serviceName),
       ),
 
       body: SingleChildScrollView(
@@ -31,7 +63,7 @@ class DetailServiceClientScreen extends StatelessWidget {
 
             // Carrusel de imágenes
             ImageCarousel(
-              imageUrls: [service.imagesPath],
+              imageUrls: [widget.service.imagesPath],
             ),
 
             const SizedBox(height: 16),
@@ -39,7 +71,7 @@ class DetailServiceClientScreen extends StatelessWidget {
             // Nombre del servicio
 
             Text(
-              service.serviceName,
+              widget.service.serviceName,
 
               style: const TextStyle(
                 fontSize: 24,
@@ -50,7 +82,7 @@ class DetailServiceClientScreen extends StatelessWidget {
             
             // Precio
             Text(
-              '\$${service.servicePrice.toStringAsFixed(2)}',
+              '\$${widget.service.servicePrice.toStringAsFixed(2)}',
 
               style: const TextStyle(
                 fontSize: 20,
@@ -72,7 +104,7 @@ class DetailServiceClientScreen extends StatelessWidget {
             
             // Descripción del servicio
             Text(
-              service.description,
+              widget.service.description,
 
               style: const TextStyle(
                 fontSize: 16,
@@ -90,7 +122,7 @@ class DetailServiceClientScreen extends StatelessWidget {
                 // Foto del prestador
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: NetworkImage(service.imagesPath),
+                  backgroundImage: NetworkImage(widget.service.imagesPath),
 
                 ),
                 const SizedBox(width: 16),
@@ -102,7 +134,7 @@ class DetailServiceClientScreen extends StatelessWidget {
                     children: [
                       // Nombre del prestador
                       Text(
-                        '${service.firstNameProvider} ${service.lastNameProvider}',
+                        '${widget.service.firstNameProvider} ${widget.service.lastNameProvider}',
 
                         style: const TextStyle(
                           fontSize: 18,
@@ -117,7 +149,7 @@ class DetailServiceClientScreen extends StatelessWidget {
                           const Icon(Icons.star, color: Colors.amber, size: 16),
                           const SizedBox(width: 4),
                           Text(
-                            service.punctuationProvider.toStringAsFixed(1),
+                            widget.service.punctuationProvider.toStringAsFixed(1),
 
                             style: const TextStyle(fontSize: 14),
                           ),
@@ -131,7 +163,7 @@ class DetailServiceClientScreen extends StatelessWidget {
                           const Icon(Icons.location_on, size: 16),
                           const SizedBox(width: 4),
                           Text(
-                            service.addressProvider,
+                            widget.service.addressProvider,
                             style: const TextStyle(fontSize: 14),
                           ),
                         ],
@@ -155,7 +187,7 @@ class DetailServiceClientScreen extends StatelessWidget {
           onPressed: () {
             showDialog(
               context: context,
-              builder: (context) => ServiceRequestDialog(service: service),
+              builder: (context) => ServiceRequestDialog(service: widget.service),
             );
           },
         ),

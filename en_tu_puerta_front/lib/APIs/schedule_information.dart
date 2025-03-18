@@ -14,33 +14,37 @@ class ScheduleInformation {
   Map<String, List<String>> availableSlotsMap = {};
   int daysShown = 0;
 
-  ScheduleInformation(this.serviceId, this.token) {
-    // Llamar a la función para obtener la información
-    getInfo(serviceId.toString(), token!);
-  }
+  ScheduleInformation(this.serviceId, this.token);
 
   Future<void> getInfo(String serviceId, String token) async {
+    // Limpia los datos antes de realizar la llamada a la API
+    dates.clear();
+    days.clear();
+    availableSlotsMap.clear();
+    daysShown = 0;
+
+    
     try {
       // Llamada a la API
       var data = await serviceSchedule(serviceId, token);
 
+      mensajero.log(Level.info, data);
       // Verifica que la respuesta contenga datos
       if (data != null && data.isNotEmpty) {
-        
         for (var entry in data) {
           // Agregar fecha y día a sus respectivas listas
-          if (entry["available_slots"] != null && entry["available_slots"].isNotEmpty) {
-          dates.add(entry["date"]);
-          days.add(entry["day"]);
+          if (entry["available_slots"] != null &&
+              entry["available_slots"].isNotEmpty) {
+            dates.add(entry["date"]);
+            days.add(entry["day"]);
 
-          // Agregar fecha y horarios disponibles al mapa
-          availableSlotsMap[entry["date"]] = List<String>.from(entry["available_slots"]);}
-          else{continue;}
+            // Agregar fecha y horarios disponibles al mapa
+            availableSlotsMap[entry["date"]] =
+                List<String>.from(entry["available_slots"]);
+          }
         }
         daysShown = days.length;
 
-        // Log para verificar la información extraída
-        //mensajero.log(Level.debug, availableSlotsMap);
       } else {
         mensajero.log(Level.warning, "No se recibieron datos de la API.");
       }

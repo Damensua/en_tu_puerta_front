@@ -102,7 +102,7 @@ Future getUser(String idUser, String? token) async {
 //Retorna una el JSON con los usuarios que tengan concidencia parcial con el input colocado
 Future getUsers(String inputSearchBar, String? token) async {
   var url = Uri.http(urlBase(), 'api/v1/users', {'fullname': inputSearchBar});
-  
+
   Map<String, String>? header;
 
   if (token != null) {
@@ -238,8 +238,9 @@ Future postPetition(Map<String, dynamic> petitionJson, String? token) async {
 
 //Controller para traer los servicios de un prestador
 Future getOwnServices(int userId, String? token) async {
-  var url = Uri.http(urlBase(), 'api/v1/services', {'filter[provider]': userId});
-  
+  var url =
+      Uri.http(urlBase(), 'api/v1/services', {'filter[provider]': userId});
+
   Map<String, String>? header;
 
   if (token != null) {
@@ -266,9 +267,9 @@ Future getOwnServices(int userId, String? token) async {
 }
 
 //Controller para buscar la información de un prestador
-Future getServiceOwner(String userId, String? token) async {
+Future getServiceOwner(int userId, String? token) async {
   var url = Uri.http(urlBase(), 'api/v1/users/$userId');
-  
+
   Map<String, String>? header;
 
   if (token != null) {
@@ -283,10 +284,10 @@ Future getServiceOwner(String userId, String? token) async {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
+
       logger.log(Level.info, data);
 
       return data;
-
     } else {
       return null;
     }
