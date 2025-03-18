@@ -68,16 +68,22 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
         final response = await createEvent(newEvent, localToken);
 
         // Verifica si la respuesta es exitosa
-        if (response != null) {
+        if (response.statusCode == 201) {
           // Manejar la respuesta, por ejemplo, mostrar un mensaje de éxito
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Evento creado con éxito')),
+          );
+          _resetFields();
+        } else if (response.statusCode == 409) {
+          // Manejar la respuesta, por ejemplo, mostrar un mensaje de éxito
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(response.body)),
           );
           Navigator.pop(context); // Cierra la pantalla de creación
         } else {
           // Manejar el error
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error al crear el evento')),
+            SnackBar(content: Text(response.body)),
           );
         }
       } catch (e) {
@@ -95,42 +101,81 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     }
   }
 
+  void _resetFields() {
+    setState(() {
+      _titleController.clear(); // Limpia el texto del título
+      _selectedDate = null; // Resetea la fecha seleccionada
+      _selectedTime = null; // Resetea la hora seleccionada
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crear Evento'),
+        title: Align(
+          alignment: Alignment.bottomCenter,
+          child: Text(
+            'Crear evento',
+            style: TextStyle(
+                fontSize: 32,
+                color: const Color.fromARGB(255, 68, 87, 255),
+                fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+        // Enable scrolling to avoid overflow
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _titleController,
-              decoration: InputDecoration(labelText: 'Título del Evento'),
+              decoration: InputDecoration(labelText: 'Título del evento'),
             ),
             SizedBox(height: 20),
-            TextButton(
-              onPressed: () => _selectDate(context),
-              child: Text(
-                _selectedDate == null
-                    ? 'Seleccionar Fecha'
-                    : 'Fecha: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}',
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ElevatedButton(
+                onPressed: () => _selectDate(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                ),
+                child: Text(
+                  _selectedDate == null
+                      ? 'Seleccionar Fecha'
+                      : 'Fecha: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
             ),
             SizedBox(height: 20),
-            TextButton(
-              onPressed: () => _selectTime(context),
-              child: Text(
-                _selectedTime == null
-                    ? 'Seleccionar Hora'
-                    : 'Hora: $_selectedTime',
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ElevatedButton(
+                onPressed: () => _selectTime(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                ),
+                child: Text(
+                  _selectedTime == null
+                      ? 'Seleccionar Hora'
+                      : 'Hora: $_selectedTime',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _createEvent,
-              child: Text('Crear Evento'),
+            SizedBox(height: 200),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: _createEvent,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text('Crear evento'),
+              ),
             ),
           ],
         ),

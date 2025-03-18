@@ -34,12 +34,12 @@ class Event {
 
   Map<String, dynamic> toJson() {
     return {
-      "data": {
-        "attributes": {
-          "provider_id": provider_id,
-          "title": title,
-          "date": DateFormat('yyyy-MM-dd').format(date), // Formato de fecha
-          "time": _convertTimeTo24HourFormat(time), // Formato de hora
+      'data': {
+        'attributes': {
+          'provider_id': provider_id,
+          'title': title,
+          'date': DateFormat('yyyy-MM-dd').format(date), // Formato de fecha
+          'time': _convertTimeTo24HourFormat(time), // Formato de hora
         }
       }
     };

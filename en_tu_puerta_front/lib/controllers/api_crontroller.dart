@@ -302,15 +302,19 @@ Future<dynamic> createEvent(Event event, String? token) async {
   var url = Uri.http(urlBase(), 'api/v1/events');
   var body = event.toJson();
 
+  print("Request body: ${jsonEncode(body)}");
+
   Map<String, String>? header;
 
   if (token != null) {
-    header = {'Accept': 'application/json', 'Authorization': 'Bearer $token'};
+    header = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
   } else {
-    header = {'Accept': 'application/json'};
+    header = {'Accept': 'application/json', 'Content-Type': 'application/json'};
   }
-
-  print(jsonEncode(body));
 
   try {
     var response = await http.post(
@@ -319,13 +323,10 @@ Future<dynamic> createEvent(Event event, String? token) async {
       body: jsonEncode(body), // Asegúrate de codificar el cuerpo como JSON
     );
 
-    // Imprimir el código de estado y el cuerpo de la respuesta
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      return data;
+    if (response.statusCode == 201) {
+      return response;
+    } else if (response.statusCode == 409) {
+      return response;
     } else {
       // Puedes lanzar una excepción o devolver null
       throw Exception('Error: ${response.statusCode} - ${response.body}');
