@@ -1,3 +1,4 @@
+import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:en_tu_puerta_front/models/event.dart';
@@ -118,8 +119,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           child: Text(
             'Crear evento',
             style: TextStyle(
-                fontSize: 32,
-                color: const Color.fromARGB(255, 68, 87, 255),
+                fontSize: 30,
+                color: const Color(0xFF001563),
                 fontWeight: FontWeight.bold),
           ),
         ),
@@ -131,50 +132,38 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           children: [
             TextField(
               controller: _titleController,
-              decoration: InputDecoration(labelText: 'Título del evento'),
+              decoration: InputDecoration(
+              labelText: 'Título del evento',
+              labelStyle: TextStyle(color: Color(0xFF001563)),
+              ),
             ),
             SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
-              child: ElevatedButton(
+                child: ReusableButton(
                 onPressed: () => _selectDate(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                ),
-                child: Text(
-                  _selectedDate == null
-                      ? 'Seleccionar Fecha'
-                      : 'Fecha: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}',
-                  style: TextStyle(color: Colors.grey),
+                text: _selectedDate == null
+                  ? 'Seleccionar Fecha'
+                  : 'Fecha: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}',
+                color: Color(0xFF001563),
                 ),
               ),
-            ),
             SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
-              child: ElevatedButton(
+                child: ReusableButton(
                 onPressed: () => _selectTime(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                ),
-                child: Text(
-                  _selectedTime == null
-                      ? 'Seleccionar Hora'
-                      : 'Hora: $_selectedTime',
-                  style: TextStyle(color: Colors.grey),
+                text: _selectedTime == null ? 'Seleccionar Hora' : 'Hora: $_selectedTime',
+                color: Color(0xFF001563),
                 ),
               ),
-            ),
             SizedBox(height: 200),
             Align(
               alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
+                child: ReusableButton(
                 onPressed: _createEvent,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                ),
-                child: Text('Crear evento'),
+                text: 'Crear evento',
+                 color: Color(0xFF001563),
               ),
             ),
           ],
