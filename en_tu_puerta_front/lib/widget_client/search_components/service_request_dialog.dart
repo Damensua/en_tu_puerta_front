@@ -245,8 +245,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //Quitar este boton
-
-
             //ESTOS BOTONES SOLO PUEDEN APARECER EN PANTALLA SI isLoading==FALSE && DAYSSHOWN!=0 Listo
             //BOTON PARA ENVIAR LA SOLICITUD
             if (!isLoading && daysShown != 0) 

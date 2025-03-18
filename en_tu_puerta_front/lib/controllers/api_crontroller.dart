@@ -129,10 +129,9 @@ Future getUsers(String inputSearchBar, String? token) async {
 }
 
 //Controller para las las solicitud de peticiones
-//TODO: falta colocar el endpoint correcto para la historia de solicitar
 Future getPetitionS(String userId, String? token) async {
   var url = Uri.http(urlBase(), 'api/v1/petitions',
-      {'filter[user]': '$userId & include=user'});
+      {'filter[provider]': '$userId & include=user'});
 
   Map<String, String>? header;
 
@@ -237,8 +236,6 @@ Future postPetition(Map<String, dynamic> petitionJson, String? token) async {
   }
 }
 
-
-
 //Controller para traer los servicios de un prestador
 Future getOwnServices(int userId, String? token) async {
   var url = Uri.http(urlBase(), 'api/v1/services', {'filter[provider]': userId});
@@ -267,7 +264,6 @@ Future getOwnServices(int userId, String? token) async {
     logger.log(Level.error, 'Error: $e');
   }
 }
-
 
 //Controller para buscar la información de un prestador
 Future getServiceOwner(String userId, String? token) async {
