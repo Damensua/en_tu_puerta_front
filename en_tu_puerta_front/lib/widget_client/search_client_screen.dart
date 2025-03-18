@@ -121,7 +121,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
             Text(
               'Búsqueda',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 30,
                 fontWeight: FontWeight.bold, // Hacer el texto más grueso
                 color: Color(0xFF001563), // Cambiar el color si es necesario
               ),
