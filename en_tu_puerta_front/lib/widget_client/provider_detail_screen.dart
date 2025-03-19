@@ -1,6 +1,7 @@
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/functions/read_data.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/detail_service_client_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/models/provider.dart';
 import 'package:logger/logger.dart';
@@ -75,7 +76,10 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                       children: [
                         Icon(Icons.star, color: Colors.amber), 
                         SizedBox(width: 4),
-                        //Provider rating
+                        Text(
+                          widget.provider.punctuation.toString(),
+                          style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                        ),
                         Text(
                           widget.provider.type,
                           style: TextStyle(fontSize: 16, color: Colors.grey[700]), 
@@ -106,8 +110,8 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          'Empty Card',
-                          style: TextStyle(fontSize: 18, color: Colors.teal[800]), // Placeholder text style
+                            'Horario: ${widget.provider.startTime} - ${widget.provider.endTime}',
+                          style: TextStyle(fontSize: 18, color: Colors.teal[800]), 
                         ),
                       ),
                     ),
@@ -118,13 +122,13 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                   child: Card(
                     elevation: 6,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // Rounded corners
+                      borderRadius: BorderRadius.circular(12), 
                     ),
                     child: Container(
-                      height: 100, // Set a height for the card
+                      height: 100, 
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.teal[50], // Card background color
+                        color: Colors.teal[50], 
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -148,6 +152,58 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
             Text(
               'Servicio',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.teal),
+            ),
+
+            Expanded(
+              child: ListView.builder(
+              padding: EdgeInsets.all(16.0),
+              itemCount: servicesFounds.length,
+              itemBuilder: (context, index) {
+                final service = servicesFounds[index];
+                return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailServiceClientScreen(
+                    service: service,
+                    ),
+                  ),
+                  );
+                },
+                
+                child: Card(
+                  elevation: 4,
+                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ListTile(
+                  title: Text(
+                    service['serviceName'],
+                    style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal[800],
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${service['firstNameProvider']} ${service['lastNameProvider']}',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                  ),
+                  trailing: Text(
+                    '\$${service['servicePrice']}',
+                    style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal[800],
+                    ),
+                  ),
+                  ),
+                ),
+                );
+              },
+              ),
             ),
           ],
         ),

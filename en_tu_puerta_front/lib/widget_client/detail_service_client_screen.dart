@@ -7,6 +7,7 @@ import 'package:en_tu_puerta_front/widget_client/search_components/service_reque
 import 'package:en_tu_puerta_front/widgets/image_carousel.dart';
 import 'package:en_tu_puerta_front/models/service.dart';
 import 'package:logger/logger.dart';
+import 'package:en_tu_puerta_front/widget_client/provider_detail_screen.dart'; 
 
 final mensajito = Logger();
 
@@ -42,7 +43,7 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
     setState(() {
       mainProvider = parseProvider(json);
       mensajito.log(Level.info,
-          "Nombre de usurio, dueño del servicio ${mainProvider.username}");
+          "Nombre de usuario, dueño del servicio ${mainProvider.username}");
     });
   }
 
@@ -129,6 +130,7 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
                 
                 // Detalles del prestador
                 Expanded(
+
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

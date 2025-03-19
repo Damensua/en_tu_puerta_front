@@ -158,9 +158,19 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
               if (isLoading) ...[
                 Center(child: CircularProgressIndicator()),
               ] else if (daysShown == 0 || days.isEmpty || times.isEmpty) ...[
+                Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.warning,
+                        color: Colors.red,
+                        size: 50,
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                ),
                 Text(
-                  //ACA SE DEBE COLOCAR UNA IMAGEN CON UN ICONO PARA ACOMPAÑAR AL TEXTO, ICONO EN ROJO
-                  //SI ESTO SUCEDE NO DEBERÍAS MOSTRARSE LOS BOTONES
                   'Lo sentimos, no hay fechas disponibles para el servicio. Intenta en otro momento o con otro servicio.',
                   style: TextStyle(
                       fontSize: 16, color: const Color.fromARGB(255, 0, 0, 0)),
@@ -200,7 +210,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                           onChanged: (String? newValue) {
                             setState(() {
                               selectedTime = newValue;
-                              print(selectedTime);
                             });
                           },
                           items: (indexSelectedDay >= 0 &&
@@ -249,10 +258,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //Quitar este boton
-
-
-            //ESTOS BOTONES SOLO PUEDEN APARECER EN PANTALLA SI isLoading==FALSE && DAYSSHOWN!=0 Listo
             //BOTON PARA ENVIAR LA SOLICITUD
             if (!isLoading && daysShown != 0)
               ReusableButton(
@@ -260,8 +265,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                 color: Color(0xFF001563),
                 onPressed: () async {
                   if (indexSelectedDay == -1) {
-                    //No se ha seleccionado ningun día entonces no se puede enviar la petición
-                    // y hay que colocar una advertencia Listo
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -284,11 +287,8 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       ),
                     );
 
-                    print(
-                        "Debe seleccionar una fecha para solicitar el servicio");
                   } else if (selectedTime == null) {
-                    //No se ha seleccionado ningun horario entonces no se puede enviar la petición
-                    // y hay que colocar una advertencia Listo
+
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -310,8 +310,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         ],
                       ),
                     );
-                    print(
-                        "Debe seleccionar un horario para solicitar el servicio");
 
                     //Procede a intentar crear la solicitud
                   } else if (indexSelectedDay >= 0 && idClient != null) {
@@ -360,15 +358,60 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                             ),
                           ),
                         );
-                      } else if (response == 409) {
-                        //DESPLEGAR MENSAJE/
-                        //No se puede crear la misma solicitud dos veces
-                        print('Ya existe la solicitud');
+                        } else if (response == 409) {
+                        // Mostrar un mensaje emergente indicando que ya existe la solicitud
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                          title: Text('Solicitud duplicada',
+                            style: TextStyle(color: Color(0xFF001563))),
+                          content: Text(
+                            'Ya existe una solicitud para este servicio en la fecha y hora seleccionadas.',
+                            style: TextStyle(fontSize: 18)),
+                          actions: [
+                            Center(
+                            child: ReusableButton(
+                              text: 'Ok',
+                              color: Color(0xFF001563),
+                              onPressed: () {
+                              Navigator.pop(context);
+                              },
+                            ),
+                            ),
+                          ],
+                          ),
+                        );
                       } else {
                         //DESPLEGAR MENSAJE/
-                        //Despues del mensaje y del boton okay se deja al usuario en el formulario, pero el formulario reiniciado
-                        print(
-                            'Hubo un error con la solicitud, intente nuevamente');
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                          title: Text('Error',
+                            style: TextStyle(color: Color(0xFF001563))),
+                          content: Text(
+                            'Hubo un error con la solicitud, intente nuevamente.',
+                            style: TextStyle(fontSize: 18)),
+                          actions: [
+                            Center(
+                            child: ReusableButton(
+                              text: 'Ok',
+                              color: Color(0xFF001563),
+                              onPressed: () {
+                              Navigator.pop(context);
+                              // Reinicia el formulario
+                              setState(() {
+                                indexSelectedDay = -1;
+                                selectedDay = null;
+                                selectedTime = null;
+                                _controller.clear();
+                              });
+                              },
+                            ),
+                            ),
+                          ],
+                          ),
+                        );
+
                       }
 
                       //

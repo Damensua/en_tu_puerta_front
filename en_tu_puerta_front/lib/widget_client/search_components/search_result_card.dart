@@ -21,7 +21,7 @@ class SearchResultCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16.0),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: SingleChildScrollView( // Added scrollable functionality
+        child: SingleChildScrollView( 
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,20 +33,20 @@ class SearchResultCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      serviceName, // Updated to serviceName
+                      serviceName, 
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
-                      overflow: TextOverflow.ellipsis, // Prevent overflow
+                      overflow: TextOverflow.ellipsis, 
                     ),
                     Text(
-                      providerName, // Added providerName
+                      providerName, 
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),
-                      overflow: TextOverflow.ellipsis, // Prevent overflow
+                      overflow: TextOverflow.ellipsis, 
                     ),
                     const SizedBox(height: 6),
                     Text(

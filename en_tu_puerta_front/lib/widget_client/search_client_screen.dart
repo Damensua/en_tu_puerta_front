@@ -112,9 +112,6 @@ class _WidgetSearchState extends State<WidgetSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       //ENCABEZADO
-      //Acomodar el espaciamiento de esto
-      //Esya muy pegado arriba, debe estar entre la barra y el logo
-      //Y el tipo de letra debe ser más grande y llamativo, y en azul
       appBar: AppBar(
         title: Row(
           children: [
@@ -122,8 +119,8 @@ class _WidgetSearchState extends State<WidgetSearch> {
               'Búsqueda',
               style: TextStyle(
                 fontSize: 30,
-                fontWeight: FontWeight.bold, // Hacer el texto más grueso
-                color: Color(0xFF001563), // Cambiar el color si es necesario
+                fontWeight: FontWeight.w900, 
+                color: Color(0xFF001563),
               ),
             ),
           ],
@@ -135,7 +132,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(
-                vertical: 8.0, horizontal: 16.0), // Reduce el espacio vertical
+                vertical: 8.0, horizontal: 16.0), 
 
             child: Row(
               children: [
@@ -143,7 +140,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
                 Expanded(
                   child: SearchBar(
                     controller: _searchController,
-                    hintText: 'Buscar servicio...',
+                    hintText: 'Realiza tu búsqueda aquí',
                     leading: Icon(Icons.search, color: Color(0xFF001563)),
                     trailing: [
                       PopupMenuButton<String>(
@@ -162,9 +159,9 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
                           // Cambia la busqueda segun el filtro
                           if (selectedFilter == 'Servicio') {
-                            fetchServices(); // Fetch services if the filter is "Servicio"
+                            fetchServices(); 
                           } else if (selectedFilter == 'Cuenta') {
-                            fetchProviders(); // Fetch providers if the filter is "Cuenta"
+                            fetchProviders(); 
                           }
                         },
                         itemBuilder: (BuildContext context) => [
@@ -208,7 +205,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
                                 if (!_searchController.text.isEmpty)
                                 Image.network(
                                   noResultsImages[Random().nextInt(noResultsImages.length)], // Seleccionar aleatoriamente una imagen
-                                  height: 200, //tamaño de la imagen
+                                  height: 200, 
                                   ),  
                                 const SizedBox(height: 8),
                                 Text(

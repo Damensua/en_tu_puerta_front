@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/models/provider.dart';
-import 'package:en_tu_puerta_front/widget_client/provider_detail_screen.dart'; // Importar la pantalla de detalles
+import 'package:en_tu_puerta_front/widget_client/provider_detail_screen.dart'; 
 
 // Widget para mostrar la información del proveedor
 class CardProvider extends StatelessWidget {
