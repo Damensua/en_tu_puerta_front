@@ -327,8 +327,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                       String? response;
                       //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                      response =
-                          await postPetition(newPetition.toJson(), token);
+                      //response = await postPetition(newPetition.toJson(), token);
                       //mensajero.log(Level.info, response);
 
                       //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
