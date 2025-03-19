@@ -1,5 +1,6 @@
 class Service {
   final int id;
+  final int idProvider;
   final String firstNameProvider;
   final String lastNameProvider;
   final double punctuationProvider;
@@ -12,6 +13,7 @@ class Service {
 
   Service({
     required this.id,
+    required this.idProvider,    
     required this.firstNameProvider,
     required this.lastNameProvider,
     required this.punctuationProvider,
@@ -27,6 +29,7 @@ class Service {
     final attributes = json['attributes'];
     return Service(
       id: json['id'],
+      idProvider: attributes["id_provider"],
       firstNameProvider: attributes['firstName_provider'],
       lastNameProvider: attributes['lastName_provider'],
       punctuationProvider: attributes['punctuation_provider'].toDouble(),

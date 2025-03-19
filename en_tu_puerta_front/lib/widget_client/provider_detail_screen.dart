@@ -1,17 +1,52 @@
+import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
+import 'package:en_tu_puerta_front/functions/read_data.dart';
+import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/models/provider.dart';
+import 'package:logger/logger.dart';
 
-// Página para mostrar los detalles del proveedor
-class ProviderDetailScreen extends StatelessWidget {
+final mensajito = Logger();
+
+class ProviderDetailScreen extends StatefulWidget {
   final Provider provider;
 
-  const ProviderDetailScreen({Key? key, required this.provider}) : super(key: key);
+  const ProviderDetailScreen({super.key, required this.provider});
 
+  @override
+  _ProviderDetailScreenState createState() => _ProviderDetailScreenState();
+}
+
+
+// Página para mostrar los detalles del proveedor
+class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
+  String? localToken = globalToken;
+  List servicesFounds = [];
+  late int userId;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = widget.provider.id; // Inicializa userId aquí
+    fetchServices(); // Llama a la función para obtener los prestadores
+  }
+  
+  // Función para obtener los servicios
+  void fetchServices() async {
+    var json = await getOwnServices(userId, localToken);
+    mensajito.log(Level.debug, "JSON RETORNADO:$json");
+    setState(() {
+      servicesFounds = parseServices(json);
+      mensajito.log(Level.info, "Objetos Servicio: $servicesFounds, cantidad de servicios: ${servicesFounds.length}"); // Actualiza la lista de servicios encontrados
+    });
+  }
+
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${provider.firstName} ${provider.lastName}'),
+        title: Text('${widget.provider.firstName} ${widget.provider.lastName}'),
         backgroundColor: Colors.teal, // AppBar color
       ),
       body: Padding(
@@ -32,7 +67,7 @@ class ProviderDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${provider.firstName} ${provider.lastName}',
+                      '${widget.provider.firstName} ${widget.provider.lastName}',
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.teal),
                     ),
                     SizedBox(height: 4),
@@ -42,7 +77,7 @@ class ProviderDetailScreen extends StatelessWidget {
                         SizedBox(width: 4),
                         //Provider rating
                         Text(
-                          provider.type,
+                          widget.provider.type,
                           style: TextStyle(fontSize: 16, color: Colors.grey[700]), 
                         ),
                       ],

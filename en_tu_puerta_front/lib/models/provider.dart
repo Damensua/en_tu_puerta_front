@@ -10,7 +10,7 @@ class Provider {
   final String address;
   final String startTime;
   final String endTime;
-  final String profileImagePath;
+  final String? profileImagePath;
   final int punctuation;
 
 
@@ -28,7 +28,7 @@ class Provider {
     required this.punctuation
   });
 
-  // Factory method to create a Provider from JSON
+
   factory Provider.fromJson(Map<String, dynamic> json) {
     return Provider(
       type: json['type'],
@@ -50,4 +50,8 @@ class Provider {
 List<Provider> parseProviders(String responseBody) {
   final parsed = json.decode(responseBody)['data'].cast<Map<String, dynamic>>();
   return parsed.map<Provider>((json) => Provider.fromJson(json)).toList();
+}
+
+Provider parseProvider(Map<String, dynamic> parsed) {
+  return Provider.fromJson(parsed['data']);
 }
