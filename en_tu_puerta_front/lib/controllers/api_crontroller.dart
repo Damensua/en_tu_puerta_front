@@ -239,7 +239,7 @@ Future postPetition(Map<String, dynamic> petitionJson, String? token) async {
 //Controller para traer los servicios de un prestador
 Future getOwnServices(int userId, String? token) async {
   var url =
-      Uri.http(urlBase(), 'api/v1/services', {'filter[provider]': userId});
+      Uri.http(urlBase(), 'api/v1/services', {'filter[provider]': '$userId'});
 
   Map<String, String>? header;
 

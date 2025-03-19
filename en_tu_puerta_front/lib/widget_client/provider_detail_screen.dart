@@ -47,116 +47,160 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.provider.firstName} ${widget.provider.lastName}'),
-        backgroundColor: Colors.teal, // AppBar color
+        title: Text('${widget.provider.firstName} ${widget.provider.lastName}'), // AppBar color
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Icono y nombre del proveedor
             Row(
               children: [
-                CircleAvatar(
-                  radius: 40, 
-                  backgroundColor: Colors.teal[100], 
-                  child: Icon(Icons.person, size: 40, color: Colors.teal), 
+              CircleAvatar(
+                radius: 40, 
+                backgroundColor: Color(0xFF001563), 
+                child: Icon(Icons.person, size: 40, color: Color(0xFF606D9E)), 
+              ),
+              SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                Text(
+                  '${widget.provider.firstName} ${widget.provider.lastName}',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF001563)),
                 ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SizedBox(height: 4),
+                Text(
+                  '@${widget.provider.username}',
+                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: Color(0xFF606D9E)), 
+                ),
+                SizedBox(height: 4),
+                Row(
                   children: [
-                    Text(
-                      '${widget.provider.firstName} ${widget.provider.lastName}',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.teal),
-                    ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.amber), 
-                        SizedBox(width: 4),
-                        Text(
-                          widget.provider.punctuation.toString(),
-                          style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                        ),
-                        Text(
-                          widget.provider.type,
-                          style: TextStyle(fontSize: 16, color: Colors.grey[700]), 
-                        ),
-                      ],
-                    ),
+                  Icon(Icons.star, color: Colors.amber), 
+                  SizedBox(width: 4),
+                  Text(
+                    widget.provider.punctuation.toDouble().toString(),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                  ),
                   ],
                 ),
+                ],
+              ),
               ],
             ),
             SizedBox(height: 16),
 
             // Dos cards para mostrar la ubicación y el horario del proveedor
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Card(
-                    elevation: 6,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), 
-                    ),
-                    child: Container(
-                      height: 100, 
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.teal[50], 
-                      ),
-                      child: Center(
-                        child: Text(
-                            'Horario: ${widget.provider.startTime} - ${widget.provider.endTime}',
-                          style: TextStyle(fontSize: 18, color: Colors.teal[800]), 
-                        ),
-                      ),
-                    ),
+              Expanded(
+              child: Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Color(0xFF001563),
+                ),
+                child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                Text(
+                  'Horario',
+                  style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                   ),
                 ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Card(
-                    elevation: 6,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), 
-                    ),
-                    child: Container(
-                      height: 100, 
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.teal[50], 
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.location_on, color: Colors.red, size: 30), 
-                          SizedBox(width: 8),
-                          Text(
-                            'Ubicación',
-                            style: TextStyle(fontSize: 18, color: Colors.teal[800]), 
-                          ),
-                        ],
-                      ),
+                SizedBox(height: 4),
+                Text(
+                  'Inicio: ${widget.provider.startTime}',
+                  style: TextStyle(fontSize: 12, color: Colors.white),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Fin: ${widget.provider.endTime}',
+                  style: TextStyle(fontSize: 12, color: Colors.white),
+                ),
+                ],
+                ),
+                ),
+              ),
+              ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+              child: Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Color(0xFF001563),
+                ),
+                child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  Icon(Icons.location_on, color: Colors.red, size: 22),
+                  SizedBox(width: 4),
+                  Text(
+                    'Ubicación',
+                    style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                     ),
                   ),
+                  ],
                 ),
+                SizedBox(height: 8),
+                Flexible(
+                  child: Text(
+                  widget.provider.address,
+                  style: TextStyle(fontSize: 11, color: Colors.white),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  ),
+                ),
+                ],
+                ),
+                ),
+              ),
+              ),
+              ),
               ],
             ),
             SizedBox(height: 16),
 
-            // Titulo de la sección servicios, aqui van los 
+            // Titulo de la sección servicios, aqui van los servicios
             Text(
-              'Servicio',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.teal),
+              'Servicios',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Color(0xFF001563)),
             ),
 
             Expanded(
               child: ListView.builder(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(9.0),
               itemCount: servicesFounds.length,
               itemBuilder: (context, index) {
                 final service = servicesFounds[index];
@@ -172,31 +216,37 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                   );
                 },
                 
-                child: Card(
+                child: SizedBox(
+                  width: 300, 
+                  height: 120, 
+                  child: Card(
                   elevation: 4,
                   margin: EdgeInsets.symmetric(vertical: 8.0),
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: ListTile(
-                  title: Text(
-                    service['serviceName'],
-                    style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.teal[800],
+                  child: Center( 
+                    child: ListTile(
+                    title: Text(
+                      service.serviceName,
+                      style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF001563),
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    '${service['firstNameProvider']} ${service['lastNameProvider']}',
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                  ),
-                  trailing: Text(
-                    '\$${service['servicePrice']}',
-                    style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.teal[800],
+                    subtitle: Text(
+                      '${service.firstNameProvider} ${service.lastNameProvider}',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                    ),
+                    trailing: Text(
+                      '\$${service.servicePrice}',
+                      style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                      ),
+                    ),
                     ),
                   ),
                   ),

@@ -416,7 +416,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                       //
                     } catch (e) {
-                      //AGREGAR UN MENSAJE POP DE QUE HA HABIDO UN ERROR CON EL ENVIO: CON EL TIPO DE ERROR
                         showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
