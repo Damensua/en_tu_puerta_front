@@ -118,63 +118,75 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
             const SizedBox(height: 16),
             
             // Información del prestador
-            Row(
-              children: [
+            GestureDetector(
+              onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => ProviderDetailScreen(provider: mainProvider),
+                ),
+              );
+              },
+              child: Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Row(
+                children: [
                 // Foto del prestador
                 CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(widget.service.imagesPath),
-
                 ),
                 const SizedBox(width: 16),
                 
                 // Detalles del prestador
                 Expanded(
-
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Nombre del prestador
+                    Text(
+                    '${widget.service.firstNameProvider} ${widget.service.lastNameProvider}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ),
+                    const SizedBox(height: 4),
+                    
+                    // Rating en estrellas
+                    Row(
                     children: [
-                      // Nombre del prestador
+                      const Icon(Icons.star, color: Colors.amber, size: 16),
+                      const SizedBox(width: 4),
                       Text(
-                        '${widget.service.firstNameProvider} ${widget.service.lastNameProvider}',
-
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      
-                      // Rating en estrellas
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            widget.service.punctuationProvider.toStringAsFixed(1),
-
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      
-                      // Ubicación
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            widget.service.addressProvider,
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                        ],
+                      widget.service.punctuationProvider.toStringAsFixed(1),
+                      style: const TextStyle(fontSize: 14),
                       ),
                     ],
+                    ),
+                    const SizedBox(height: 4),
+                    
+                    // Ubicación
+                    Row(
+                    children: [
+                      const Icon(Icons.location_on, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                      widget.service.addressProvider,
+                      style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                    ),
+                  ],
                   ),
                 ),
-              ],
-            ),
+                ],
+              ),
+              ),
+            )
           ],
         ),
       ),
