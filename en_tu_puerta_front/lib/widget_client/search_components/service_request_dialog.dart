@@ -417,26 +417,27 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       //
                     } catch (e) {
                       //AGREGAR UN MENSAJE POP DE QUE HA HABIDO UN ERROR CON EL ENVIO: CON EL TIPO DE ERROR
-                      showDialog(
+                        showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
                           title: Text('Ha ocurrido un error',
-                              style: TextStyle(color: Color(0xFF001563))),
-                          content: Text('Intente más tarde.',
-                              style: TextStyle(fontSize: 18)),
+                            style: TextStyle(color: Color(0xFF001563))),
+                          content: Text(
+                            'Intente más tarde. Detalles del error: ${e.toString()}',
+                            style: TextStyle(fontSize: 18)),
                           actions: [
-                            Center(
-                              child: ReusableButton(
-                                text: 'Ok',
-                                color: Color(0xFF001563),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
+                          Center(
+                            child: ReusableButton(
+                            text: 'Ok',
+                            color: Color(0xFF001563),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             ),
+                          ),
                           ],
                         ),
-                      );
+                        );
                       print(e.toString());
                     }
                   }
