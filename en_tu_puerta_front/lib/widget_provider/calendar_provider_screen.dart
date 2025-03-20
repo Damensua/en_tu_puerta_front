@@ -33,6 +33,8 @@ class _CalendarScreenState extends State<WidgetCalendar> {
 
   //final int userId = 1; // Cambia esto según el usuario actual
 
+  //TODO: Como tomo el id del usuario que di con el token?
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +70,14 @@ class _CalendarScreenState extends State<WidgetCalendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendario'),
+        title: Text(
+          'Calendario',
+          style: TextStyle(
+        color: Color(0xFF001563),
+        fontWeight: FontWeight.bold,
+        fontSize: 30,
+          ),
+        ),
       ),
       body: Column(
         children: [

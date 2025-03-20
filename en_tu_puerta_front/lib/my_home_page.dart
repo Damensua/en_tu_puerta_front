@@ -5,10 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/widget_client/search_client_screen.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart'; 
 
+import 'package:flutter/material.dart';
+
+import 'package:en_tu_puerta_front/widget_client/search_client_screen.dart';
+import 'package:en_tu_puerta_front/pre_home_screen.dart'; 
+
+import 'package:en_tu_puerta_front/widget_client/home_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/search_client_screen.dart';
+
+import 'package:en_tu_puerta_front/widget_client/calendar_client_screen.dart';
+import 'package:en_tu_puerta_front/widget_client/settings_client_screen.dart';
+import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home screen
+
+
+
 //Controlador principal de la aplicación en el rol de cliente
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title, this.globalToken});
-  
+
   final String title;
   final String? globalToken;
 
@@ -23,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //WidgetHome(),
     WidgetSearch(),
     WidgetCalendar(),
+    //WidgetNotification(),
     //WidgetSettings()
   ];
 
@@ -31,10 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedIndex = index;
     });
   } 
-
+}
   @override
   Widget build(BuildContext context) {
-    print('Global Token: ${widget.globalToken}'); 
+    // Use the globalToken as needed
+    print('Global Token: $globalToken');
+
 
     return Scaffold(
       appBar: AppBar(
@@ -55,12 +72,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             
           ],
-
         ),
       ),
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
+
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.home),
+          //   label: 'Home',
+          // ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Búsqueda',
@@ -69,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.calendar_month),
             label: 'Calendario',
           ),
+
           /* BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
             label: 'calendario',
@@ -77,6 +100,16 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.list),
             label: 'Perfil',
           ),*/
+
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.notifications),
+          //   label: 'Notificaciones',
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.list),
+          //   label: 'Perfil',
+          // ),
+
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.grey,
