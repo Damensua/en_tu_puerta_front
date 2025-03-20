@@ -7,7 +7,7 @@ class Service {
   final String addressProvider;
   final String serviceName;
   final double servicePrice;
-  final String imagesPath;
+  final List imagesPath;
   final String description;
   final int duration;
 

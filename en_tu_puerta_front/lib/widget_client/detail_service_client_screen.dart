@@ -64,7 +64,7 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
 
             // Carrusel de imágenes
             ImageCarousel(
-              imageUrls: [widget.service.imagesPath],
+              imageUrls: (widget.service.imagesPath as List<dynamic>).cast<String>(),
             ),
 
             const SizedBox(height: 16),
@@ -137,7 +137,7 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
                 // Foto del prestador
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: NetworkImage(widget.service.imagesPath),
+                  backgroundImage: NetworkImage(mainProvider.profileImagePath ?? 'https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png'),
                 ),
                 const SizedBox(width: 16),
                 
