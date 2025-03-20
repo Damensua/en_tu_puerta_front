@@ -268,8 +268,18 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text('Advertencia',
+                        title: Row(
+                          children: [
+                          Icon(
+                            Icons.warning,
+                            color: Colors.red,
+                            size: 24,
+                          ),
+                          SizedBox(width: 8),
+                          Text('Advertencia',
                             style: TextStyle(color: Color(0xFF001563))),
+                          ],
+                        ),
                         content: Text(
                             'Debe seleccionar una fecha para solicitar el servicio',
                             style: TextStyle(fontSize: 18)),
@@ -292,8 +302,18 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text('Advertencia',
+                        title: Row(
+                          children: [
+                          Icon(
+                            Icons.warning,
+                            color: Colors.red,
+                            size: 24,
+                          ),
+                          SizedBox(width: 8),
+                          Text('Advertencia',
                             style: TextStyle(color: Color(0xFF001563))),
+                          ],
+                        ),
                         content: Text(
                             'Debe seleccionar un horario para solicitar el servicio',
                             style: TextStyle(fontSize: 18)),
@@ -363,8 +383,18 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                          title: Text('Solicitud duplicada',
-                            style: TextStyle(color: Color(0xFF001563))),
+                            title: Row(
+                            children: [
+                              Icon(
+                              Icons.warning,
+                              color: Colors.red,
+                              size: 24,
+                              ),
+                              SizedBox(width: 8),
+                              Text('Solicitud duplicada',
+                                style: TextStyle(color: Color(0xFF001563))),
+                            ],
+                            ),
                           content: Text(
                             'Ya existe una solicitud para este servicio en la fecha y hora seleccionadas.',
                             style: TextStyle(fontSize: 18)),
@@ -386,8 +416,18 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                          title: Text('Error',
-                            style: TextStyle(color: Color(0xFF001563))),
+                            title: Row(
+                            children: [
+                              Icon(
+                              Icons.warning,
+                              color: Colors.red,
+                              size: 24,
+                              ),
+                              SizedBox(width: 8),
+                              Text('Error',
+                              style: TextStyle(color: Color(0xFF001563))),
+                            ],
+                            ),
                           content: Text(
                             'Hubo un error con la solicitud, intente nuevamente.',
                             style: TextStyle(fontSize: 18)),
@@ -419,8 +459,20 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Ha ocurrido un error',
-                            style: TextStyle(color: Color(0xFF001563))),
+                            title: Row(
+                            children: [
+                              Icon(
+                              Icons.warning,
+                              color: Colors.red,
+                              size: 24,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                              'Ha ocurrido un error',
+                              style: TextStyle(color: Color(0xFF001563)),
+                              ),
+                            ],
+                            ),
                           content: Text(
                             'Intente más tarde. Detalles del error: ${e.toString()}',
                             style: TextStyle(fontSize: 18)),
