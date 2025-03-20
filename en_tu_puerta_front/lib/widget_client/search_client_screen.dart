@@ -41,7 +41,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
   //Variable para el Filtro
   String selectedFilter = 'Servicio';
 
- //Lista de images de gatos
+  //Lista de images de gatos
   final List<String> noResultsImages = [
     'https://i.postimg.cc/wxRP2X0y/pngtree-adorable-cute-kitten-orange-cat-sad-in-box-sticker-png-image-9191988.png',
     'https://i.postimg.cc/LXwWR568/pngtree-adorable-cute-animal-orange-cat-sleeping-on-blue-pillow-sticker-cartoon-png-image-9192730.png',
@@ -81,8 +81,12 @@ class _WidgetSearchState extends State<WidgetSearch> {
     var json = await getServices(searchText, localToken);
     //mensajito.log(Level.debug, "JSON RETORNADO:$json");
     setState(() {
-      servicesFounds = parseServices(json);
-      //mensajito.log(Level.info, "Objetos Servicio: $servicesFounds"); // Actualiza la lista de servicios encontrados
+      if (json == null) {
+        servicesFounds = []; // Si no hay resultados, la lista queda vacía
+      } else {
+        servicesFounds = parseServices(json);
+      }
+      //mensajito.log(Level.info,"Objetos Servicio: $servicesFounds"); // Actualiza la lista de servicios encontrados
     });
   }
 
@@ -119,7 +123,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
               'Búsqueda',
               style: TextStyle(
                 fontSize: 30,
-                fontWeight: FontWeight.w900, 
+                fontWeight: FontWeight.w900,
                 color: Color(0xFF001563),
               ),
             ),
@@ -131,9 +135,8 @@ class _WidgetSearchState extends State<WidgetSearch> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 8.0, horizontal: 16.0), 
-
+            padding:
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: Row(
               children: [
                 //BARRA DE BÚSQUEDA CON FILTRO INTEGRADO
@@ -147,8 +150,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
                         icon: Icon(Icons.filter_alt, color: Color(0xFF001563)),
                         onSelected: (String value) {
                           setState(() {
-                            selectedFilter =
-                                value; // Actualiza el filtro
+                            selectedFilter = value; // Actualiza el filtro
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -159,9 +161,9 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
                           // Cambia la busqueda segun el filtro
                           if (selectedFilter == 'Servicio') {
-                            fetchServices(); 
+                            fetchServices();
                           } else if (selectedFilter == 'Cuenta') {
-                            fetchProviders(); 
+                            fetchProviders();
                           }
                         },
                         itemBuilder: (BuildContext context) => [
@@ -202,11 +204,12 @@ class _WidgetSearchState extends State<WidgetSearch> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (!_searchController.text.isEmpty)
-                                Image.network(
-                                  noResultsImages[Random().nextInt(noResultsImages.length)], // Seleccionar aleatoriamente una imagen
-                                  height: 200, 
-                                  ),  
+                                if (_searchController.text.isNotEmpty)
+                                  Image.network(
+                                    noResultsImages[Random().nextInt(noResultsImages
+                                        .length)], // Seleccionar aleatoriamente una imagen
+                                    height: 200,
+                                  ),
                                 const SizedBox(height: 8),
                                 Text(
                                   _searchController.text.isEmpty
@@ -249,11 +252,13 @@ class _WidgetSearchState extends State<WidgetSearch> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (!_searchController.text.isEmpty)
+                                if (_searchController.text.isNotEmpty)
                                   Image.network(
-                                  noResultsImages[Random().nextInt(noResultsImages.length)], // Seleccionar aleatoriamente una imagen
-                                  height: 200, // Ajustar el tamaño de la imagen
-                                  ),  
+                                    noResultsImages[Random().nextInt(noResultsImages
+                                        .length)], // Seleccionar aleatoriamente una imagen
+                                    height:
+                                        200, // Ajustar el tamaño de la imagen
+                                  ),
                                 const SizedBox(height: 8),
                                 Text(
                                   _searchController.text.isEmpty
