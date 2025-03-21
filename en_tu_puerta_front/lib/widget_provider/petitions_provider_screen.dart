@@ -23,6 +23,40 @@ class _WidgetProviderNotificationsState extends State<WidgetProviderNotification
     });
   }
 
+  // void _acceptRequest() async {
+  //   // Aquí estamos asumiendo que la API tiene un endpoint PATCH como '/petitions/{id}/accept'
+  //   var url = Uri.http('10.0.2.2:8000', 'api/v1/petitions/$petitionId/accept');
+  //   Map<String, String>? headers = {
+  //     'Accept': 'application/json',
+  //     'Authorization': 'Bearer $token',
+  //   };
+
+  //   try {
+  //     var response = await http.patch(url, headers: headers);
+
+  //     if (response.statusCode == 200) {
+  //       var data = jsonDecode(response.body);
+  //       // Si la solicitud se acepta correctamente, actualiza la UI
+  //       setState(() {
+  //         _showCard = false; // Oculta la tarjeta de solicitud
+  //       });
+
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Solicitud aceptada')),
+  //       );
+  //     } else {
+  //       // Si hubo un error al aceptar la solicitud
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Error al aceptar la solicitud')),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Error: $e')),
+  //     );
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     // Construye la interfaz de notificaciones con lista de solicitudes
