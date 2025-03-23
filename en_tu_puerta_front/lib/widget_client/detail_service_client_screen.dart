@@ -151,7 +151,7 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
                 // Foto del prestador
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: NetworkImage(widget.service.imagesPath),
+                  backgroundImage: NetworkImage("https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png"),
                 ),
                 const SizedBox(width: 16),
                 
