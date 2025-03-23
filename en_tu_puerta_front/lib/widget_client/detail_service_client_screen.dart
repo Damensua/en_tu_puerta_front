@@ -129,10 +129,6 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
             // Línea horizontal
             const Divider(thickness: 1),
             const SizedBox(height: 16),
-            // Mostrar la ruta de las imágenes en un texto
-            Text(
-              'Ruta de las imágenes: ${widget.service.imagesPath}',
-            ),
             
             const SizedBox(height: 16),
             // Información del prestador

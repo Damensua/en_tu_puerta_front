@@ -285,11 +285,8 @@ class _WidgetSearchState extends State<WidgetSearch> {
                                     ),
                                   );
                                 },
-                                child: SearchResultCard(
-                                  serviceName: service.serviceName,
-                                  providerName:
-                                      '${service.firstNameProvider} ${service.lastNameProvider}',
-                                  price: service.servicePrice,
+                                child: SearchResultCard(service: service,
+                                  
                                 ),
                               );
                             },

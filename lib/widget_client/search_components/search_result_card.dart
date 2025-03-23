@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../models/service.dart';
-// Adjust the import according to your project structure
+import 'package:your_project/models/service.dart'; // Adjust the import according to your project structure
 
 // Componente que muestra una tarjeta de resultado de búsqueda
 class SearchResultCard extends StatelessWidget {
@@ -21,20 +19,9 @@ class SearchResultCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         child: SingleChildScrollView( 
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              service.imagesPath.startsWith('[') 
-                ? Image.network(
-                service.imagesPath
-                .substring(1, service.imagesPath.length - 1) // Remove brackets
-                .split(',')[0] // Take the first URL
-                .replaceAll('"', '') // Remove quotes if present
-                .trim(), // Trim whitespace
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-                )
-                : Icon(Icons.work, size: 80, color: Color(0xFF001563)), // Icono fijo
+              Icon(Icons.work, size: 40, color: Color(0xFF001563)), // Icono fijo
 
               SizedBox(width: 16),
               Expanded(
@@ -42,7 +29,7 @@ class SearchResultCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      service.serviceName, 
+                      service.name, 
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -50,16 +37,16 @@ class SearchResultCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis, 
                     ),
                     Text(
-                      '${service.firstNameProvider} ${service.lastNameProvider}', 
+                      service.providerName, 
                       style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
+                        fontSize: 16,
+                        color: Colors.grey,
                       ),
                       overflow: TextOverflow.ellipsis, 
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '\$${service.servicePrice}',
+                      '\$${service.price.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.green,
