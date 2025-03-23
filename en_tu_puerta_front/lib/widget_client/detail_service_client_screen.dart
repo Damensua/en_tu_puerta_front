@@ -63,9 +63,22 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
           children: [
 
             // Carrusel de imágenes
-            ImageCarousel(
-              imageUrls: [widget.service.imagesPath],
-            ),
+            widget.service.imagesPath.startsWith('[')
+              ? ImageCarousel(
+                imageUrls: List<String>.from(
+                  widget.service.imagesPath
+                    .substring(1, widget.service.imagesPath.length - 1)
+                    .split(',')
+                    .map((e) => e.trim().replaceAll('"', '')),
+                ),
+                )
+                : const Center(
+                child: Icon(
+                  Icons.image_not_supported,
+                  size: 100,
+                  color: Colors.grey,
+                ),
+                ),
 
             const SizedBox(height: 16),
             
@@ -116,7 +129,12 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
             // Línea horizontal
             const Divider(thickness: 1),
             const SizedBox(height: 16),
+            // Mostrar la ruta de las imágenes en un texto
+            Text(
+              'Ruta de las imágenes: ${widget.service.imagesPath}',
+            ),
             
+            const SizedBox(height: 16),
             // Información del prestador
             GestureDetector(
               onTap: () {
@@ -176,7 +194,7 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
                       const SizedBox(width: 4),
                       Text(
                       widget.service.addressProvider,
-                      style: const TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 12),
                       ),
                     ],
                     ),
