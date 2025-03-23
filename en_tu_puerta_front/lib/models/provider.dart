@@ -10,7 +10,7 @@ class Provider {
   final String address;
   final String startTime;
   final String endTime;
-  final String? profileImagePath;
+  final String profileImagePath;
   final int punctuation;
 
 
