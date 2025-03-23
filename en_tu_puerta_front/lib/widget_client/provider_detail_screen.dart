@@ -56,11 +56,13 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
           children: [
             // Icono y nombre del proveedor
             Row(
-              children: [
+                children: [
                 CircleAvatar(
-                radius: 40,
-                backgroundImage: NetworkImage(widget.provider.profileImagePath ?? 'https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png'),
-                backgroundColor: Colors.transparent,
+                  radius: 40,
+                  backgroundImage: NetworkImage(
+                  widget.provider.profileImagePath.replaceAll('"', ''),
+                  ),
+                  backgroundColor: Color(0xFF001563),
                 ),
               SizedBox(width: 16),
               Column(
