@@ -3,24 +3,24 @@ class Petition {
   final String? firstNameUser;
   final String? lastNameUser;
   final String? imageUser;
-  final DateTime date;
+  final String date;
   final String? time;
   final String? status;
-  final String message;
+  final String? message;
   final int? idService;
   final String? nameService;
 
   Petition({
     required this.idUser,
-    required this.firstNameUser,
-    required this.lastNameUser,
-    required this.imageUser,
+    this.firstNameUser,
+    this.lastNameUser,
+    this.imageUser,
     required this.date,
     required this.time,
-    required this.status,
+    this.status,
     required this.message,
     required this.idService,
-    required this.nameService,
+    this.nameService,
   });
 
   factory Petition.fromJson(Map<String, dynamic> json) {
@@ -30,7 +30,7 @@ class Petition {
       firstNameUser: attributes['firstname_user'],
       lastNameUser: attributes['lastname_user'],
       imageUser: attributes['image_user'],
-      date: DateTime.parse(attributes['date']),
+      date: attributes['date'],
       time: attributes['time'],
       status: attributes['status'],
       message: attributes['message'],

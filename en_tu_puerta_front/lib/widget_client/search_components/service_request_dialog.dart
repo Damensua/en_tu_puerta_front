@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/functions/add_seconds.dart';
 import 'package:en_tu_puerta_front/functions/format_dates.dart';
@@ -336,21 +338,16 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         date: dates[indexSelectedDay],
                         time: addSeconds(selectedTime),
                         message: getInput(),
-                        idService: idService,
-                        firstNameUser: null,
-                        lastNameUser: null,
-                        imageUser: null,
-                        status: null,
-                        nameService: null,
+                        idService: idService
                       );
                       mensajero.log(Level.info, newPetition.toJson());
 
-                      String? response;
+                      int? response;
                       response =
                           await postPetition(newPetition.toJson(), token);
                       mensajero.log(Level.info, response);
 
-                      if (response != null) {
+                      if (response == 201) {
                         Navigator.pop(context);
                         showDialog(
                           context: context,
@@ -378,7 +375,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                             ),
                           ),
                         );
-                      } else if (response == '409') {
+                      } else if (response ==409) {
                         // Mostrar un mensaje emergente indicando que ya existe la solicitud
                         showDialog(
                           context: context,
@@ -488,12 +485,10 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                           ],
                         ),
                       );
-                      print(e.toString());
                     }
                   }
 
                   // Mostrar diálogo de confirmación
-                  // Aquí podría ser utilizado un framework de diálogos, como Flutter Dialogs,
                 },
               )
             else
