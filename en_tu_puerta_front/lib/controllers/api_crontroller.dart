@@ -130,7 +130,7 @@ Future getUsers(String inputSearchBar, String? token) async {
 }
 
 //Controller para las las solicitud de peticiones
-Future getPetition(String userId, String? token) async {
+Future getPetitionsByIdUser(String? userId, String? token) async {
   var url = Uri.http(urlBase(), 'api/v1/petitions',
       {'filter[provider]': '$userId & include=user'});
 
@@ -144,12 +144,15 @@ Future getPetition(String userId, String? token) async {
 
   try {
     var response = await http.get(url, headers: header);
-
     if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      logger.log(Level.info, data);
-
-      return data;
+      var jsonResponse = json.decode(response.body);
+      print(jsonResponse);
+      if (jsonResponse['data'] != null) {
+        List<dynamic> petitionsData = jsonResponse['data'];
+        return petitionsData
+            .map((petition) => Petition.fromJson(petition))
+            .toList();
+      }
     } else {
       return null;
     }

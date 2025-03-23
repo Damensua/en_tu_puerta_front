@@ -1,25 +1,55 @@
+import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
+import 'package:en_tu_puerta_front/models/petition.dart';
 import 'package:flutter/material.dart';
 import 'provider_petition_components/petition_card.dart';
+import 'package:en_tu_puerta_front/pre_home_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 // Widget para la pantalla de notificaciones del proveedor
 class WidgetProviderNotifications extends StatefulWidget {
-
   const WidgetProviderNotifications({super.key});
 
   @override
-  State<WidgetProviderNotifications> createState() => _WidgetProviderNotificationsState();
+  State<WidgetProviderNotifications> createState() =>
+      _WidgetProviderNotificationsState();
 }
 
 // Estado que maneja la lógica de las notificaciones del proveedor
-class _WidgetProviderNotificationsState extends State<WidgetProviderNotifications> {
+class _WidgetProviderNotificationsState
+    extends State<WidgetProviderNotifications> {
+  String? localToken = globalToken;
+  String? userId = globalIdUser;
 
-  bool _showCard = true;
+  List petitionsFounds = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPetitions();
+  }
+
+  Future<void> _loadPetitions() async {
+    if (await getPetitionsByIdUser(userId, localToken) != null) {
+      List<Petition> fetchedPetitions =
+          await getPetitionsByIdUser(userId, localToken);
+
+      setState(() {
+        for (var petitionMap in fetchedPetitions) {
+          if (petitionMap.status == "Enviada") {
+            petitionsFounds.add(petitionMap);
+          }
+        }
+        _isLoading = false;
+      });
+    }
+  }
 
   // Método para aceptar una solicitud de servicio
-  void _acceptRequest() {
-
+  void _acceptRequest(int index) {
     setState(() {
-      _showCard = false;
+      petitionsFounds.removeAt(index);
     });
   }
 
@@ -50,19 +80,34 @@ class _WidgetProviderNotificationsState extends State<WidgetProviderNotification
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              itemCount: _showCard ? 1 : 0,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                return NotificationCard(
-                  profileName: '*Prof_Name*',
-                  profLastName: '*Prof_LastName*',
-                  onAccept: _acceptRequest,
-                  onToggleDetails: () {},
-                );
-              },
-            ),
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : petitionsFounds.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No tiene solicitudes pendientes',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF001563),
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: EdgeInsets.all(16.0),
+                        itemCount: petitionsFounds.length,
+                        itemBuilder: (context, index) {
+                          final petition = petitionsFounds[index];
+                          return NotificationCard(
+                            profileName: petition.firstNameUser,
+                            profLastName: petition.lastNameUser,
+                            onAccept: () {
+                              _acceptRequest(index);
+                            },
+                            onToggleDetails: () {},
+                          );
+                        },
+                      ),
           ),
         ],
       ),

@@ -83,10 +83,10 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
             icon: Icon(Icons.add),
             label: 'Añadir',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Perfil',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.list),
+          //   label: 'Perfil',
+          // ),
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.grey,

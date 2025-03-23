@@ -232,7 +232,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                               : []))
                   ],
                 )),
-                 SizedBox(height: 15),
+                SizedBox(height: 15),
 
                 //CAJA DE TEXTO
                 SizedBox(
@@ -270,14 +270,14 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       builder: (context) => AlertDialog(
                         title: Row(
                           children: [
-                          Icon(
-                            Icons.warning,
-                            color: Colors.red,
-                            size: 24,
-                          ),
-                          SizedBox(width: 8),
-                          Text('Advertencia',
-                            style: TextStyle(color: Color(0xFF001563))),
+                            Icon(
+                              Icons.warning,
+                              color: Colors.red,
+                              size: 24,
+                            ),
+                            SizedBox(width: 8),
+                            Text('Advertencia',
+                                style: TextStyle(color: Color(0xFF001563))),
                           ],
                         ),
                         content: Text(
@@ -296,22 +296,20 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         ],
                       ),
                     );
-
                   } else if (selectedTime == null) {
-
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: Row(
                           children: [
-                          Icon(
-                            Icons.warning,
-                            color: Colors.red,
-                            size: 24,
-                          ),
-                          SizedBox(width: 8),
-                          Text('Advertencia',
-                            style: TextStyle(color: Color(0xFF001563))),
+                            Icon(
+                              Icons.warning,
+                              color: Colors.red,
+                              size: 24,
+                            ),
+                            SizedBox(width: 8),
+                            Text('Advertencia',
+                                style: TextStyle(color: Color(0xFF001563))),
                           ],
                         ),
                         content: Text(
@@ -335,17 +333,23 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                   } else if (indexSelectedDay >= 0 && idClient != null) {
                     try {
                       Petition newPetition = Petition(
-                          idUser: int.parse(idClient as String),
-                          date: dates[indexSelectedDay],
-                          time: addSeconds(selectedTime),
-                          message: getInput(),
-                          idService: idService);
-
+                        idUser: int.parse(idClient as String),
+                        date: dates[indexSelectedDay],
+                        time: addSeconds(selectedTime),
+                        message: getInput(),
+                        idService: idService,
+                        firstNameUser: null,
+                        lastNameUser: null,
+                        imageUser: null,
+                        status: null,
+                        nameService: null,
+                      );
                       mensajero.log(Level.info, newPetition.toJson());
 
                       String? response;
                       //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
-                      response = await postPetition(newPetition.toJson(), token);
+                      response =
+                          await postPetition(newPetition.toJson(), token);
                       mensajero.log(Level.info, response);
 
                       //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
@@ -378,37 +382,37 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                             ),
                           ),
                         );
-                        } else if (response == 409) {
+                      } else if (response == 409) {
                         // Mostrar un mensaje emergente indicando que ya existe la solicitud
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
                             title: Row(
-                            children: [
-                              Icon(
-                              Icons.warning,
-                              color: Colors.red,
-                              size: 24,
+                              children: [
+                                Icon(
+                                  Icons.warning,
+                                  color: Colors.red,
+                                  size: 24,
+                                ),
+                                SizedBox(width: 8),
+                                Text('Solicitud duplicada',
+                                    style: TextStyle(color: Color(0xFF001563))),
+                              ],
+                            ),
+                            content: Text(
+                                'Ya existe una solicitud para este servicio en la fecha y hora seleccionadas.',
+                                style: TextStyle(fontSize: 18)),
+                            actions: [
+                              Center(
+                                child: ReusableButton(
+                                  text: 'Ok',
+                                  color: Color(0xFF001563),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
                               ),
-                              SizedBox(width: 8),
-                              Text('Solicitud duplicada',
-                                style: TextStyle(color: Color(0xFF001563))),
                             ],
-                            ),
-                          content: Text(
-                            'Ya existe una solicitud para este servicio en la fecha y hora seleccionadas.',
-                            style: TextStyle(fontSize: 18)),
-                          actions: [
-                            Center(
-                            child: ReusableButton(
-                              text: 'Ok',
-                              color: Color(0xFF001563),
-                              onPressed: () {
-                              Navigator.pop(context);
-                              },
-                            ),
-                            ),
-                          ],
                           ),
                         );
                       } else {
@@ -417,78 +421,77 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                           context: context,
                           builder: (context) => AlertDialog(
                             title: Row(
-                            children: [
-                              Icon(
-                              Icons.warning,
-                              color: Colors.red,
-                              size: 24,
+                              children: [
+                                Icon(
+                                  Icons.warning,
+                                  color: Colors.red,
+                                  size: 24,
+                                ),
+                                SizedBox(width: 8),
+                                Text('Error',
+                                    style: TextStyle(color: Color(0xFF001563))),
+                              ],
+                            ),
+                            content: Text(
+                                'Hubo un error con la solicitud, intente nuevamente.',
+                                style: TextStyle(fontSize: 18)),
+                            actions: [
+                              Center(
+                                child: ReusableButton(
+                                  text: 'Ok',
+                                  color: Color(0xFF001563),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    // Reinicia el formulario
+                                    setState(() {
+                                      indexSelectedDay = -1;
+                                      selectedDay = null;
+                                      selectedTime = null;
+                                      _controller.clear();
+                                    });
+                                  },
+                                ),
                               ),
-                              SizedBox(width: 8),
-                              Text('Error',
-                              style: TextStyle(color: Color(0xFF001563))),
                             ],
-                            ),
-                          content: Text(
-                            'Hubo un error con la solicitud, intente nuevamente.',
-                            style: TextStyle(fontSize: 18)),
-                          actions: [
-                            Center(
-                            child: ReusableButton(
-                              text: 'Ok',
-                              color: Color(0xFF001563),
-                              onPressed: () {
-                              Navigator.pop(context);
-                              // Reinicia el formulario
-                              setState(() {
-                                indexSelectedDay = -1;
-                                selectedDay = null;
-                                selectedTime = null;
-                                _controller.clear();
-                              });
-                              },
-                            ),
-                            ),
-                          ],
                           ),
                         );
-
                       }
 
                       //
                     } catch (e) {
-                        showDialog(
+                      showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                            title: Row(
+                          title: Row(
                             children: [
                               Icon(
-                              Icons.warning,
-                              color: Colors.red,
-                              size: 24,
+                                Icons.warning,
+                                color: Colors.red,
+                                size: 24,
                               ),
                               SizedBox(width: 8),
                               Text(
-                              'Ha ocurrido un error',
-                              style: TextStyle(color: Color(0xFF001563)),
+                                'Ha ocurrido un error',
+                                style: TextStyle(color: Color(0xFF001563)),
                               ),
                             ],
-                            ),
-                          content: Text(
-                            'Intente más tarde. Detalles del error: ${e.toString()}',
-                            style: TextStyle(fontSize: 18)),
-                          actions: [
-                          Center(
-                            child: ReusableButton(
-                            text: 'Ok',
-                            color: Color(0xFF001563),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            ),
                           ),
+                          content: Text(
+                              'Intente más tarde. Detalles del error: ${e.toString()}',
+                              style: TextStyle(fontSize: 18)),
+                          actions: [
+                            Center(
+                              child: ReusableButton(
+                                text: 'Ok',
+                                color: Color(0xFF001563),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
                           ],
                         ),
-                        );
+                      );
                       print(e.toString());
                     }
                   }

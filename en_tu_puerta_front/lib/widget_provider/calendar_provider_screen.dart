@@ -1,5 +1,4 @@
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
-import 'package:en_tu_puerta_front/functions/read_data.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -30,10 +29,6 @@ class _CalendarScreenState extends State<WidgetCalendar> {
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
-
-  //final int userId = 1; // Cambia esto según el usuario actual
-
-  //TODO: Como tomo el id del usuario que di con el token?
 
   @override
   void initState() {
@@ -73,9 +68,9 @@ class _CalendarScreenState extends State<WidgetCalendar> {
         title: Text(
           'Calendario',
           style: TextStyle(
-        color: Color(0xFF001563),
-        fontWeight: FontWeight.bold,
-        fontSize: 30,
+            color: Color(0xFF001563),
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
           ),
         ),
       ),
