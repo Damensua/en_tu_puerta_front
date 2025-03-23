@@ -40,7 +40,8 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
   //Variable para el Filtro
   String selectedFilter = 'Servicio';
-
+  // Variable para controlar el cargado
+  bool isLoading = true;
   //Lista de images de gatos
   final List<String> noResultsImages = [
     'https://i.postimg.cc/wxRP2X0y/pngtree-adorable-cute-kitten-orange-cat-sad-in-box-sticker-png-image-9191988.png',
@@ -92,13 +93,23 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
   //Funcion para obtener los prestadores de servicios
   void fetchProviders() async {
+    setState(() {
+      isLoading = true; // Set loading to true when starting the fetch
+    });
+
     var json = await getUsers(searchText, localToken);
     mensajito.log(Level.debug, "JSON RETORNADO:$json");
+
     setState(() {
-      providersFounds = parseProviders(json);
-      mensajito.log(Level.info,
-          "Objetos Servicio: $providersFounds,Cantidad de usarios encontrados ${providersFounds.length}");
-      // Actualiza la lista de prestadores de servicio encontrados
+      isLoading = false;
+      if (json != null) {
+        providersFounds = parseProviders(json);
+        mensajito.log(Level.info,
+            "Objetos Servicio: $providersFounds, Cantidad de usuarios encontrados: ${providersFounds.length}");
+      } else {
+        mensajito.log(Level.warning, "Data no encontrada o API retorna null.");
+        providersFounds = []; 
+      }
     });
   }
 
@@ -290,8 +301,8 @@ class _WidgetSearchState extends State<WidgetSearch> {
                                     ),
                                   );
                                 },
-                                child: SearchResultCard(service: service,
-                                  
+                                child: SearchResultCard(
+                                  service: service,
                                 ),
                               );
                             },

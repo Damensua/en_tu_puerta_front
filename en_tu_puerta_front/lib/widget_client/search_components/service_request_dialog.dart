@@ -329,7 +329,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       ),
                     );
 
-                    //Procede a intentar crear la solicitud
                   } else if (indexSelectedDay >= 0 && idClient != null) {
                     try {
                       Petition newPetition = Petition(
@@ -347,13 +346,10 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       mensajero.log(Level.info, newPetition.toJson());
 
                       String? response;
-                      //FUNCION QUE MANDA LA PETICION A LA BASE DE DATOS
                       response =
                           await postPetition(newPetition.toJson(), token);
                       mensajero.log(Level.info, response);
 
-                      //SI REPONSE DISTINTO DE NULL SE ENVIO EXITOSAMENTE LA CUESTION
-                      //Si se envia existosamente entonces sale el mensaje de besito y luego lo dejas en la pantalla detallada del servicio
                       if (response != null) {
                         Navigator.pop(context);
                         showDialog(
@@ -382,7 +378,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                             ),
                           ),
                         );
-                      } else if (response == 409) {
+                      } else if (response == '409') {
                         // Mostrar un mensaje emergente indicando que ya existe la solicitud
                         showDialog(
                           context: context,
