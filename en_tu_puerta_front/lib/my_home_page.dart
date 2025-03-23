@@ -45,8 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
     });
-  } 
-}
+} 
+
   @override
   Widget build(BuildContext context) {
     // Use the globalToken as needed
