@@ -152,9 +152,7 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
                 child: CircularProgressIndicator(),
               )
               : 
-              Text(
-                'Profile Image Path: ${mainProvider.profileImagePath}',
-              ),
+              
               GestureDetector(
                 onTap: () {
                 Navigator.push(
