@@ -49,18 +49,19 @@ class _NotificationCardState extends State<NotificationCard> {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
+                    Container(
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.blue.shade50,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      Icons.person,
-                      color: Color(0xFF001563),
-                      size: 28,
+                    child: Image.network(
+                      'https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png',
+                      width: 40,
+                      height: 20,
+                      fit: BoxFit.cover,
                     ),
-                  ),
+                    ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: Column(

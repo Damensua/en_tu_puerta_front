@@ -49,7 +49,7 @@ class _DetailPetitionProviderScreenState
             CircleAvatar(
               radius: 60,
               backgroundImage: NetworkImage(widget.petition.imageUser ??
-                  "https://i.pinimg.com/280x280_RS/61/1e/29/611e298177035a4ff0191a72b95d0976.jpg"),
+                  "https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png"),
             ),
             const SizedBox(height: 16),
 
@@ -113,6 +113,7 @@ class _DetailPetitionProviderScreenState
               widget.petition.message ?? 'Sin mensaje',
               style: const TextStyle(fontSize: 16),
             ),
+            SizedBox(height: 16),
             ReusableButton(
               text: 'Aceptar solicitud',
               color: const Color(0xFF001563),
