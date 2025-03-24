@@ -62,7 +62,7 @@ class DaysWidgetState extends State<DaysWidget> {
   }
 
   int? getIndexSelectedDay() {
-    return indexSelectedDay ?? -1; // Return -1 if indexSelectedDay is null
+    return indexSelectedDay ?? -1; 
   }
 }
 

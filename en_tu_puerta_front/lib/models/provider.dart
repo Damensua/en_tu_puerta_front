@@ -46,7 +46,6 @@ class Provider {
   }
 }
 
-// Function to parse the JSON response
 List<Provider> parseProviders(String responseBody) {
   final parsed = json.decode(responseBody)['data'].cast<Map<String, dynamic>>();
   return parsed.map<Provider>((json) => Provider.fromJson(json)).toList();

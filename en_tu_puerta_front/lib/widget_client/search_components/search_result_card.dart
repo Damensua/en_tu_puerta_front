@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/service.dart';
-// Adjust the import according to your project structure
 
 // Componente que muestra una tarjeta de resultado de búsqueda
 class SearchResultCard extends StatelessWidget {
@@ -26,10 +25,10 @@ class SearchResultCard extends StatelessWidget {
               service.imagesPath.startsWith('[') 
                 ? Image.network(
                 service.imagesPath
-                .substring(1, service.imagesPath.length - 1) // Remove brackets
-                .split(',')[0] // Take the first URL
-                .replaceAll('"', '') // Remove quotes if present
-                .trim(), // Trim whitespace
+                .substring(1, service.imagesPath.length - 1) 
+                .split(',')[0] 
+                .replaceAll('"', '') 
+                .trim(), 
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,

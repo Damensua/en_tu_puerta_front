@@ -4,12 +4,11 @@
 ///
 List<dynamic> formatDates(dates) {
   return dates.map((date) {
-    // Split the date string by "-"
     List<String> parts = date.split("-");
-    // Extract day and month
-    String day = parts[2]; // Day is the third part
-    String month = parts[1]; // Month is the second part
-    // Return formatted string
+
+    String day = parts[2]; 
+    String month = parts[1]; 
+    
     return '$day/$month';
   }).toList();
 }

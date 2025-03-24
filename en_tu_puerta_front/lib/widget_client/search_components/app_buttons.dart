@@ -10,7 +10,7 @@ class AppButtons extends StatelessWidget {
     super.key,
     required this.isSelected,
     required this.day,
-    required this.onTap, // required callback function
+    required this.onTap, 
     required this.date,
   });
 

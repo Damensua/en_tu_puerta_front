@@ -89,14 +89,12 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
     mensajero.log(Level.warning, dates);
     mensajero.log(Level.warning, days);
     mensajero.log(Level.info, daysShown);
-    // Initialize shortDays and shortDates after fetching data
     shortDays = shortenDays(days);
     shortDates = formatDates(dates);
 
     //mensajero.log(Level.warning,shortDays);
     //mensajero.log(Level.warning, shortDates);
 
-    // Update the state to reflect the new data
     setState(() {});
   }
 
@@ -109,9 +107,8 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   //
   void handleDaySelected(int index) {
     setState(() {
-      indexSelectedDay = index; // Update the selected day index
+      indexSelectedDay = index;
     });
-    //print("Selected Day Index: $indexSelectedDay");
   }
 
   //
@@ -156,7 +153,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
               ),
               SizedBox(height: 20),
 
-              // Check if daysShown is 0
               if (isLoading) ...[
                 Center(child: CircularProgressIndicator()),
               ] else if (daysShown == 0 || days.isEmpty || times.isEmpty) ...[
@@ -201,7 +197,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 20),
-                    // Dropdown for hours
                     if (indexSelectedDay >= 0)
                       (DropdownButtonFormField<String>(
                           decoration: InputDecoration(
@@ -227,7 +222,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                                       hour,
                                       style: TextStyle(
                                           fontSize:
-                                              16), // Customize item text style
+                                              16),
                                     ),
                                   );
                                 }).toList()

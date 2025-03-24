@@ -36,7 +36,7 @@ class Service {
       addressProvider: attributes['address_provider'],
       serviceName: attributes['service_name'],
       servicePrice: attributes['service_price'].toDouble(),
-      imagesPath: attributes['images_path'].replaceAll('"', ''), // Remove quotes
+      imagesPath: attributes['images_path'].replaceAll('"', ''), 
       description: attributes['description'],
       duration: attributes['duration'],
     );

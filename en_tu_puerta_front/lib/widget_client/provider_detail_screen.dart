@@ -47,7 +47,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.provider.firstName} ${widget.provider.lastName}'), // AppBar color
+        title: Text('${widget.provider.firstName} ${widget.provider.lastName}'), 
       ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),

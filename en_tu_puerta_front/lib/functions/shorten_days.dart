@@ -5,7 +5,7 @@
 ///
 List<dynamic> shortenDays(days) {
   return days.map((day) {
-    // Get the first three characters and capitalize the first letter
+    
     String shortened = day.length > 3 ? day.substring(0, 3) : day;
     return shortened[0].toUpperCase() + shortened.substring(1).toLowerCase();
   }).toList();

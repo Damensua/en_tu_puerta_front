@@ -126,7 +126,6 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        // Enable scrolling to avoid overflow
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [

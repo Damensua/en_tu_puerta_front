@@ -75,7 +75,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
 
   @override
   void dispose() {
-    _searchController.dispose(); // Dispose the controller when done
+    _searchController.dispose(); 
     super.dispose();
   }
 

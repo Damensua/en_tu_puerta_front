@@ -61,7 +61,7 @@ class WidgetProviderHome extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // Servicios Section
+
             const Text(
               'Tus Servicios',
               style: TextStyle(
@@ -85,7 +85,7 @@ class WidgetProviderHome extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // Agenda Section
+
             const Text(
               'Agenda',
               style: TextStyle(
