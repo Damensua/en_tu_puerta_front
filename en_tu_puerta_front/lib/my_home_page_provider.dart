@@ -18,7 +18,7 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    WidgetProviderHome(),
+    //WidgetProviderHome(),
     WidgetProviderNotifications(),
     WidgetCalendar(),
     //WidgetProviderMetrics(),
@@ -59,10 +59,10 @@ class _MyHomePageProviderState extends State<MyHomePageProvider> {
       //NAVBAR
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.home),
+          //   label: 'Home',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'Notificaciones',

@@ -14,9 +14,11 @@ Future getToken(String userType) async {
   var body;
 
   //Usario de validación para hacer el login
-  if(userType=='client'){body = {'email': 'testcliente@example.com', 'password': 'password'};
-  }else if(userType=='provider'){body = {'email': 'testprestador2@example.com', 'password': 'password'};}
-  
+  if (userType == 'client') {
+    body = {'email': 'testcliente@example.com', 'password': 'password'};
+  } else if (userType == 'provider') {
+    body = {'email': 'testprestador2@example.com', 'password': 'password'};
+  }
 
   try {
     //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs
@@ -366,6 +368,58 @@ Future<dynamic> createEvent(Event event, String? token) async {
     } else {
       // Puedes lanzar una excepción o devolver null
       throw Exception('Error: ${response.statusCode} - ${response.body}');
+    }
+  } catch (e) {
+    logger.log(Level.error, 'Error: $e');
+    return null;
+  }
+}
+
+//Controller para aceptar una solicitud de servicio
+Future acceptPetition(Petition petition, String? token) async {
+  var petitionId = petition.id;
+  var url = Uri.http(urlBase(), 'api/v1/petitions/$petitionId');
+
+  Map<String, String>? header;
+  if (token != null) {
+    header = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+  } else {
+    header = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+  }
+
+  //Usuario de validación para hacer el login
+  var body = jsonEncode(petition.toJson());
+  print('VER ESTO ACA              $body');
+
+  try {
+    //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs
+    var response = await http.patch(
+      url,
+      headers: header,
+      body: body,
+    );
+
+    logger.log(Level.info, 'Response status: ${response.statusCode}');
+    logger.log(Level.info, 'Response body: ${response.body}');
+
+    if (response.statusCode == 201) {
+      var data = jsonDecode(response.body);
+
+      logger.log(Level.info, data);
+
+      return response.statusCode;
+    } else if (response.statusCode == 409) {
+      var data = jsonDecode(response.body);
+
+      logger.log(Level.info, data);
+
+      return response.statusCode;
+    } else {
+      return null;
     }
   } catch (e) {
     logger.log(Level.error, 'Error: $e');

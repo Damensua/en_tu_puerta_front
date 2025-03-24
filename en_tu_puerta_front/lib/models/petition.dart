@@ -1,4 +1,5 @@
 class Petition {
+  final int? id;
   final int idUser;
   final String? firstNameUser;
   final String? lastNameUser;
@@ -11,6 +12,7 @@ class Petition {
   final String? nameService;
 
   Petition({
+    this.id,
     required this.idUser,
     this.firstNameUser,
     this.lastNameUser,
@@ -26,6 +28,7 @@ class Petition {
   factory Petition.fromJson(Map<String, dynamic> json) {
     final attributes = json['attributes'];
     return Petition(
+      id: json['id'],
       idUser: attributes['id_user'],
       firstNameUser: attributes['firstname_user'],
       lastNameUser: attributes['lastname_user'],
@@ -42,6 +45,7 @@ class Petition {
   Map<String, dynamic> toJson() {
     return {
       "data": {
+        "id": id,
         "attributes": {
           "id_user": idUser,
           "date": date,

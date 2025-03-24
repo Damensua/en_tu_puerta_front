@@ -3,6 +3,7 @@ import 'package:en_tu_puerta_front/models/petition.dart';
 import 'package:flutter/material.dart';
 import 'provider_petition_components/petition_card.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
+import 'package:en_tu_puerta_front/widget_provider/provider_petition_components/detail_petition_provider_screen.dart';
 
 // Widget para la pantalla de notificaciones del proveedor
 class WidgetProviderNotifications extends StatefulWidget {
@@ -16,8 +17,8 @@ class WidgetProviderNotifications extends StatefulWidget {
 // Estado que maneja la lógica de las notificaciones del proveedor
 class _WidgetProviderNotificationsState
     extends State<WidgetProviderNotifications> {
-  String? localToken = globalClientToken;
-  String? userId = globalIdClient;
+  String? localToken = globalProviderToken;
+  String? userId = globalIdProvider;
 
   List petitionsFounds = [];
   bool _isLoading = true;
@@ -46,9 +47,19 @@ class _WidgetProviderNotificationsState
 
   // Método para aceptar una solicitud de servicio
   void _acceptRequest(int index) {
-    setState(() {
-      petitionsFounds.removeAt(index);
-    });
+    try {
+      acceptPetition(petitionsFounds[index], globalProviderToken);
+      setState(() {
+        petitionsFounds.removeAt(index);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Solicitud aceptada')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('La solicitud ya ha sido aceptada')),
+      );
+    }
   }
 
   @override
@@ -78,35 +89,50 @@ class _WidgetProviderNotificationsState
             ),
           ),
           Expanded(
-            child: _isLoading
-                ? Center(child: CircularProgressIndicator())
-                : petitionsFounds.isEmpty
-                    ? Center(
-                        child: Text(
-                          'No tiene solicitudes pendientes',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF001563),
+              child: _isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : petitionsFounds.isEmpty
+                      ? Center(
+                          child: Text(
+                            'No tiene solicitudes pendientes',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF001563),
+                            ),
                           ),
-                        ),
-                      )
-                    : ListView.builder(
-                        padding: EdgeInsets.all(16.0),
-                        itemCount: petitionsFounds.length,
-                        itemBuilder: (context, index) {
-                          final petition = petitionsFounds[index];
-                          return NotificationCard(
-                            profileName: petition.firstNameUser,
-                            profLastName: petition.lastNameUser,
-                            onAccept: () {
-                              _acceptRequest(index);
-                            },
-                            onToggleDetails: () {},
-                          );
-                        },
-                      ),
-          ),
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.all(16.0),
+                          itemCount: petitionsFounds.length,
+                          itemBuilder: (context, index) {
+                            final petition = petitionsFounds[index];
+                            return NotificationCard(
+                              petitionId: petition.id,
+                              profileName: petition.firstNameUser,
+                              profLastName: petition.firstNameUser,
+                              onAccept: () {
+                                _acceptRequest(index);
+                              },
+                              onToggleDetails: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailPetitionProviderScreen(
+                                      petition: petition,
+                                      onAccept: () {
+                                        setState(() {
+                                          petitionsFounds.removeAt(index);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        )),
         ],
       ),
     );
