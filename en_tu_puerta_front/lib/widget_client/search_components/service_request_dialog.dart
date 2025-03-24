@@ -27,8 +27,8 @@ class ServiceRequestDialog extends StatefulWidget {
 
 class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
   //Datos de autentificación para mandar la solicitud de Servicio
-  String? token = globalToken;
-  String? idClient = globalIdUser;
+  String? token = globalClientToken;
+  String? idClient = globalIdClient;
   late int idService;
 
   //Datos de selección del usuario

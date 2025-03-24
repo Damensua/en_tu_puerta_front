@@ -16,8 +16,8 @@ class WidgetProviderNotifications extends StatefulWidget {
 // Estado que maneja la lógica de las notificaciones del proveedor
 class _WidgetProviderNotificationsState
     extends State<WidgetProviderNotifications> {
-  String? localToken = globalToken;
-  String? userId = globalIdUser;
+  String? localToken = globalClientToken;
+  String? userId = globalIdClient;
 
   List petitionsFounds = [];
   bool _isLoading = true;

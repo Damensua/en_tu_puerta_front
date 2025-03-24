@@ -8,9 +8,13 @@ import 'package:logger/logger.dart';
 // Pantalla de inicio que permite al usuario elegir entre ser cliente o proveedor
 final mensajero = Logger();
 
-String? globalToken;
-AuthResponse? authResponse;
-String? globalIdUser;
+String? globalClientToken;
+AuthResponse? authResponseClient;
+String? globalIdClient;
+
+String? globalProviderToken;
+AuthResponse? authResponseProvider;
+String? globalIdProvider;
 
 class PreHomeScreen extends StatefulWidget {
   const PreHomeScreen({super.key});
@@ -28,19 +32,23 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
   }
 
   Future<void> _initializeAuth() async {
-    authResponse = await getToken();
-    globalToken = authResponse?.token;
-    globalIdUser = authResponse?.idUser;
+    authResponseClient = await getToken( 'client');
+    globalClientToken = authResponseClient?.token;
+    globalIdClient = authResponseClient?.idUser;
+
+    authResponseProvider = await getToken('provider');
+    globalProviderToken = authResponseProvider?.token;
+    globalIdProvider = authResponseProvider?.idUser;
     setState(() {
       _isTokenInitialized = true;
     });
   }
 
   Future<String> fetchData() async {
-    if (globalToken == null) {
+    if (globalClientToken == null || globalProviderToken==null ) {
       throw Exception('Token is not available, Try Again');
     }
-    return globalToken!;
+    return globalClientToken!;
   }
 
   @override
@@ -93,7 +101,7 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                                   MaterialPageRoute(
                                       builder: (context) => MyHomePage(
                                           title: 'Home',
-                                          globalToken: globalToken)),
+                                          globalToken: globalClientToken)),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
@@ -113,6 +121,10 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () {
+                                //
+
+
+
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

@@ -8,12 +8,15 @@ import 'package:logger/logger.dart';
 
 final logger = Logger();
 
-Future getToken() async {
+Future getToken(String userType) async {
   //Url de la pagina login
   var url = Uri.http(urlBase(), 'api/login');
+  var body;
 
   //Usario de validación para hacer el login
-  var body = {'email': 'testcliente@example.com', 'password': 'password'};
+  if(userType=='client'){body = {'email': 'testcliente@example.com', 'password': 'password'};
+  }else if(userType=='provider'){body = {'email': 'testprestador2@example.com', 'password': 'password'};}
+  
 
   try {
     //Envio de la información a la página, donde retorna el token para poder llamar a las demás APIs

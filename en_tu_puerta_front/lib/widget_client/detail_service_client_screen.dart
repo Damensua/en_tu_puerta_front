@@ -25,7 +25,7 @@ class DetailServiceClientScreen extends StatefulWidget {
 }
 
 class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
-  String? localToken = globalToken;
+  String? localToken = globalClientToken;
   late Provider mainProvider;
 
   @override

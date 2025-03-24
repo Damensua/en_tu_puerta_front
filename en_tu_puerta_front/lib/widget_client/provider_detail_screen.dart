@@ -20,7 +20,7 @@ class ProviderDetailScreen extends StatefulWidget {
 
 // Página para mostrar los detalles del proveedor
 class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
-  String? localToken = globalToken;
+  String? localToken = globalClientToken;
   List servicesFounds = [];
   late int userId;
 

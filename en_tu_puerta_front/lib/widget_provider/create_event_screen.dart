@@ -13,8 +13,8 @@ class CreateEventScreen extends StatefulWidget {
 }
 
 class _CreateEventScreenState extends State<CreateEventScreen> {
-  String? localToken = globalToken;
-  String? userId = globalIdUser;
+  String? localToken = globalClientToken;
+  String? userId = globalIdClient;
 
   final TextEditingController _titleController = TextEditingController();
   DateTime? _selectedDate;

@@ -25,7 +25,7 @@ class _WidgetSearchState extends State<WidgetSearch> {
   //VARIABLES
 
   //Token//
-  String? localToken = globalToken;
+  String? localToken = globalClientToken;
 
   // Controlador de la caja de texto para la búsqueda//
   final TextEditingController _searchController = TextEditingController();
