@@ -10,49 +10,92 @@ class CardProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Navegar a la pantalla de detalles del proveedor
-        Navigator.push(
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 0.5),
+      child: Column(
+      children: [
+        GestureDetector(
+        onTap: () {
+          Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ProviderDetailScreen(provider: provider),
           ),
-        );
-      },
-      child: Card(
-        elevation: 4,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Padding(
+          );
+        },
+        child: Container(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+            ),
+          ],
+          ),
+          child: Row(
+          children: [
+            // Foto del prestador
+            CircleAvatar(
+            radius: 30,
+            backgroundImage: NetworkImage(provider.profileImagePath.replaceAll('"', '')),
+            ),
+            const SizedBox(width: 16),
+
+            // Detalles del prestador
+            Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              // Nombre del prestador
               Text(
                 '${provider.firstName} ${provider.lastName}',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF001563),
+                style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
-                'Username: ${provider.username}',
-                style: TextStyle(fontSize: 16),
+              const SizedBox(height: 4),
+
+              // Rating en estrellas
+              Row(
+                children: [
+                const Icon(Icons.star, color: Colors.amber, size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  provider.punctuation.toStringAsFixed(1),
+                  style: const TextStyle(fontSize: 14),
+                ),
+                ],
               ),
-              Text(
-                'Email: ${provider.email}',
-                style: TextStyle(fontSize: 16),
+              const SizedBox(height: 4),
+
+              // Ubicación
+              Row(
+                children: [
+                const Icon(Icons.location_on, size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  provider.address,
+                  style: const TextStyle(fontSize: 12),
+                ),
+                ],
               ),
-              Text(
-                'Address: ${provider.address}',
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
+              ],
+            ),
+            ),
+          ],
           ),
         ),
+        ),
+        const SizedBox(height: 16),
+      ],
       ),
     );
   }
-}
+  }
+
