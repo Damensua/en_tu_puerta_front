@@ -28,12 +28,11 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
   }
 
   Future<void> _initializeAuth() async {
-    authResponse = await getToken(); 
-    globalToken=authResponse?.token;
-    globalIdUser=authResponse?.idUser;
+    authResponse = await getToken();
+    globalToken = authResponse?.token;
+    globalIdUser = authResponse?.idUser;
     setState(() {
-      _isTokenInitialized =
-          true;
+      _isTokenInitialized = true;
     });
   }
 
@@ -47,7 +46,7 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF001563), // Updated background color
+      backgroundColor: Color(0xFF001563),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 40),
         child: Center(
@@ -68,41 +67,27 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.network(
-                              'https://i.postimg.cc/85XVXVzn/Entupuertanuevo.png', // Updated image URL
-                              height: 160, // Height of the top image
+                              'https://i.postimg.cc/85XVXVzn/Entupuertanuevo.png',
+                              height: 160,
                             ),
-                            SizedBox(
-                                height:
-                                    20), // Space between the top image and the text
+                            SizedBox(height: 20),
                             Text(
                               '¿Que necesitas?',
                               style: TextStyle(
-                                fontSize: 24, // Increased font size
-                                color: Colors.white, // Updated title color
+                                fontSize: 24,
+                                color: Colors.white,
                               ),
                               textAlign: TextAlign.center,
                             ),
 
                             //BOTON DE CLIENTE
-                            SizedBox(
-                                height:
-                                    20), // Space between the text and the first image
+                            SizedBox(height: 20),
                             Image.network(
-                              'https://i.postimg.cc/pdZv8jbv/cliente.png', // Updated client icon URL
-                              height:
-                                  130, // Updated height to 130 for the client icon
+                              'https://i.postimg.cc/pdZv8jbv/cliente.png',
+                              height: 130,
                             ),
                             ElevatedButton(
                               onPressed: () async {
-
-                                //ESPACIO DE PRUEBA PARA LA LLAMADA DE LAS APIs
-
-                                //String inputSearchBar="ra";
-                                //var messi= await getUsers(inputSearchBar,  globalToken);
-                                //mensajero.log(Level.debug,'Este es la respuesta de los srvicios a la llamada de la API:$messi');
-
-                                ///////////////////////////////////////////////////////////
-
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -114,36 +99,31 @@ class _PreHomeScreenState extends State<PreHomeScreen> {
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 15),
-                                backgroundColor:
-                                    Color(0xFF606d9e), // Updated button color
+                                backgroundColor: Color(0xFF606d9e),
                               ),
                               child: Text('Solicitar servicio',
                                   style: TextStyle(color: Colors.white)),
                             ),
 
                             //BOTON DE PRESTADADOR
-                            SizedBox(
-                                height:
-                                    20), // Space between the button and the second image
+                            SizedBox(height: 20),
                             Image.network(
-                              'https://i.postimg.cc/XJYbgv4C/proveedor.png', // Updated provider icon URL
-                              height:
-                                  130, // Updated height to 130 for the provider icon
+                              'https://i.postimg.cc/XJYbgv4C/proveedor.png',
+                              height: 130,
                             ),
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MyHomePageProvider(
-                                          title: 'Home')),
+                                      builder: (context) =>
+                                          MyHomePageProvider(title: 'Home')),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 15),
-                                backgroundColor:
-                                    Color(0xFF606d9e), // Updated button color
+                                backgroundColor: Color(0xFF606d9e),
                               ),
                               child: Text('Ofrecer servicio',
                                   style: TextStyle(color: Colors.white)),

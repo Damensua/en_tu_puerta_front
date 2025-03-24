@@ -3,8 +3,6 @@ import 'package:en_tu_puerta_front/models/petition.dart';
 import 'package:flutter/material.dart';
 import 'provider_petition_components/petition_card.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 // Widget para la pantalla de notificaciones del proveedor
 class WidgetProviderNotifications extends StatefulWidget {
