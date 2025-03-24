@@ -26,7 +26,20 @@ class DetailServiceClientScreen extends StatefulWidget {
 
 class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
   String? localToken = globalClientToken;
-  late Provider mainProvider;
+  late Provider mainProvider = Provider(
+    id: 0,
+    username: '',
+    profileImagePath: '',
+    type: '', 
+    firstName: '', 
+    lastName: '', 
+    email: '', 
+    address: '', 
+    startTime: '', 
+    endTime: '', 
+    punctuation: 0, 
+  );
+   bool isLoading = true;
 
   @override
   void initState() {
@@ -38,7 +51,9 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
 
 //Funcion para obtener los prestadores de servicios
   void fetchProvider() async {
+    isLoading = true;
     var json = await getServiceOwner(widget.service.idProvider, localToken);
+    isLoading = false;
     
     setState(() {
       mainProvider = parseProvider(json);
@@ -132,75 +147,83 @@ class _DetailServiceClientScreenState extends State<DetailServiceClientScreen> {
             
             const SizedBox(height: 16),
             // Información del prestador
-            GestureDetector(
-              onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                builder: (context) => ProviderDetailScreen(provider: mainProvider),
-                ),
-              );
-              },
-              child: Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
+            isLoading
+              ? const Center(
+                child: CircularProgressIndicator(),
+              )
+              : 
+              Text(
+                'Profile Image Path: ${mainProvider.profileImagePath}',
               ),
-              child: Row(
-                children: [
-                // Foto del prestador
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage("https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png"),
-                ),
-                const SizedBox(width: 16),
-                
-                // Detalles del prestador
-                Expanded(
-                  child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Nombre del prestador
-                    Text(
-                    '${widget.service.firstNameProvider} ${widget.service.lastNameProvider}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                    const SizedBox(height: 4),
-                    
-                    // Rating en estrellas
-                    Row(
-                    children: [
-                      const Icon(Icons.star, color: Colors.amber, size: 16),
-                      const SizedBox(width: 4),
-                      Text(
-                      widget.service.punctuationProvider.toStringAsFixed(1),
-                      style: const TextStyle(fontSize: 14),
-                      ),
-                    ],
-                    ),
-                    const SizedBox(height: 4),
-                    
-                    // Ubicación
-                    Row(
-                    children: [
-                      const Icon(Icons.location_on, size: 16),
-                      const SizedBox(width: 4),
-                      Text(
-                      widget.service.addressProvider,
-                      style: const TextStyle(fontSize: 12),
-                      ),
-                    ],
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                  builder: (context) => ProviderDetailScreen(provider: mainProvider),
                   ),
+                );
+                },
+                child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                ],
-              ),
-              ),
-            )
+                child: Row(
+                  children: [
+                  // Foto del prestador
+                    CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(mainProvider.profileImagePath.replaceAll('"', '')),
+                    ),
+                  const SizedBox(width: 16),
+
+                  // Detalles del prestador
+                  Expanded(
+                    child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Nombre del prestador
+                      Text(
+                      '${widget.service.firstNameProvider} ${widget.service.lastNameProvider}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      ),
+                      const SizedBox(height: 4),
+
+                      // Rating en estrellas
+                      Row(
+                      children: [
+                        const Icon(Icons.star, color: Colors.amber, size: 16),
+                        const SizedBox(width: 4),
+                        Text(
+                        widget.service.punctuationProvider.toStringAsFixed(1),
+                        style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                      ),
+                      const SizedBox(height: 4),
+
+                      // Ubicación
+                      Row(
+                      children: [
+                        const Icon(Icons.location_on, size: 16),
+                        const SizedBox(width: 4),
+                        Text(
+                        widget.service.addressProvider,
+                        style: const TextStyle(fontSize: 12),
+                        ),
+                      ],
+                      ),
+                    ],
+                    ),
+                  ),
+                  ],
+                ),
+                ),
+              )
           ],
         ),
       ),
