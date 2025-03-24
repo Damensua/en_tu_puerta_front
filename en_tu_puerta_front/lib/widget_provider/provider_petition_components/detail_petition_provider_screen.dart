@@ -48,8 +48,9 @@ class _DetailPetitionProviderScreenState
             // Avatar del usuario
             CircleAvatar(
               radius: 60,
-              backgroundImage: NetworkImage(widget.petition.imageUser ??
-                  "https://i.postimg.cc/05h66XrJ/Artboard-1-copy-2-3x.png"),
+              backgroundImage: const NetworkImage(
+                  "https://previews.123rf.com/images/john79/john791708/john79170800031/84347480-chicas-de-perfil-para-sal%C3%B3n-de-belleza-y-peluquer%C3%ADa-con-tijeras-y-peine.jpg",
+              ),
             ),
             const SizedBox(height: 16),
 
