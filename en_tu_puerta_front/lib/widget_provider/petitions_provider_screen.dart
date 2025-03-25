@@ -110,7 +110,7 @@ class _WidgetProviderNotificationsState
                             return NotificationCard(
                               petitionId: petition.id,
                               profileName: petition.firstNameUser,
-                              profLastName: petition.firstNameUser,
+                              profLastName: petition.lastNameUser,
                               onAccept: () {
                                 _acceptRequest(index);
                               },

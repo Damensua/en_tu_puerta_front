@@ -15,9 +15,9 @@ Future getToken(String userType) async {
 
   //Usario de validación para hacer el login
   if (userType == 'client') {
-    body = {'email': 'testprestador2@example.com', 'password': 'password'};
+    body = {'email': 'testcliente@example.com', 'password': 'password'};
   } else if (userType == 'provider') {
-    body = {'email': 'testprestador2@example.com', 'password': 'password'};
+    body = {'email': 'testprestador1@example.com', 'password': 'password'};
   }
 
   try {

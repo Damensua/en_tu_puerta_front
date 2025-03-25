@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
+import 'package:en_tu_puerta_front/widget_provider/petitions_provider_screen.dart';
 
 class DetailPetitionProviderScreen extends StatefulWidget {
   final Petition petition;
@@ -22,7 +23,6 @@ class _DetailPetitionProviderScreenState
   void _acceptRequest(petition) async {
     try {
       await acceptPetition(petition.id, globalProviderToken);
-      widget.onAccept();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Solicitud aceptada')),
@@ -49,7 +49,7 @@ class _DetailPetitionProviderScreenState
             CircleAvatar(
               radius: 60,
               backgroundImage: const NetworkImage(
-                  "https://previews.123rf.com/images/john79/john791708/john79170800031/84347480-chicas-de-perfil-para-sal%C3%B3n-de-belleza-y-peluquer%C3%ADa-con-tijeras-y-peine.jpg",
+                "https://previews.123rf.com/images/john79/john791708/john79170800031/84347480-chicas-de-perfil-para-sal%C3%B3n-de-belleza-y-peluquer%C3%ADa-con-tijeras-y-peine.jpg",
               ),
             ),
             const SizedBox(height: 16),
