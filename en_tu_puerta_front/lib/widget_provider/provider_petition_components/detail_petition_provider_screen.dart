@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
-import 'package:en_tu_puerta_front/widget_provider/petitions_provider_screen.dart';
-import 'package:logger/logger.dart';
 
 class DetailPetitionProviderScreen extends StatefulWidget {
   final Petition petition;

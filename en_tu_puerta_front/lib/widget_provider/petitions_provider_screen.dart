@@ -1,9 +1,6 @@
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/models/petition.dart';
-import 'package:en_tu_puerta_front/my_home_page_provider.dart';
-import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'provider_petition_components/petition_card.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/provider_petition_components/detail_petition_provider_screen.dart';
@@ -46,44 +43,6 @@ class _WidgetProviderNotificationsState
       }
       _isLoading = false;
     });
-  }
-
-  // Método para aceptar una solicitud de servicio
-  void _acceptRequest(int index) {
-    try {
-      logger.log(Level.info, petitionsFounds[index].id);
-      acceptPetition(petitionsFounds[index], globalProviderToken);
-      setState(() {
-        petitionsFounds.removeAt(index);
-      });
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Solicitud aceptada!'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Se ha aceptado correctamente la solicitud.'),
-              SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ReusableButton(
-                  text: 'Aceptar',
-                  color: Color(0xFF001563),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('La solicitud ya ha sido aceptada')),
-      );
-    }
   }
 
   @override
