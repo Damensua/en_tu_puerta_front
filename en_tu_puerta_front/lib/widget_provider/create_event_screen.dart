@@ -113,60 +113,66 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Align(
-          alignment: Alignment.bottomCenter,
-          child: Text(
-            'Crear evento',
-            style: TextStyle(
-                fontSize: 30,
-                color: const Color(0xFF001563),
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
+    
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                labelText: 'Título del evento',
-                labelStyle: TextStyle(color: Color(0xFF001563)),
-              ),
+        Image.network(
+          'https://i.postimg.cc/Z59qsBR6/Timeline-bro.png',
+          height: 200,
+        ),
+        SizedBox(height: 20),
+        Text(
+          'Crear evento',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF001563),
+          ),
+        ),
+        SizedBox(height: 20),
+        TextField(
+          controller: _titleController,
+          decoration: InputDecoration(
+            labelText: 'Título del evento',
+            labelStyle: TextStyle(color: Color(0xFF001563)),
+          ),
+        ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+          child: ReusableButton(
+            onPressed: () => _selectDate(context),
+            text: _selectedDate == null
+            ? 'Fecha'
+            : DateFormat('yyyy-MM-dd').format(_selectedDate!),
+            color: Color(0xFF001563),
+          ),
             ),
-            SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ReusableButton(
-                onPressed: () => _selectDate(context),
-                text: _selectedDate == null
-                    ? 'Seleccionar Fecha'
-                    : 'Fecha: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}',
-                color: Color(0xFF001563),
-              ),
+            SizedBox(width: 10), 
+            Expanded(
+            child: ReusableButton(
+            onPressed: () => _selectTime(context),
+            text: _selectedTime == null
+            ? 'Hora'
+            : _selectedTime!,
+            color: Color(0xFF001563),
             ),
-            SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ReusableButton(
-                onPressed: () => _selectTime(context),
-                text: _selectedTime == null
-                    ? 'Seleccionar Hora'
-                    : 'Hora: $_selectedTime',
-                color: Color(0xFF001563),
-              ),
             ),
-            SizedBox(height: 200),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ReusableButton(
-                onPressed: _createEvent,
-                text: 'Crear evento',
-                color: Color(0xFF001563),
-              ),
-            ),
+          ],
+        ),
+        SizedBox(height: 180),
+        SizedBox(
+          width: 200, 
+          child: ReusableButton(
+            onPressed: _createEvent,
+            text: 'Crear evento',
+            color: Color(0xFF001563),
+          ),
+        ),
           ],
         ),
       ),
