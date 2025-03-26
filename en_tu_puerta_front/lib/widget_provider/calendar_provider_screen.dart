@@ -18,8 +18,8 @@ class WidgetCalendar extends StatefulWidget {
 
 class _CalendarScreenState extends State<WidgetCalendar> {
 //Token//
-  String? localToken = globalClientToken;
-  String? userId = globalIdClient;
+  String? localToken = globalProviderToken;
+  String? userId = globalIdProvider;
 
   //Lista de objetos Evento y usuario//
   List eventsFounds = [];

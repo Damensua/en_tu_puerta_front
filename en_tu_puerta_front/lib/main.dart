@@ -1,21 +1,17 @@
-
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:flutter/material.dart';
 
-
 // Punto de entrada principal de la aplicación
-void main() {  
+void main() {
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return 
-    MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'En Tu Puerta',
       theme: ThemeData(
@@ -27,5 +23,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

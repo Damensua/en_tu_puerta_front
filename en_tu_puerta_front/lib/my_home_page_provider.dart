@@ -1,6 +1,5 @@
 import 'package:en_tu_puerta_front/widget_provider/create_event_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:en_tu_puerta_front/widget_provider/home_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/petitions_provider_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/calendar_provider_screen.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart'; // Import the pre-home screen
@@ -15,6 +14,8 @@ class MyHomePageProvider extends StatefulWidget {
 }
 
 class _MyHomePageProviderState extends State<MyHomePageProvider> {
+  final GlobalKey<_MyHomePageProviderState> myHomePageProviderKey =
+      GlobalKey<_MyHomePageProviderState>();
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[

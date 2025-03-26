@@ -4,6 +4,7 @@ import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/widgets/reusable_button.dart';
 import 'package:en_tu_puerta_front/widget_provider/petitions_provider_screen.dart';
+import 'package:logger/logger.dart';
 
 class DetailPetitionProviderScreen extends StatefulWidget {
   final Petition petition;
@@ -20,14 +21,36 @@ class DetailPetitionProviderScreen extends StatefulWidget {
 
 class _DetailPetitionProviderScreenState
     extends State<DetailPetitionProviderScreen> {
-  void _acceptRequest(petition) async {
+  void _acceptRequest(petition, onAccept) async {
     try {
-      await acceptPetition(petition.id, globalProviderToken);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Solicitud aceptada')),
+      await acceptPetition(petition, globalProviderToken);
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Solicitud aceptada!'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Se ha aceptado correctamente la solicitud.'),
+              SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ReusableButton(
+                  text: 'Aceptar',
+                  color: Color(0xFF001563),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    onAccept();
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       );
     } catch (e) {
+      //logger.log(Level.info, e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('La solicitud ya ha sido aceptada')),
       );
@@ -119,7 +142,7 @@ class _DetailPetitionProviderScreenState
               text: 'Aceptar solicitud',
               color: const Color(0xFF001563),
               onPressed: () {
-                _acceptRequest(widget.petition);
+                _acceptRequest(widget.petition, widget.onAccept);
               },
             ),
           ],

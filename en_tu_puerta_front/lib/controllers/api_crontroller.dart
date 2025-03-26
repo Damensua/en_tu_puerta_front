@@ -305,8 +305,8 @@ Future getServiceOwner(int userId, String? token) async {
 }
 
 Future getEventsByUser(String? userId, String? token) async {
-  var url = Uri.http(
-      urlBase(), 'api/v1/events', {'filter[user]': '$userId & include=user'});
+  var url = Uri.http(urlBase(), 'api/v1/events',
+      {'filter[provider]': '$userId & include=provider'});
 
   Map<String, String>? header;
 
