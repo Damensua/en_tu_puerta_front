@@ -152,7 +152,6 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                 ],
               ),
               SizedBox(height: 20),
-
               if (isLoading) ...[
                 Center(child: CircularProgressIndicator()),
               ] else if (daysShown == 0 || days.isEmpty || times.isEmpty) ...[
@@ -220,9 +219,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                                     value: hour,
                                     child: Text(
                                       hour,
-                                      style: TextStyle(
-                                          fontSize:
-                                              16),
+                                      style: TextStyle(fontSize: 16),
                                     ),
                                   );
                                 }).toList()
@@ -325,30 +322,26 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                         ],
                       ),
                     );
-
                   } else if (indexSelectedDay >= 0 && idClient != null) {
                     try {
-                      String comment=getInput();
+                      String comment = getInput();
                       Petition newPetition;
-                      if (comment==''){
-                       newPetition= Petition(
-                        idUser: int.parse(idClient as String),
-                        date: dates[indexSelectedDay],
-                        time: addSeconds(selectedTime),
-                        message: 'No hay comentario',
-                        idService: idService
-                      );
-                      mensajero.log(Level.info, newPetition.toJson());
-                      }else{
-                        newPetition= Petition(
-                        idUser: int.parse(idClient as String),
-                        date: dates[indexSelectedDay],
-                        time: addSeconds(selectedTime),
-                        message: getInput(),
-                        idService: idService
-                      );
-                      mensajero.log(Level.info, newPetition.toJson());
-
+                      if (comment == '') {
+                        newPetition = Petition(
+                            idUser: int.parse(idClient as String),
+                            date: dates[indexSelectedDay],
+                            time: addSeconds(selectedTime),
+                            message: 'No hay comentario',
+                            idService: idService);
+                        mensajero.log(Level.info, newPetition.toJson());
+                      } else {
+                        newPetition = Petition(
+                            idUser: int.parse(idClient as String),
+                            date: dates[indexSelectedDay],
+                            time: addSeconds(selectedTime),
+                            message: getInput(),
+                            idService: idService);
+                        mensajero.log(Level.info, newPetition.toJson());
                       }
                       int? response;
                       response =
@@ -383,7 +376,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                             ),
                           ),
                         );
-                      } else if (response ==409) {
+                      } else if (response == 409) {
                         // Mostrar un mensaje emergente indicando que ya existe la solicitud
                         showDialog(
                           context: context,
