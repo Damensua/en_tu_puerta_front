@@ -83,7 +83,7 @@ class _NotificationCardState extends State<NotificationCard> {
                               onPressed: () {
                                 widget.onToggleDetails();
                               },
-                              color: Colors.blue.shade800,
+                              color: Color(0xFF001563),
                             ),
                             const SizedBox(width: 12),
                             _buildActionButton(
