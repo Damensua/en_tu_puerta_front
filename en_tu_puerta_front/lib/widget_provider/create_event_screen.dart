@@ -13,8 +13,8 @@ class CreateEventScreen extends StatefulWidget {
 }
 
 class _CreateEventScreenState extends State<CreateEventScreen> {
-  String? localToken = globalClientToken;
-  String? userId = globalIdClient;
+  String? localToken = globalProviderToken;
+  String? userId = globalIdProvider;
 
   final TextEditingController _titleController = TextEditingController();
   DateTime? _selectedDate;
@@ -132,37 +132,39 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             TextField(
               controller: _titleController,
               decoration: InputDecoration(
-              labelText: 'Título del evento',
-              labelStyle: TextStyle(color: Color(0xFF001563)),
+                labelText: 'Título del evento',
+                labelStyle: TextStyle(color: Color(0xFF001563)),
               ),
             ),
             SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
-                child: ReusableButton(
+              child: ReusableButton(
                 onPressed: () => _selectDate(context),
                 text: _selectedDate == null
-                  ? 'Seleccionar Fecha'
-                  : 'Fecha: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}',
+                    ? 'Seleccionar Fecha'
+                    : 'Fecha: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}',
                 color: Color(0xFF001563),
-                ),
               ),
+            ),
             SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
-                child: ReusableButton(
+              child: ReusableButton(
                 onPressed: () => _selectTime(context),
-                text: _selectedTime == null ? 'Seleccionar Hora' : 'Hora: $_selectedTime',
+                text: _selectedTime == null
+                    ? 'Seleccionar Hora'
+                    : 'Hora: $_selectedTime',
                 color: Color(0xFF001563),
-                ),
               ),
+            ),
             SizedBox(height: 200),
             Align(
               alignment: Alignment.bottomCenter,
-                child: ReusableButton(
+              child: ReusableButton(
                 onPressed: _createEvent,
                 text: 'Crear evento',
-                 color: Color(0xFF001563),
+                color: Color(0xFF001563),
               ),
             ),
           ],
