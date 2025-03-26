@@ -45,7 +45,7 @@ class _CalendarScreenState extends State<WidgetCalendar> {
   }
 
   Future<void> _loadEvents() async {
-    List<Event> fetchedEvents = await getEventsByUser(userId, localToken);
+    List<Event> fetchedEvents = await getEventsByUser(userId, localToken, false);
 
     setState(() {
       for (var eventMap in fetchedEvents) {

@@ -17,27 +17,50 @@ class DetailEventClientScreen extends StatelessWidget {
         title: Text('Detalles del Evento'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(2.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Proveedor ID: ${event.provider_id}',
-                style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Cliente ID: ${event.client_id}',
-                style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Servicio ID: ${event.service_id}',
-                style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text(event.title, style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Fecha: ${event.date.toLocal().toString().split(' ')[0]}',
-                style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Hora: ${event.time}', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Estado: ${event.status}', style: TextStyle(fontSize: 18)),
+            Center(
+              child: Image.network(
+                'https://i.postimg.cc/qMDRGXkk/Notes-bro.png',
+                height: 300,
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Evento:',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
+                    Text(event.title, style: TextStyle(fontSize: 20)),
+                    SizedBox(height: 16),
+                    Text('Fecha:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(event.date.toLocal().toString().split(' ')[0],
+                        style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 8),
+                    Text('Hora:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(event.time, style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 8),
+                    Text('Estado',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text('Estado',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(event.status, style: TextStyle(fontSize: 18)),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

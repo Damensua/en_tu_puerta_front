@@ -1,6 +1,7 @@
 import 'package:en_tu_puerta_front/controllers/api_crontroller.dart';
 import 'package:en_tu_puerta_front/models/petition.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'provider_petition_components/petition_card.dart';
 import 'package:en_tu_puerta_front/pre_home_screen.dart';
 import 'package:en_tu_puerta_front/widget_provider/provider_petition_components/detail_petition_provider_screen.dart';
@@ -44,6 +45,54 @@ class _WidgetProviderNotificationsState
       _isLoading = false;
     });
   }
+
+
+  void _acceptRequest(int index) {
+    try {
+      acceptPetition(petitionsFounds[index], localToken);
+
+      setState(() {
+        petitionsFounds.removeAt(index);
+      });
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Solicitud aceptada!'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10),
+              Text('Se ha aceptado correctamente la solicitud.'),
+              SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    backgroundColor: Color(0xFF001563),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _loadPetitions();
+                  },
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } catch (Exception) {
+      logger.log(Level.info, 'Error');
+  }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +144,7 @@ class _WidgetProviderNotificationsState
                               profileName: petition.firstNameUser,
                               profLastName: petition.lastNameUser,
                               onAccept: () {
+                                _acceptRequest(index);
                                 _loadPetitions();
                               },
                               onToggleDetails: () {

@@ -304,9 +304,15 @@ Future getServiceOwner(int userId, String? token) async {
   }
 }
 
-Future getEventsByUser(String? userId, String? token) async {
-  var url = Uri.http(urlBase(), 'api/v1/events',
-      {'filter[provider]': '$userId & include=provider'});
+Future getEventsByUser(String? userId, String? token, bool? client) async {
+  var url;
+  if (client == true) {
+     url = Uri.http(urlBase(), 'api/v1/events',
+        {'filter[client]': '$userId & include=client'});
+  } else {
+    url = Uri.http(urlBase(), 'api/v1/events',
+        {'filter[provider]': '$userId & include=provider'});
+  }
 
   Map<String, String>? header;
 
