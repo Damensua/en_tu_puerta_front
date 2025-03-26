@@ -139,7 +139,18 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             labelStyle: TextStyle(color: Color(0xFF001563)),
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 25),
+        Align(  
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Selecione los datos:',
+            style: TextStyle(
+              fontSize: 16, // Tamaño de la fuente
+              color: Color(0xFF001563), // Color del texto
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

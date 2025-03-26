@@ -328,7 +328,19 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
 
                   } else if (indexSelectedDay >= 0 && idClient != null) {
                     try {
-                      Petition newPetition = Petition(
+                      String comment=getInput();
+                      Petition newPetition;
+                      if (comment==''){
+                       newPetition= Petition(
+                        idUser: int.parse(idClient as String),
+                        date: dates[indexSelectedDay],
+                        time: addSeconds(selectedTime),
+                        message: 'No hay comentario',
+                        idService: idService
+                      );
+                      mensajero.log(Level.info, newPetition.toJson());
+                      }else{
+                        newPetition= Petition(
                         idUser: int.parse(idClient as String),
                         date: dates[indexSelectedDay],
                         time: addSeconds(selectedTime),
@@ -337,6 +349,7 @@ class _ServiceRequestDialogState extends State<ServiceRequestDialog> {
                       );
                       mensajero.log(Level.info, newPetition.toJson());
 
+                      }
                       int? response;
                       response =
                           await postPetition(newPetition.toJson(), token);
